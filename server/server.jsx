@@ -106,12 +106,12 @@ function renderPage(appHtml) {
 const options = {
   key: fs.readFileSync(path.join(__dirname, 'server/key.pem')),
   cert: fs.readFileSync(path.join(__dirname, 'server/cert.crt')),
-  passphrase: 'BoxHeroY4'
+  passphrase: 'iManT'
 };
 https.createServer(options, app).listen(443);
 console.log('Server is running on port 8080.');
 
-getMarks();
+// getMarks();
 // prompt.start();
 // prompt.get('password', (err, result) => {
 //   if (err) return;
