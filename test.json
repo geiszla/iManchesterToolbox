@@ -1,0 +1,1143 @@
+{
+  "years": [
+    {
+      "number": 1,
+      "schoolYear": [
+        16,
+        17
+      ],
+      "subjects": [
+        {
+          "_id": "101L",
+          "name": "First Year Team Project",
+          "subjectId": "101",
+          "semester": null,
+          "type": "lab",
+          "isFinal": false,
+          "total": 82.7,
+          "isInProgress": true,
+          "marked": 59.1,
+          "sessions": [
+            {
+              "name": "1ampD",
+              "weighting": 1,
+              "denominator": 71,
+              "value": 67,
+              "isEstimated": true,
+              "isExpected": true,
+              "isLate": false
+            },
+            {
+              "name": "1hsD",
+              "weighting": 1,
+              "denominator": 300,
+              "value": 284,
+              "isEstimated": true,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "2D",
+              "weighting": 2,
+              "denominator": 1,
+              "value": 1,
+              "isEstimated": true,
+              "isExpected": true,
+              "isLate": false
+            },
+            {
+              "name": "3D",
+              "weighting": 2,
+              "denominator": 20,
+              "value": 19.5,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "4D",
+              "weighting": 2,
+              "denominator": 6,
+              "value": 6,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "5D",
+              "weighting": 2,
+              "denominator": 20,
+              "value": 20,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "6D",
+              "weighting": 2,
+              "denominator": 16,
+              "value": 12,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "7D",
+              "weighting": 2,
+              "denominator": 20,
+              "value": 20,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "8D",
+              "weighting": 2,
+              "denominator": 10,
+              "value": null,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            }
+          ]
+        },
+        {
+          "_id": "101s1C",
+          "name": "First Year Team Project",
+          "subjectId": "101",
+          "semester": 1,
+          "type": "clinic",
+          "isFinal": false,
+          "total": 70,
+          "isInProgress": true,
+          "marked": 0,
+          "sessions": [
+            {
+              "name": "RWRpt",
+              "weighting": 10,
+              "denominator": 100,
+              "value": 70,
+              "isEstimated": true,
+              "isExpected": true,
+              "isLate": false
+            },
+            {
+              "name": "Pres",
+              "weighting": 15,
+              "denominator": 100,
+              "value": 70,
+              "isEstimated": true,
+              "isExpected": true,
+              "isLate": false
+            },
+            {
+              "name": "Rflct",
+              "weighting": 5,
+              "denominator": 2,
+              "value": 1,
+              "isEstimated": true,
+              "isExpected": true,
+              "isLate": false
+            }
+          ]
+        },
+        {
+          "_id": "101s2C",
+          "name": "First Year Team Project",
+          "subjectId": "101",
+          "semester": 2,
+          "type": "clinic",
+          "isFinal": false,
+          "total": 70,
+          "isInProgress": true,
+          "marked": 0,
+          "sessions": [
+            {
+              "name": "CodeD",
+              "weighting": 0,
+              "denominator": 1,
+              "value": 1,
+              "isEstimated": true,
+              "isExpected": true,
+              "isLate": false
+            },
+            {
+              "name": "PresD",
+              "weighting": 20,
+              "denominator": 100,
+              "value": 70,
+              "isEstimated": true,
+              "isExpected": true,
+              "isLate": false
+            },
+            {
+              "name": "FnRpt",
+              "weighting": 20,
+              "denominator": 60,
+              "value": 42,
+              "isEstimated": true,
+              "isExpected": true,
+              "isLate": false
+            }
+          ]
+        },
+        {
+          "_id": "111T",
+          "name": "Mathematical Techniques for Computer Science",
+          "subjectId": "111",
+          "semester": null,
+          "type": "test",
+          "isFinal": false,
+          "total": 85,
+          "isInProgress": false,
+          "marked": 85,
+          "sessions": [
+            {
+              "name": "TestD",
+              "weighting": 1,
+              "denominator": 20,
+              "value": 17,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            }
+          ]
+        },
+        {
+          "_id": "111s1E",
+          "name": "Mathematical Techniques for Computer Science",
+          "subjectId": "111",
+          "semester": 1,
+          "type": "examples",
+          "isFinal": false,
+          "total": 90,
+          "isInProgress": false,
+          "marked": 90,
+          "sessions": [
+            {
+              "name": "2D",
+              "weighting": 1,
+              "denominator": 10,
+              "value": 10,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "3D",
+              "weighting": 1,
+              "denominator": 10,
+              "value": 8,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "4D",
+              "weighting": 1,
+              "denominator": 10,
+              "value": 10,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "5D",
+              "weighting": 1,
+              "denominator": 10,
+              "value": 9,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "6D",
+              "weighting": 1,
+              "denominator": 10,
+              "value": 9,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "7D",
+              "weighting": 1,
+              "denominator": 10,
+              "value": 9,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "8D",
+              "weighting": 1,
+              "denominator": 10,
+              "value": 8,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "9D",
+              "weighting": 1,
+              "denominator": 10,
+              "value": 9,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "10D",
+              "weighting": 1,
+              "denominator": 10,
+              "value": 8,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "11D",
+              "weighting": 1,
+              "denominator": 10,
+              "value": null,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": true
+            }
+          ]
+        },
+        {
+          "_id": "111s1Efin",
+          "name": "Mathematical Techniques for Computer Science",
+          "subjectId": "111",
+          "semester": 1,
+          "type": "examples",
+          "isFinal": true,
+          "total": 90,
+          "isInProgress": false,
+          "marked": 90,
+          "sessions": [
+            {
+              "name": "Raw",
+              "weighting": 0,
+              "denominator": 100,
+              "value": 90,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "FinD",
+              "weighting": 1,
+              "denominator": 100,
+              "value": 90,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            }
+          ]
+        },
+        {
+          "_id": "111s2E",
+          "name": "Mathematical Techniques for Computer Science",
+          "subjectId": "111",
+          "semester": 2,
+          "type": "examples",
+          "isFinal": false,
+          "sessions": [
+            {
+              "name": "1D",
+              "weighting": 1,
+              "denominator": 10,
+              "value": 9,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "2D",
+              "weighting": 1,
+              "denominator": 10,
+              "value": 10,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "3D",
+              "weighting": 1,
+              "denominator": 10,
+              "value": 10,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "4D",
+              "weighting": 1,
+              "denominator": 10,
+              "value": 9,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "5D",
+              "weighting": 1,
+              "denominator": 10,
+              "value": 0,
+              "isEstimated": true,
+              "isExpected": true,
+              "isLate": true
+            },
+            {
+              "name": "6D",
+              "weighting": 1,
+              "denominator": 10,
+              "value": 0,
+              "isEstimated": true,
+              "isExpected": true,
+              "isLate": true
+            },
+            {
+              "name": "7D",
+              "weighting": 1,
+              "denominator": 10,
+              "value": 0,
+              "isEstimated": true,
+              "isExpected": true,
+              "isLate": true
+            },
+            {
+              "name": "8D",
+              "weighting": 1,
+              "denominator": 10,
+              "value": 0,
+              "isEstimated": true,
+              "isExpected": true,
+              "isLate": true
+            },
+            {
+              "name": "9D",
+              "weighting": 1,
+              "denominator": 10,
+              "value": 10,
+              "isEstimated": true,
+              "isExpected": true,
+              "isLate": false
+            },
+            {
+              "name": "10D",
+              "weighting": 1,
+              "denominator": 10,
+              "value": 10,
+              "isEstimated": true,
+              "isExpected": true,
+              "isLate": false
+            }
+          ]
+        },
+        {
+          "_id": "111s2Efin",
+          "name": "Mathematical Techniques for Computer Science",
+          "subjectId": "111",
+          "semester": 2,
+          "type": "examples",
+          "isFinal": true,
+          "total": 70.7,
+          "isInProgress": true,
+          "marked": 0,
+          "sessions": [
+            {
+              "name": "Raw",
+              "weighting": 0,
+              "denominator": 100,
+              "value": 71.3,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "FinD",
+              "weighting": 1,
+              "denominator": 100,
+              "value": 71,
+              "isEstimated": true,
+              "isExpected": true,
+              "isLate": false
+            }
+          ]
+        },
+        {
+          "_id": "112E",
+          "name": "Fundamentals of Computation",
+          "subjectId": "112",
+          "semester": null,
+          "type": "examples",
+          "isFinal": false,
+          "total": 47.5,
+          "isInProgress": true,
+          "marked": 47.5,
+          "sessions": [
+            {
+              "name": "1D",
+              "weighting": 1,
+              "denominator": 10,
+              "value": 8,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "2D",
+              "weighting": 1,
+              "denominator": 10,
+              "value": 10,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "3D",
+              "weighting": 1,
+              "denominator": 10,
+              "value": 10,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "4D",
+              "weighting": 1,
+              "denominator": 10,
+              "value": 10,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "5D",
+              "weighting": 1,
+              "denominator": 10,
+              "value": 0,
+              "isEstimated": true,
+              "isExpected": true,
+              "isLate": false
+            },
+            {
+              "name": "6D",
+              "weighting": 1,
+              "denominator": 10,
+              "value": null,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "7D",
+              "weighting": 1,
+              "denominator": 10,
+              "value": null,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "8D",
+              "weighting": 1,
+              "denominator": 10,
+              "value": null,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "9D",
+              "weighting": 1,
+              "denominator": 10,
+              "value": 0,
+              "isEstimated": true,
+              "isExpected": true,
+              "isLate": false
+            },
+            {
+              "name": "10D",
+              "weighting": 1,
+              "denominator": 10,
+              "value": 0,
+              "isEstimated": true,
+              "isExpected": true,
+              "isLate": false
+            }
+          ]
+        },
+        {
+          "_id": "112Efin",
+          "name": "Fundamentals of Computation",
+          "subjectId": "112",
+          "semester": null,
+          "type": "examples",
+          "isFinal": true,
+          "total": 58.7,
+          "isInProgress": true,
+          "marked": 0,
+          "sessions": [
+            {
+              "name": "Raw",
+              "weighting": 0,
+              "denominator": 100,
+              "value": 47.5,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "FinD",
+              "weighting": 1,
+              "denominator": 100,
+              "value": 59,
+              "isEstimated": true,
+              "isExpected": true,
+              "isLate": false
+            }
+          ]
+        },
+        {
+          "_id": "121L",
+          "name": "Fundamentals of Computer Engineering",
+          "subjectId": "121",
+          "semester": null,
+          "type": "lab",
+          "isFinal": false,
+          "sessions": [
+            {
+              "name": "1.2aD",
+              "weighting": 0,
+              "denominator": 40,
+              "value": 40,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "1.2bD",
+              "weighting": 0,
+              "denominator": 40,
+              "value": 40,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "1.2cD",
+              "weighting": 0,
+              "denominator": 40,
+              "value": 40,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "2.2aD",
+              "weighting": 12,
+              "denominator": 60,
+              "value": 60,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "2.2fD",
+              "weighting": 8,
+              "denominator": 50,
+              "value": 45,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "3.2aD",
+              "weighting": 10,
+              "denominator": 60,
+              "value": 60,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "3.2bD",
+              "weighting": 10,
+              "denominator": 60,
+              "value": 59,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "3.2fD",
+              "weighting": 15,
+              "denominator": 65,
+              "value": 61,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "4.2aD",
+              "weighting": 10,
+              "denominator": 30,
+              "value": 30,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "4.2fD",
+              "weighting": 10,
+              "denominator": 20,
+              "value": 17,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            }
+          ]
+        },
+        {
+          "_id": "151L",
+          "name": "Fundamentals of Computer Architecture",
+          "subjectId": "151",
+          "semester": null,
+          "type": "lab",
+          "isFinal": false,
+          "total": 99,
+          "isInProgress": false,
+          "marked": 99,
+          "sessions": [
+            {
+              "name": "1D",
+              "weighting": 1,
+              "denominator": 10,
+              "value": 9.5,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "2D",
+              "weighting": 1,
+              "denominator": 10,
+              "value": 10,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "3D",
+              "weighting": 1,
+              "denominator": 10,
+              "value": 10,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "4D",
+              "weighting": 1,
+              "denominator": 10,
+              "value": 10,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "5D",
+              "weighting": 1,
+              "denominator": 10,
+              "value": 10,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            }
+          ]
+        },
+        {
+          "_id": "161L",
+          "name": "Object Oriented Programming with Java 1",
+          "subjectId": "161",
+          "semester": null,
+          "type": "lab",
+          "isFinal": false,
+          "total": 97.4,
+          "isInProgress": false,
+          "marked": 97.4,
+          "sessions": [
+            {
+              "name": "1D",
+              "weighting": 1,
+              "denominator": 120,
+              "value": 88,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "2.2D",
+              "weighting": 2,
+              "denominator": 220,
+              "value": 220,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "3D",
+              "weighting": 1,
+              "denominator": 120,
+              "value": 119,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "4.2D",
+              "weighting": 2,
+              "denominator": 220,
+              "value": 216,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "5D",
+              "weighting": 1,
+              "denominator": 80,
+              "value": 80,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "6.2D",
+              "weighting": 2,
+              "denominator": 120,
+              "value": 120,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "7D",
+              "weighting": 1,
+              "denominator": 40,
+              "value": 40,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "8.2D",
+              "weighting": 2,
+              "denominator": 120,
+              "value": 120,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "9D",
+              "weighting": 1,
+              "denominator": 80,
+              "value": 80,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "10D",
+              "weighting": 1,
+              "denominator": 80,
+              "value": 76,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "8oD",
+              "weighting": 1,
+              "denominator": 20,
+              "value": null,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": true
+            },
+            {
+              "name": "10oD",
+              "weighting": 1,
+              "denominator": 40,
+              "value": null,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": true
+            },
+            {
+              "name": "Weight",
+              "weighting": null,
+              "denominator": null,
+              "value": 14,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            }
+          ]
+        },
+        {
+          "_id": "162L",
+          "name": "Object Oriented Programming with Java 2",
+          "subjectId": "162",
+          "semester": null,
+          "type": "lab",
+          "isFinal": false,
+          "total": 92.4,
+          "isInProgress": false,
+          "marked": 67.8,
+          "sessions": [
+            {
+              "name": "1.1D",
+              "weighting": 2,
+              "denominator": 1,
+              "value": 1,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "1.3D",
+              "weighting": 28,
+              "denominator": 125,
+              "value": 124,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "2.2D",
+              "weighting": 20,
+              "denominator": 60,
+              "value": 59,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "3D",
+              "weighting": 10,
+              "denominator": 40,
+              "value": 39,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "4D",
+              "weighting": 10,
+              "denominator": 40,
+              "value": 40,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": true
+            },
+            {
+              "name": "5.2D",
+              "weighting": 20,
+              "denominator": 40,
+              "value": 39,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "6D",
+              "weighting": 10,
+              "denominator": 60,
+              "value": 60,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "7.2D",
+              "weighting": 20,
+              "denominator": 80,
+              "value": 79,
+              "isEstimated": true,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "8D",
+              "weighting": 10,
+              "denominator": 40,
+              "value": 39,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "9.2D",
+              "weighting": 20,
+              "denominator": 40,
+              "value": 40,
+              "isEstimated": true,
+              "isExpected": true,
+              "isLate": false
+            },
+            {
+              "name": "10D",
+              "weighting": 10,
+              "denominator": 20,
+              "value": 20,
+              "isEstimated": true,
+              "isExpected": true,
+              "isLate": false
+            },
+            {
+              "name": "11oD",
+              "weighting": 10,
+              "denominator": 75,
+              "value": 74,
+              "isEstimated": true,
+              "isExpected": true,
+              "isLate": false
+            },
+            {
+              "name": "12oD",
+              "weighting": 10,
+              "denominator": 100,
+              "value": 99,
+              "isEstimated": true,
+              "isExpected": true,
+              "isLate": false
+            },
+            {
+              "name": "13oD",
+              "weighting": 10,
+              "denominator": 125,
+              "value": 123,
+              "isEstimated": true,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "Weight",
+              "weighting": null,
+              "denominator": null,
+              "value": 160,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            }
+          ]
+        },
+        {
+          "_id": "181L",
+          "name": "Fundamentals of Distributed Systems",
+          "subjectId": "181",
+          "semester": null,
+          "type": "lab",
+          "isFinal": false,
+          "total": 100,
+          "isInProgress": true,
+          "marked": 64,
+          "sessions": [
+            {
+              "name": "1D",
+              "weighting": 10,
+              "denominator": 10,
+              "value": 10,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "2.1D",
+              "weighting": 2,
+              "denominator": 1,
+              "value": 1,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "2.2D",
+              "weighting": 18,
+              "denominator": 9,
+              "value": 9,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "3.1D",
+              "weighting": 2,
+              "denominator": 1,
+              "value": 1,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            },
+            {
+              "name": "3.2D",
+              "weighting": 18,
+              "denominator": 9,
+              "value": 9,
+              "isEstimated": true,
+              "isExpected": true,
+              "isLate": false
+            }
+          ]
+        },
+        {
+          "_id": "Intro1",
+          "name": null,
+          "subjectId": null,
+          "semester": null,
+          "type": null,
+          "isFinal": false,
+          "total": 100,
+          "isInProgress": false,
+          "marked": 100,
+          "sessions": [
+            {
+              "name": "1D",
+              "weighting": 1,
+              "denominator": 1,
+              "value": 1,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            }
+          ]
+        },
+        {
+          "_id": "Welcome",
+          "name": null,
+          "subjectId": null,
+          "semester": null,
+          "type": null,
+          "isFinal": false,
+          "sessions": [
+            {
+              "name": "0D",
+              "weighting": 0,
+              "denominator": 2,
+              "value": 189,
+              "isEstimated": false,
+              "isExpected": false,
+              "isLate": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
