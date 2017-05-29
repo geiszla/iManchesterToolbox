@@ -1,7 +1,7 @@
 import { ApolloClient, ApolloProvider, createNetworkInterface } from 'react-apollo';
 
+import App from '../src/components/app.jsx';
 import React from 'react';
-import Routes from '../src/components/routes.jsx';
 import { StaticRouter } from 'react-router-dom';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
@@ -67,7 +67,7 @@ app.get('*', (req, res) => {
   const appHtml = renderToString(
     <ApolloProvider client={client}>
       <StaticRouter location={req.url} context={context}>
-        <Routes />
+        <App />
       </StaticRouter>
     </ApolloProvider>
   );
@@ -76,6 +76,7 @@ app.get('*', (req, res) => {
     res.writeHead(301, {
       Location: context.url
     });
+    res.send();
   } else {
     res.send(renderPage(appHtml));
   }

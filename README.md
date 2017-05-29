@@ -136,7 +136,7 @@ Open a web browser and navigate to "[https://localhost/](https://localhost/)" to
 
   * components
 
-     Each React component is defined here. The "routes.jsx" file contains the routing information of the pages (the structure of the website).
+     Each React component is defined here.
 
   * styles
 

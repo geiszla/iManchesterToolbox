@@ -18,8 +18,10 @@ module.exports = {
     }),
     commonjs({
       namedExports: {
-        'material-ui/styles': ['MuiThemeProvider'],
+        'material-ui/styles': ['MuiThemeProvider', 'createMuiTheme', 'createStyleSheet', 'withStyles'],
+        'mobx-react': ['observer'],
         'react-apollo': ['ApolloProvider', 'graphql'],
+        'material-ui/Tabs': ['Tab']
       }
     })
   ],

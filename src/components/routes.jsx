@@ -1,4 +1,4 @@
-import Home from './Home.jsx';
+import App from './App.jsx';
 import React from 'react';
 import { Route } from 'react-router-dom';
 import gql from 'graphql-tag';
@@ -11,7 +11,7 @@ const ViewerQuery = gql`
     }
 }`;
 
-const HomeWithData = graphql(ViewerQuery, {
+const AppWithData = graphql(ViewerQuery, {
   options: {
     variables: {
       username: '__NAME__',
@@ -19,8 +19,8 @@ const HomeWithData = graphql(ViewerQuery, {
       password: '__PASSWORD__',
     }
   }
-})(Home);
+})(App);
 
 export default () => (
-  <Route path="/" component={HomeWithData} />
+  <App />
 );
