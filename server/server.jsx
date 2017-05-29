@@ -87,7 +87,7 @@ function renderPage(appHtml) {
     <html lang="en">
     <head>
       <meta charset="UTF-8">
-      <title>iManchester Toolkit</title>
+      <title>iManchester Toolbox</title>
 
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons"

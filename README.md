@@ -1,4 +1,4 @@
-# iManchester Toolkit
+# iManchester Toolbox
 A web application based on the React framework developed for The University of Manchester students.
 
 **Table of contents**
@@ -126,7 +126,7 @@ Open a web browser and navigate to "[https://localhost/](https://localhost/)" to
 
      JavaScript code that describes the working of the webserver and sends the generated index.html and bundle.js files to the client on request.
 
-  * cert.crt, key.pem, openssl.cnf
+  * cert.crt, key.pem, openssl.cfg
 
      Files required for HTTPS server. They are NOT bundled to server.bundle.js
 
