@@ -31,7 +31,7 @@ class App extends React.Component {
 
   @observable selectedPage = -1;
 
-  handlePageSelect = (_, index) => {
+  handlePageSelect = (index) => {
     const previousPage = this.selectedPage;
     this.selectedPage = index;
 
@@ -39,6 +39,7 @@ class App extends React.Component {
       this.props.history.push(App.pages[this.selectedPage]);
     }
   }
+
   // static propTypes = {
   //   data: PropTypes.shape({
   //     loading: PropTypes.bool,
@@ -70,15 +71,13 @@ class App extends React.Component {
       return <Redirect to="/marks" />;
     }
 
-    if (this.selectedPage === -1) {
-      const pageNumber = App.pages.indexOf(this.props.location.pathname);
-      this.selectedPage = pageNumber !== -1 ? pageNumber : 0;
-    }
+    const pageNumber = App.pages.indexOf(this.props.location.pathname);
+    const currPage = pageNumber !== -1 ? pageNumber : 0;
 
     return (
       <MuiThemeProvider theme={theme}>
         <div>
-          <Navigation selectedPage={this.selectedPage} handlePageSelect={this.handlePageSelect} />
+          <Navigation selectedPage={currPage} handlePageSelect={this.handlePageSelect} />
 
           <Switch>
             <Route path="/marks" component={Marks} />

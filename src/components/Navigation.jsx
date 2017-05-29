@@ -28,7 +28,11 @@ class Navigation extends React.Component {
     return (
       <Paper className={classes.root}>
         <div className={classes.appBar}>
-          <Tabs index={this.props.selectedPage} onChange={this.props.handlePageSelect} fullWidth>
+          <Tabs
+            index={this.props.selectedPage}
+            onChange={(_, index) => this.props.handlePageSelect(index)}
+            fullWidth
+          >
             <Tab label="Marks" />
             <Tab label="Timetable" />
             <Tab label="Resources" />
