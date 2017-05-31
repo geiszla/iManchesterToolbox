@@ -7,13 +7,19 @@ import React from 'react';
 
 const styleSheet = createStyleSheet('Home', theme => ({
   root: {
-    width: '400px',
-    margin: '30px auto'
+    width: 400,
+    margin: '30px auto',
+    '@media (max-width: 500px)': {
+      width: '100%'
+    },
+    '@media (min-width: 960px)': {
+      width: 500
+    }
   },
   appBar: {
     backgroundColor: theme.palette.primary[500],
-    color: theme.palette.getContrastText(theme.palette.primary[500]),
-  },
+    color: theme.palette.getContrastText(theme.palette.primary[500])
+  }
 }));
 
 class Navigation extends React.Component {
@@ -32,6 +38,7 @@ class Navigation extends React.Component {
             index={this.props.selectedPage}
             onChange={(_, index) => this.props.handlePageSelect(index)}
             fullWidth
+            centered
           >
             <Tab label="Marks" />
             <Tab label="Timetable" />
