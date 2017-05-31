@@ -9,10 +9,11 @@ import ReactDOM from 'react-dom';
 const client = new ApolloClient({
   networkInterface: createNetworkInterface({
     uri: 'https://localhost/api'
-  }),
+  })
 });
 
 window.addEventListener('load', () => {
+  client.initialState = window.__APOLLO_STATE__;
   ReactDOM.render(
     <ApolloProvider client={client}>
       <BrowserRouter>

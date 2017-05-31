@@ -1,4 +1,4 @@
-import { GraphQLNonNull, GraphQLObjectType, GraphQLSchema, GraphQLString } from 'graphql';
+import { GraphQLBoolean, GraphQLNonNull, GraphQLObjectType, GraphQLSchema, GraphQLString } from 'graphql';
 
 const userType = new GraphQLObjectType({
   name: 'User',
@@ -13,18 +13,9 @@ const userType = new GraphQLObjectType({
 const queryType = new GraphQLObjectType({
   name: 'Query',
   fields: {
-    viewer: {
-      type: GraphQLString,
-      resolve: () => 'Username'
-    },
-    viewerData: {
-      type: userType,
-      args: {
-        username: { type: new GraphQLNonNull(GraphQLString) },
-        email: { type: new GraphQLNonNull(GraphQLString) },
-        password: { type: new GraphQLNonNull(GraphQLString) }
-      },
-      resolve: (root, { username, email, password }) => ({ username, email, password })
+    isLoggedIn: {
+      type: GraphQLBoolean,
+      resolve: () => true
     }
   }
 });

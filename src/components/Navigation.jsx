@@ -8,7 +8,7 @@ import React from 'react';
 const styleSheet = createStyleSheet('Home', theme => ({
   root: {
     width: '400px',
-    margin: '30px auto',
+    margin: '30px auto'
   },
   appBar: {
     backgroundColor: theme.palette.primary[500],
@@ -44,7 +44,10 @@ class Navigation extends React.Component {
 }
 
 Navigation.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.shape({
+    appBar: PropTypes.string.isRequired,
+    root: PropTypes.string.isRequired
+  }).isRequired,
   selectedPage: PropTypes.number.isRequired,
   handlePageSelect: PropTypes.func.isRequired
 };

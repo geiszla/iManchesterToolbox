@@ -10,7 +10,8 @@ module.exports = {
   }],
   plugins: [
     babel({
-      exclude: 'node_modules/**'
+      exclude: 'node_modules/**',
+      sourceMaps: false
     }),
     nodeResolve({
       jsnext: true,
@@ -22,7 +23,8 @@ module.exports = {
         'mobx-react': ['observer'],
         'react-apollo': ['ApolloProvider', 'graphql'],
         'material-ui/Tabs': ['Tab']
-      }
+      },
+      sourceMap: false
     })
   ],
   onwarn: (warning) => {
