@@ -21,6 +21,7 @@ class Toolbox extends React.Component {
   }
 
   render() {
+    // If page not found redirect to "/marks"
     const pathname = this.props.location.pathname;
     if (pathname === '/' || !Toolbox.pages.includes(pathname)) {
       return <Redirect to="/marks" />;
@@ -31,19 +32,18 @@ class Toolbox extends React.Component {
     this.selectedPage = pageNumber !== -1 ? pageNumber : 0;
 
     return (
-      <div>
-        <DocumentTitle title={`${Toolbox.pageNames[this.selectedPage]} | iManchester Toolbox`}>
-          <div>
-            <Navigation selectedPage={this.selectedPage} handlePageSelect={this.handlePageSelect} />
+      <DocumentTitle title={`${Toolbox.pageNames[this.selectedPage]} | iManchester Toolbox`}>
+        <div>
+          <Navigation selectedPage={this.selectedPage} handlePageSelect={this.handlePageSelect} />
 
-            <Switch>
-              <Route path="/marks" component={Marks} />
-              <Route path="/timetable" component={Timetable} />
-              <Route epath="/resources" component={Resources} />
-            </Switch>
-          </div>
-        </DocumentTitle>
-      </div>
+          <Switch>
+            <Route path="/marks" component={Marks} />
+            <Route path="/timetable" component={Timetable} />
+            <Route epath="/resources" component={Resources} />
+          </Switch>
+          <button onClick={() => this.props.handleLogout()}>Logout</button>
+        </div>
+      </DocumentTitle>
     );
   }
 }
@@ -52,6 +52,7 @@ Toolbox.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired
   }).isRequired,
+  handleLogout: PropTypes.func.isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired
   }).isRequired

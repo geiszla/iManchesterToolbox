@@ -1,16 +1,13 @@
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 import { Redirect, Route, Switch, withRouter } from 'react-router-dom';
 import { blue, pink, white } from 'material-ui/styles/colors';
+import { compose, gql, graphql } from 'react-apollo';
 
 import Login from './Login.jsx';
 import PropTypes from 'prop-types';
 import React from 'react';
 import Toolbox from './Toolbox.jsx';
 import createPalette from 'material-ui/styles/palette';
-import gql from 'graphql-tag';
-import { graphql } from 'react-apollo';
-
-// import propType from 'graphql-anywhere';
 
 const theme = createMuiTheme({
   palette: createPalette({
@@ -25,29 +22,64 @@ const theme = createMuiTheme({
 const IsLoggedInQuery = gql`
   query IsLoggedInQuery {
     isLoggedIn
-  }`;
+  }
+`;
 
-function App(props) {
-  // Redirection
-  const isLoggedIn = props.data.isLoggedIn;
-  const pathname = props.location.pathname;
+const LoginUserMutation = gql`
+  mutation LoginUserMutation {
+    loginUser
+  }
+`;
 
-  if (!isLoggedIn && pathname !== '/login') {
-    return <Redirect to="/login" />;
+const LogoutUserMutation = gql`
+  mutation LogoutUserMutation {
+    logoutUser
+  }
+`;
+
+class App extends React.Component {
+  handleLogin = () => {
+    this.props.loginMutate();
   }
 
-  if (isLoggedIn === true && pathname === '/login') {
-    return <Redirect to="/marks" />;
+  handleLogout = () => {
+    this.props.logoutMutate();
   }
 
-  return (
-    <MuiThemeProvider theme={theme}>
-      <Switch>
-        <Route exact path="/login" component={Login} />
-        <Route path="/" component={Toolbox} />
-      </Switch>
-    </MuiThemeProvider>
-  );
+  render() {
+    const isLoggedIn = this.props.data.isLoggedIn;
+    const pathname = this.props.location.pathname;
+
+    if (!isLoggedIn && pathname !== '/login') {
+      return <Redirect to="/login" />;
+    }
+
+    if (isLoggedIn === true && pathname === '/login') {
+      return <Redirect to="/marks" />;
+    }
+
+    return (
+      <MuiThemeProvider theme={theme}>
+        <Switch>
+          <Route
+            path="/login"
+            render={defaultProps => (<Login
+              handleLogin={() => this.handleLogin()}
+              {...defaultProps}
+            />)}
+          />
+          <Route
+            path="/"
+            render={defaultProps => (<Toolbox
+              handleLogout={() => this.handleLogout()}
+              {...defaultProps}
+            />)}
+          />
+          <Route path="/" component={Toolbox} />
+        </Switch>
+      </MuiThemeProvider>
+    );
+  }
 }
 
 App.propTypes = {
@@ -58,7 +90,24 @@ App.propTypes = {
   }).isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired
-  }).isRequired
+  }).isRequired,
+  loginMutate: PropTypes.func.isRequired,
+  logoutMutate: PropTypes.func.isRequired
 };
 
-export default graphql(IsLoggedInQuery)(withRouter(App));
+const loginMutationOptions = {
+  refetchQueries: ['IsLoggedInQuery']
+};
+
+export default compose(
+  graphql(IsLoggedInQuery),
+  graphql(LoginUserMutation, {
+    name: 'loginMutate',
+    options: loginMutationOptions
+  }),
+  graphql(LogoutUserMutation, {
+    name: 'logoutMutate',
+    options: loginMutationOptions
+  }),
+  withRouter
+)(App);

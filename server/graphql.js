@@ -15,7 +15,7 @@ const queryType = new GraphQLObjectType({
   fields: {
     isLoggedIn: {
       type: GraphQLBoolean,
-      resolve: () => true
+      resolve: ({ session }) => session.isLoggedIn === true
     }
   }
 });
@@ -24,6 +24,20 @@ const queryType = new GraphQLObjectType({
 const mutationType = new GraphQLObjectType({
   name: 'Mutation',
   fields: {
+    loginUser: {
+      type: GraphQLBoolean,
+      resolve: ({ session }) => {
+        session.isLoggedIn = true;
+        return session.isLoggedIn;
+      }
+    },
+    logoutUser: {
+      type: GraphQLBoolean,
+      resolve: ({ session }) => {
+        session.isLoggedIn = false;
+        return session.isLoggedIn;
+      }
+    },
     addUserAndLogIn: {
       type: userType,
       args: {

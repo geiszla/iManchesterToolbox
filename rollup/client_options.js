@@ -21,8 +21,9 @@ module.exports = {
       namedExports: {
         'material-ui/styles': ['MuiThemeProvider', 'createMuiTheme', 'createStyleSheet', 'withStyles'],
         'mobx-react': ['observer'],
-        'react-apollo': ['ApolloProvider', 'graphql'],
-        'material-ui/Tabs': ['Tab']
+        'react-apollo': ['ApolloProvider', 'compose', 'graphql', 'gql'],
+        'material-ui/Tabs': ['Tab'],
+        'material-ui/Card': ['CardActions', 'CardContent']
       },
       sourceMap: false
     })

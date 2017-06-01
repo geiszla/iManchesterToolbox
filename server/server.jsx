@@ -60,8 +60,6 @@ app.use('/api',
 app.get('*', (req, res) => {
   // const isLoggedIn = req.session.isLoggedIn === true;
 
-  console.log();
-
   const headers = Object.assign({}, req.headers, {
     accept: 'application/json'
   });

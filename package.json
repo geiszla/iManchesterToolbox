@@ -19,8 +19,6 @@
     "express-graphql": "^0.6.6",
     "express-session": "^1.15.3",
     "graphql": "^0.10.1",
-    "graphql-anywhere": "^3.0.1",
-    "graphql-tag": "^2.2.1",
     "immutable": "^3.8.1",
     "material-ui": "next",
     "mobx": "^3.1.11",

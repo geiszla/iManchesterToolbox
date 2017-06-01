@@ -8,7 +8,10 @@ import ReactDOM from 'react-dom';
 
 const client = new ApolloClient({
   networkInterface: createNetworkInterface({
-    uri: 'https://localhost/api'
+    uri: 'https://localhost/api',
+    opts: {
+      credentials: 'same-origin'
+    }
   })
 });
 
