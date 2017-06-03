@@ -19,11 +19,12 @@ module.exports = {
     }),
     commonjs({
       namedExports: {
+        'material-ui/Card': ['CardActions', 'CardContent'],
         'material-ui/styles': ['MuiThemeProvider', 'createMuiTheme', 'createStyleSheet', 'withStyles'],
-        'mobx-react': ['observer'],
-        'react-apollo': ['ApolloProvider', 'compose', 'graphql', 'gql'],
         'material-ui/Tabs': ['Tab'],
-        'material-ui/Card': ['CardActions', 'CardContent']
+        'mobx-react': ['observer'],
+        'react-dom': ['render'],
+        'react-apollo': ['ApolloProvider', 'ApolloClient', 'compose', 'graphql', 'gql']
       },
       sourceMap: false
     })

@@ -1,8 +1,10 @@
-import { ApolloClient, ApolloProvider, createNetworkInterface, renderToStringWithData } from 'react-apollo';
+import { ApolloProvider, renderToStringWithData } from 'react-apollo';
 
 import App from '../src/components/App.jsx';
+import { MuiThemeProvider } from 'material-ui/styles';
 import React from 'react';
 import { StaticRouter } from 'react-router-dom';
+import apolloClient from '../src/apollo_client.js';
 import bodyParser from 'body-parser';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
@@ -15,6 +17,7 @@ import graphQLSchema from './graphql';
 import graphqlHTTP from 'express-graphql';
 import http from 'http';
 import https from 'https';
+import muiTheme from '../src/theme.js';
 import path from 'path';
 import session from 'express-session';
 
@@ -63,27 +66,22 @@ app.get('*', (req, res) => {
   const headers = Object.assign({}, req.headers, {
     accept: 'application/json'
   });
-  const client = new ApolloClient({
-    ssrMode: true,
-    networkInterface: createNetworkInterface({
-      uri: 'https://localhost/api',
-      opts: {
-        credentials: 'same-origin',
-        headers
-      }
-    })
-  });
+  const client = apolloClient(true, headers);
+
+  const { styleManager, theme } = MuiThemeProvider.createDefaultContext({ theme: muiTheme });
 
   const context = {};
-  const appHtml = (
-    <ApolloProvider client={client}>
-      <StaticRouter location={req.url} context={context}>
-        <App />
-      </StaticRouter>
-    </ApolloProvider>
+  const reactApp = (
+    <MuiThemeProvider styleManager={styleManager} theme={theme}>
+      <ApolloProvider client={client}>
+        <StaticRouter location={req.url} context={context}>
+          <App />
+        </StaticRouter>
+      </ApolloProvider>
+    </MuiThemeProvider>
   );
 
-  renderPage(appHtml, client).then((html) => {
+  renderPage(reactApp, client, styleManager).then((html) => {
     if (context.url) {
       res.writeHead(301, {
         Location: context.url
@@ -97,9 +95,11 @@ app.get('*', (req, res) => {
 
 global.fetch = fetch;
 
-function renderPage(reactApp, client) {
+function renderPage(reactApp, client, styleManager) {
   return renderToStringWithData(reactApp).then((content) => {
     const initialState = { apollo: client.getInitialState() };
+    const css = styleManager.sheetsToString();
+
     return `
       <!DOCTYPE html>
       <html lang="en">
@@ -117,6 +117,7 @@ function renderPage(reactApp, client) {
         </head>
         <body>
           <div id="root">${content}</div>
+          <style id="jss-server-side">${css}</style>
         </body>
       </html>
     `;

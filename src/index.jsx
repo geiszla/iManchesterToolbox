@@ -1,26 +1,22 @@
-import ApolloClient, { createNetworkInterface } from 'apollo-client';
-
 import { ApolloProvider } from 'react-apollo';
 import App from './components/App.jsx';
 import { BrowserRouter } from 'react-router-dom';
+import { MuiThemeProvider } from 'material-ui/styles';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import apolloClient from './apollo_client.js';
+import { render } from 'react-dom';
+import theme from './theme.js';
 
-const client = new ApolloClient({
-  networkInterface: createNetworkInterface({
-    uri: 'https://localhost/api',
-    opts: {
-      credentials: 'same-origin'
-    }
-  })
-});
+const client = apolloClient(false);
 
 window.addEventListener('load', () => {
   client.initialState = window.__APOLLO_STATE__;
-  ReactDOM.render(
+  render(
     <ApolloProvider client={client}>
       <BrowserRouter>
-        <App />
+        <MuiThemeProvider theme={theme}>
+          <App />
+        </MuiThemeProvider>
       </BrowserRouter>
     </ApolloProvider>,
     document.getElementById('root')

@@ -1,23 +1,10 @@
-import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 import { Redirect, Route, Switch, withRouter } from 'react-router-dom';
-import { blue, pink, white } from 'material-ui/styles/colors';
 import { compose, gql, graphql } from 'react-apollo';
 
 import Login from './Login.jsx';
 import PropTypes from 'prop-types';
 import React from 'react';
 import Toolbox from './Toolbox.jsx';
-import createPalette from 'material-ui/styles/palette';
-
-const theme = createMuiTheme({
-  palette: createPalette({
-    primary: blue,
-    accent: {
-      ...pink,
-      A200: white
-    }
-  })
-});
 
 const IsLoggedInQuery = gql`
   query IsLoggedInQuery {
@@ -38,6 +25,13 @@ const LogoutUserMutation = gql`
 `;
 
 class App extends React.Component {
+  componentDidMount = () => {
+    const jssStyles = document.getElementById('jss-server-side');
+    if (jssStyles && jssStyles.parentNode) {
+      jssStyles.parentNode.removeChild(jssStyles);
+    }
+  }
+
   handleLogin = () => {
     this.props.loginMutate();
   }
@@ -59,25 +53,23 @@ class App extends React.Component {
     }
 
     return (
-      <MuiThemeProvider theme={theme}>
-        <Switch>
-          <Route
-            path="/login"
-            render={defaultProps => (<Login
-              handleLogin={() => this.handleLogin()}
-              {...defaultProps}
-            />)}
-          />
-          <Route
-            path="/"
-            render={defaultProps => (<Toolbox
-              handleLogout={() => this.handleLogout()}
-              {...defaultProps}
-            />)}
-          />
-          <Route path="/" component={Toolbox} />
-        </Switch>
-      </MuiThemeProvider>
+      <Switch>
+        <Route
+          path="/login"
+          render={defaultProps => (<Login
+            handleLogin={() => this.handleLogin()}
+            {...defaultProps}
+          />)}
+        />
+        <Route
+          path="/"
+          render={defaultProps => (<Toolbox
+            handleLogout={() => this.handleLogout()}
+            {...defaultProps}
+          />)}
+        />
+        <Route path="/" component={Toolbox} />
+      </Switch>
     );
   }
 }
