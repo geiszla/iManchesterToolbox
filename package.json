@@ -2,10 +2,13 @@
   "name": "imanchestertoolbox",
   "version": "0.0.1",
   "main": "server.bundle.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/geiszla/iManchesterToolbox.git"
+  },
   "scripts": {
-    "start": "nodemon -e js,jsx --watch server --watch rollup/server.config.js --watch rollup/build_options.js --watch src --exec yarn run start:server",
-    "start:server": "rollup -c rollup/server.config.js && node server.bundle.js",
-    "production": "rollup -c rollup/client_prod.config.js && node server.bundle.js",
+    "start": "rollup -c rollup/client_prod.config.js && node server.bundle.js",
+    "server": "nodemon -e js,jsx --watch server --watch rollup/server.config.js --watch rollup/build_options.js --watch src --exec yarn start",
     "edit": "rollup -c rollup/client_dev.config.js -w"
   },
   "license": "MIT",
@@ -26,7 +29,6 @@
     "mongoose": "^4.10.4",
     "morgan": "^1.8.2",
     "node-fetch": "^1.7.0",
-    "prompt": "^1.0.0",
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
     "react-apollo": "1.2.0",

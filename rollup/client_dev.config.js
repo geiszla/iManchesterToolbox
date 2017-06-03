@@ -1,5 +1,5 @@
-const replace = require('rollup-plugin-replace');
 const options = require('./client_options');
+const replace = require('rollup-plugin-replace');
 
 export default (function setEvironment() {
   options.plugins.push(
@@ -8,7 +8,6 @@ export default (function setEvironment() {
       '# sourceMappingURL': ' '
     })
   );
-  // options.sourceMap = false;
 
   return options;
 }());

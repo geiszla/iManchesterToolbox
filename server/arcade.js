@@ -166,7 +166,3 @@ const subjectNames = {
   162: 'Object Oriented Programming with Java 2',
   181: 'Fundamentals of Distributed Systems'
 };
-
-/* TO-DO
-  - Store data from final marks table inside parent subject
-*/

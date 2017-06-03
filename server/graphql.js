@@ -1,13 +1,14 @@
-import { GraphQLBoolean, GraphQLNonNull, GraphQLObjectType, GraphQLSchema, GraphQLString } from 'graphql';
+import { GraphQLBoolean, GraphQLObjectType, GraphQLSchema } from 'graphql';
+// import { GraphQLNonNull, GraphQLString } from 'graphql';
 
-const userType = new GraphQLObjectType({
-  name: 'User',
-  fields: {
-    username: { type: new GraphQLNonNull(GraphQLString) },
-    email: { type: new GraphQLNonNull(GraphQLString) },
-    password: { type: new GraphQLNonNull(GraphQLString) }
-  }
-});
+// const userType = new GraphQLObjectType({
+//   name: 'User',
+//   fields: {
+//     username: { type: new GraphQLNonNull(GraphQLString) },
+//     email: { type: new GraphQLNonNull(GraphQLString) },
+//     password: { type: new GraphQLNonNull(GraphQLString) }
+//   }
+// });
 
 // Queries
 const queryType = new GraphQLObjectType({
@@ -37,16 +38,16 @@ const mutationType = new GraphQLObjectType({
         session.isLoggedIn = false;
         return session.isLoggedIn;
       }
-    },
-    addUserAndLogIn: {
-      type: userType,
-      args: {
-        username: { type: new GraphQLNonNull(GraphQLString) },
-        email: { type: new GraphQLNonNull(GraphQLString) },
-        password: { type: new GraphQLNonNull(GraphQLString) }
-      },
-      resolve: (root, { username, email, password }) => ({ username, email, password })
     }
+    // addUserAndLogIn: {
+    //   type: userType,
+    //   args: {
+    //     username: { type: new GraphQLNonNull(GraphQLString) },
+    //     email: { type: new GraphQLNonNull(GraphQLString) },
+    //     password: { type: new GraphQLNonNull(GraphQLString) }
+    //   },
+    //   resolve: (root, { username, email, password }) => ({ username, email, password })
+    // }
   }
 });
 

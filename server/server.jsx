@@ -23,7 +23,6 @@ import session from 'express-session';
 
 const morgan = require('morgan');
 
-
 // HTTP Webserver
 const unsecureApp = express();
 
@@ -61,8 +60,7 @@ app.use('/api',
 );
 
 app.get('*', (req, res) => {
-  // const isLoggedIn = req.session.isLoggedIn === true;
-
+  console.log();
   const headers = Object.assign({}, req.headers, {
     accept: 'application/json'
   });
@@ -125,13 +123,13 @@ function renderPage(reactApp, client, styleManager) {
 }
 
 const options = {
-  key: fs.readFileSync(path.join(__dirname, 'server/key.pem')),
-  cert: fs.readFileSync(path.join(__dirname, 'server/cert.crt')),
+  key: fs.readFileSync(path.join(__dirname, 'server/ssl/key.pem')),
+  cert: fs.readFileSync(path.join(__dirname, 'server/ssl/cert.crt')),
   passphrase: 'iManT'
 };
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 https.createServer(options, app).listen(443);
-console.log('Server is running on port 8080.');
+console.log('Server is started.');
 
 // getMarks();
 // prompt.start();

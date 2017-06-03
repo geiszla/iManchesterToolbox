@@ -10,8 +10,7 @@ module.exports = {
   }],
   plugins: [
     babel({
-      exclude: 'node_modules/**',
-      sourceMaps: false
+      exclude: 'node_modules/**'
     }),
     nodeResolve({
       jsnext: true,

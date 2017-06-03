@@ -23,7 +23,6 @@ const styleSheet = createStyleSheet('Home', theme => ({
 }));
 
 class Navigation extends React.Component {
-
   handleTabChange = (_, index) => {
     this.props.selectedPage = index;
   }
@@ -55,8 +54,8 @@ Navigation.propTypes = {
     appBar: PropTypes.string.isRequired,
     root: PropTypes.string.isRequired
   }).isRequired,
-  selectedPage: PropTypes.number.isRequired,
-  handlePageSelect: PropTypes.func.isRequired
+  handlePageSelect: PropTypes.func.isRequired,
+  selectedPage: PropTypes.number.isRequired
 };
 
 export default withStyles(styleSheet)(Navigation);

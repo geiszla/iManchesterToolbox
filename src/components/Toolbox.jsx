@@ -49,10 +49,10 @@ class Toolbox extends React.Component {
 }
 
 Toolbox.propTypes = {
+  handleLogout: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired
   }).isRequired,
-  handleLogout: PropTypes.func.isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired
   }).isRequired

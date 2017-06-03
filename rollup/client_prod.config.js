@@ -1,6 +1,6 @@
+const options = require('./client_options');
 const postReplace = require('rollup-plugin-replace');
 const replace = require('rollup-plugin-post-replace');
-const options = require('./client_options');
 const uglify = require('rollup-plugin-uglify');
 
 export default (function setEvironment() {
