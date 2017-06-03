@@ -7,8 +7,9 @@
     "url": "https://github.com/geiszla/iManchesterToolbox.git"
   },
   "scripts": {
-    "start": "rollup -c rollup/client_prod.config.js && node server.bundle.js",
-    "server": "nodemon -e js,jsx --watch server --watch rollup/server.config.js --watch rollup/build_options.js --watch src --exec yarn start",
+    "start": "rollup -c rollup/client_prod.config.js && npm run start:server",
+    "start:server": "rollup -c rollup/server.config.js && node server.bundle.js",
+    "server": "nodemon -e js,jsx --watch server --watch rollup/server.config.js --watch rollup/build_options.js --watch src --exec yarn start:server",
     "edit": "rollup -c rollup/client_dev.config.js -w"
   },
   "license": "MIT",
