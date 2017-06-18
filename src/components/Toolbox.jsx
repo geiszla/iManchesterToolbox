@@ -32,7 +32,7 @@ class Toolbox extends React.Component {
     this.selectedPage = pageNumber !== -1 ? pageNumber : 0;
 
     return (
-      <DocumentTitle title={`${Toolbox.pageNames[this.selectedPage]} | iManchester Toolbox`}>
+      <DocumentTitle title={Toolbox.pageNames[this.selectedPage]}>
         <div>
           <Navigation selectedPage={this.selectedPage} handlePageSelect={this.handlePageSelect} />
 

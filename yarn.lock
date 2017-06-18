@@ -2221,7 +2221,7 @@ magic-string@^0.19.0:
   dependencies:
     vlq "^0.2.1"
 
-material-ui@next:
+material-ui@1.0.0-alpha.15:
   version "1.0.0-alpha.15"
   resolved "https://registry.yarnpkg.com/material-ui/-/material-ui-1.0.0-alpha.15.tgz#afc6ddcab8d2497dd9826c68fddd8c6008cd9a78"
   dependencies:

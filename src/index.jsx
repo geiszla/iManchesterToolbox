@@ -11,6 +11,7 @@ const client = apolloClient(false);
 
 window.addEventListener('load', () => {
   client.initialState = window.__APOLLO_STATE__;
+
   render(
     <ApolloProvider client={client}>
       <BrowserRouter>

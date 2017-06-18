@@ -13,7 +13,7 @@ const styleSheet = createStyleSheet('SimpleMediaCard', {
   card: {
     maxWidth: 345,
     margin: 'auto',
-    marginTop: 250
+    marginTop: '25%'
   },
   input: {
     margin: '20px 0 0 35px'

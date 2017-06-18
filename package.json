@@ -7,10 +7,11 @@
     "url": "https://github.com/geiszla/iManchesterToolbox.git"
   },
   "scripts": {
-    "start": "rollup -c rollup/client_prod.config.js && npm run start:server",
-    "start:server": "rollup -c rollup/server.config.js && node server.bundle.js",
+    "prestart": "rollup -c rollup/client_prod.config.js && rollup -c rollup/server.config.js",
+    "start": "node server.bundle.js",
     "server": "nodemon -e js,jsx --watch server --watch rollup/server.config.js --watch rollup/build_options.js --watch src --exec yarn start:server",
-    "edit": "rollup -c rollup/client_dev.config.js -w"
+    "start:server": "rollup -c rollup/server.config.js && node server.bundle.js",
+    "client": "rollup -c rollup/client_dev.config.js -w"
   },
   "license": "MIT",
   "dependencies": {
@@ -24,7 +25,7 @@
     "express-session": "^1.15.3",
     "graphql": "^0.10.1",
     "immutable": "^3.8.1",
-    "material-ui": "next",
+    "material-ui": "1.0.0-alpha.15",
     "mobx": "^3.1.11",
     "mobx-react": "^4.2.1",
     "mongoose": "^4.10.4",

@@ -2,17 +2,16 @@ const Promise = require('bluebird');
 const fs = Promise.promisifyAll(require('fs'));
 const childProcess = require('child_process');
 
-const ignoredDependencies = ['material-ui', 'react-apollo'];
+const ignoredDependencies = ['material-ui', 'react-apollo', 'eslint'];
 getDependencies().then(dependencies => upgrade(dependencies))
   .then(dependencies => compareDependencies(dependencies)).catch(err => console.log(err));
 
 function getDependencies() {
   return fs.readFileAsync('./package.json').then((data) => {
-    const dependencies = JSON.parse(data).dependencies;
-    const devDependencies = JSON.parse(data).devDependencies;
+    const packageJSON = JSON.parse(data);
 
-    return Object.entries(dependencies)
-      .concat(Object.entries(devDependencies))
+    return Object.entries(packageJSON.dependencies)
+      .concat(Object.entries(packageJSON.devDependencies))
       .filter(entry => ignoredDependencies.indexOf(entry[0]) === -1);
   });
 }

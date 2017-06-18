@@ -103,15 +103,15 @@ function renderPage(reactApp, client, styleManager) {
       <html lang="en">
         <head>
           <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width">
           <title>iManchester Toolbox</title>
 
-          <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
-          <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-          rel="stylesheet">
-          <link rel="stylesheet" type="text/css" href="styles.css">
-
-          <script src="bundle.js"></script>
           <script>window.__APOLLO_STATE__ = ${JSON.stringify(initialState)};</script>
+
+          <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+          <link rel="stylesheet" type="text/css" href="styles.css">
+          
+          <script src="bundle.js"></script>
         </head>
         <body>
           <div id="root">${content}</div>

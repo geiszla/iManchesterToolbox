@@ -16,7 +16,7 @@ A web application based on the React framework developed for The University of M
 6. Enter `yarn install` to install all dependencies of the project.
 
 ### For production
-If you install the server for production use (i.e. you don't want to edit the webapp) open a new terminal, navigate to the project files and enter `yarn run production`. Then jump to "[Visit website](#visit-the-website)" section.
+If you install the server for production use (i.e. you don't want to edit the webapp) open a new terminal, navigate to the project files and enter `yarn start`. Then jump to "[Visit website](#visit-the-website)" section.
 
 ### Set up development environment
 #### Install LivePage Chrome extension (optional)
@@ -57,11 +57,11 @@ Adds React debugging tools to the Chrome Developer Tools.
 #### Start server
 1. Navigate to the project files using a command line utility.
 2. Enter `npm install -g rollup nodemon` to install these node utilities globally.
-3. Enter `yarn start` to start the server.
+3. Enter `yarn run server` to start the server.
 
 #### Start editing
 1. Navigate to the project files using a command line utility.
-2. Enter `yarn run edit` to start monitoring the changes in code and automatically bundle the application.
+2. Enter `yarn run client` to start monitoring the changes in code and automatically bundle the application.
 3. Before every git push, run ESLint to fix syntactic and semantic errors in JavaScript files (may have to run the command multiple times to fix all issues).
 4. Optionally turn on LivePage extension by clicking on its icon in the chrome extenstion bar (see install instructions above).
 
@@ -72,11 +72,11 @@ See setup instructions [above](#install-visual-studio-code-optional).
 1. Open project folder inside Visual Studio Code by clicking File > "Open Folder..." or by right clicking on the folder in Windows Explorer and clicking "Open with Code".
 2. If terminal is not open in the bottom of the text editor pane open it by selecting View > "Integrated Terminal" menu option.
 3. Enter `npm install -g rollup nodemon` to install these node utilities globally.
-4. In the terminal enter `yarn start` to start the server.
+4. In the terminal enter `yarn run client` to start the server.
 
 #### Start editing
 1. In Visual Studio Code click on the "+" icon in the terminal pane to open a new terminal.
-2. Enter `yarn run edit` to start monitoring the changes in code and automatically bundle the application.
+2. Enter `yarn run client` to start monitoring the changes in code and automatically bundle the application.
 3. Before every git push use the previously set up key shortcut to lint the current file and fix syntactic and semantic errors in JavaScript files (may have to run the command multiple times to fix all issues).
 4. Fix other issues, which couldn't be automatically solved, reported by the previous command.
 5. Repeat linting with all modified files.
@@ -96,7 +96,7 @@ Open a web browser and navigate to "[https://localhost/](https://localhost/)" to
 
   * client_dev.config.js and client_prod.config.js
 
-     Configuration options for generating "www/bundle.js" - by translating and packing the react elements together. If `yarn run edit` command is used it runs every time the code changes updating the bundle.
+     Configuration options for generating "www/bundle.js" - by translating and packing the react elements together. If `yarn run client` command is used it runs every time the code changes updating the bundle.
 
   * client_options.js
 
@@ -180,7 +180,7 @@ Open a web browser and navigate to "[https://localhost/](https://localhost/)" to
 
 * server.bundle.js
 
-   The generated server file. Runs first when the server is started (by `yarn start` command).
+   The generated server file. Runs first when the server is started.
 
 * upgrade.js
 
