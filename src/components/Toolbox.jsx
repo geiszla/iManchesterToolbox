@@ -1,4 +1,5 @@
 import { Redirect, Route, Switch, withRouter } from 'react-router-dom';
+import { createStyleSheet, withStyles } from 'material-ui/styles';
 
 import DocumentTitle from 'react-document-title';
 import Marks from './Marks.jsx';
@@ -7,6 +8,14 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Resources from './Resources.jsx';
 import Timetable from './Timetable.jsx';
+
+const styleSheet = createStyleSheet('Toolbox', {
+  container: {
+    margin: '50px auto',
+    padding: '0 25px',
+    maxWidth: '972px'
+  }
+});
 
 class Toolbox extends React.Component {
   static pages = ['/marks', '/timetable', '/resources'];
@@ -31,16 +40,23 @@ class Toolbox extends React.Component {
     const pageNumber = Toolbox.pages.indexOf(this.props.location.pathname);
     this.selectedPage = pageNumber !== -1 ? pageNumber : 0;
 
+    const classes = this.props.classes;
+
     return (
       <DocumentTitle title={Toolbox.pageNames[this.selectedPage]}>
         <div>
-          <Navigation selectedPage={this.selectedPage} handlePageSelect={this.handlePageSelect} />
+          <Navigation
+            selectedPage={this.selectedPage}
+            handlePageSelect={() => this.handlePageSelect()}
+          />
 
-          <Switch>
-            <Route path="/marks" component={Marks} />
-            <Route path="/timetable" component={Timetable} />
-            <Route epath="/resources" component={Resources} />
-          </Switch>
+          <div className={classes.container}>
+            <Switch>
+              <Route path="/marks" component={Marks} />
+              <Route path="/timetable" component={Timetable} />
+              <Route epath="/resources" component={Resources} />
+            </Switch>
+          </div>
           <button onClick={() => this.props.handleLogout()}>Logout</button>
         </div>
       </DocumentTitle>
@@ -49,6 +65,9 @@ class Toolbox extends React.Component {
 }
 
 Toolbox.propTypes = {
+  classes: PropTypes.shape({
+    container: PropTypes.string.isRequired
+  }).isRequired,
   handleLogout: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired
@@ -58,4 +77,4 @@ Toolbox.propTypes = {
   }).isRequired
 };
 
-export default withRouter(Toolbox);
+export default withStyles(styleSheet)(withRouter(Toolbox));

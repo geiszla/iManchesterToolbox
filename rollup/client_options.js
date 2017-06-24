@@ -19,6 +19,7 @@ module.exports = {
     commonjs({
       namedExports: {
         'material-ui/Card': ['CardActions', 'CardContent'],
+        'material-ui/Menu': ['MenuItem'],
         'material-ui/styles': ['MuiThemeProvider', 'createMuiTheme', 'createStyleSheet', 'withStyles'],
         'material-ui/Tabs': ['Tab'],
         'mobx-react': ['observer'],

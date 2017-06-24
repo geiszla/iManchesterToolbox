@@ -1,0 +1,20 @@
+fragment SessionCardSession on Session {
+    _id
+    name
+    subjectId
+    semester
+    type
+    isFinal
+    total
+    isInProgress
+    marked
+    sessions {
+        name
+        weighting
+        denominator
+        value
+        isEstimated
+        isExpected
+        isLate
+    }
+}

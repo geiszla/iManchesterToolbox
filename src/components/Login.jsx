@@ -38,7 +38,7 @@ class Login extends React.Component {
             <Input placeholder="Password" className={classes.input} />
           </CardContent>
           <CardActions className={classes.cardActions}>
-            <Button primary onClick={() => this.props.handleLogin()}>Login</Button>
+            <Button onClick={() => this.props.handleLogin()}>Login</Button>
           </CardActions>
         </Card>
       </DocumentTitle>

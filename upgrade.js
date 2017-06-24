@@ -2,7 +2,7 @@ const Promise = require('bluebird');
 const fs = Promise.promisifyAll(require('fs'));
 const childProcess = require('child_process');
 
-const ignoredDependencies = ['material-ui', 'react-apollo', 'eslint'];
+const ignoredDependencies = ['material-ui', 'react-apollo', 'eslint', 'mobx'];
 getDependencies().then(dependencies => upgrade(dependencies))
   .then(dependencies => compareDependencies(dependencies)).catch(err => console.log(err));
 
