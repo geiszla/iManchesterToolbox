@@ -1,7 +1,10 @@
+import { gql, graphql } from 'react-apollo';
+
 import Filter from './Filter.jsx';
 import Immutable from 'immutable';
 import React from 'react';
 import Subject from './Subject.jsx';
+import { filter } from 'graphql-anywhere';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 
@@ -19,6 +22,14 @@ class Marks extends React.Component {
   }
 
   render() {
+    const subjects = this.props.data.getMarks.subjects;
+    const subjectElements = subjects.map(subjectData => (
+      <Subject
+        key={subjectData._id}
+        subject={filter(Subject.fragments.subject, subjectData)}
+      />
+    ));
+
     return (
       <div>
         <Filter
@@ -27,10 +38,23 @@ class Marks extends React.Component {
           setSessionTypes={selected => this.handleSessionSet(selected)}
           setWeightings={selected => this.handleWeightingSet(selected)}
         />
-        <Subject />
+        {subjectElements}
       </div>
     );
   }
 }
 
-export default Marks;
+export const MarksQuery = gql`
+  query Marks {
+    getMarks {
+      number
+      schoolYear
+      subjects {
+        ...SubjectPageSubject
+      }
+    }
+  }
+  ${Subject.fragments.subject}
+`;
+
+export default graphql(MarksQuery)(Marks);

@@ -83,7 +83,11 @@ function parseMarks(inputString, username) {
         _id: tableMatch[1],
         semester: tableMatch[4] ? parseInt(tableMatch[4], 10) : null,
         type: subjectTypes[tableMatch[5]] || null,
-        isFinal: tableMatch[6] === 'fin'
+        isFinal: tableMatch[6] === 'fin',
+        weight: null,
+        total: null,
+        isInProgress: null,
+        marked: null
       };
 
       // Parse rows
@@ -102,6 +106,11 @@ function parseMarks(inputString, username) {
 
         const markValue = !isNaN(markMatch[1]) ? parseFloat(markMatch[1]) : null;
         const isExpected = markMatch[2].includes('E');
+
+        if (names[i] === 'Weight') {
+          currClass.weight = markValue;
+          continue;
+        }
 
         if (names[i] === 'Total') {
           currClass.total = markValue;
@@ -161,11 +170,11 @@ function parseRow(rowTitle, searchString, startIndex) {
 }
 
 const subjectTypes = {
-  L: 'lab',
-  E: 'examples',
-  T: 'test',
-  C: 'clinic',
-  X: 'exam'
+  L: 'Lab',
+  E: 'Examples class',
+  T: 'Test',
+  C: 'Clinic',
+  X: 'Exam'
 };
 
 const subjectNames = {

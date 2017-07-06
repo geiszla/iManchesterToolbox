@@ -47,7 +47,7 @@ class Toolbox extends React.Component {
         <div>
           <Navigation
             selectedPage={this.selectedPage}
-            handlePageSelect={() => this.handlePageSelect()}
+            handlePageSelect={index => this.handlePageSelect(index)}
           />
 
           <div className={classes.container}>

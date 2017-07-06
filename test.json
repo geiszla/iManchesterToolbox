@@ -14,8 +14,9 @@
             {
               "_id": "101L",
               "semester": null,
-              "type": "lab",
+              "type": "Lab",
               "isFinal": false,
+              "weight": null,
               "total": 82.7,
               "isInProgress": true,
               "marked": 59.1,
@@ -106,8 +107,9 @@
             {
               "_id": "101s1C",
               "semester": 1,
-              "type": "clinic",
+              "type": "Clinic",
               "isFinal": false,
+              "weight": null,
               "total": 70,
               "isInProgress": true,
               "marked": 0,
@@ -144,8 +146,9 @@
             {
               "_id": "101s2C",
               "semester": 2,
-              "type": "clinic",
+              "type": "Clinic",
               "isFinal": false,
+              "weight": null,
               "total": 70,
               "isInProgress": true,
               "marked": 0,
@@ -188,8 +191,9 @@
             {
               "_id": "111T",
               "semester": null,
-              "type": "test",
+              "type": "Test",
               "isFinal": false,
+              "weight": null,
               "total": 85,
               "isInProgress": false,
               "marked": 85,
@@ -208,8 +212,9 @@
             {
               "_id": "111s1E",
               "semester": 1,
-              "type": "examples",
+              "type": "Examples class",
               "isFinal": false,
+              "weight": null,
               "total": 90,
               "isInProgress": false,
               "marked": 90,
@@ -309,8 +314,9 @@
             {
               "_id": "111s1Efin",
               "semester": 1,
-              "type": "examples",
+              "type": "Examples class",
               "isFinal": true,
+              "weight": null,
               "total": 90,
               "isInProgress": false,
               "marked": 90,
@@ -338,8 +344,12 @@
             {
               "_id": "111s2E",
               "semester": 2,
-              "type": "examples",
+              "type": "Examples class",
               "isFinal": false,
+              "weight": null,
+              "total": null,
+              "isInProgress": null,
+              "marked": null,
               "sessions": [
                 {
                   "name": "1D",
@@ -436,8 +446,9 @@
             {
               "_id": "111s2Efin",
               "semester": 2,
-              "type": "examples",
+              "type": "Examples class",
               "isFinal": true,
+              "weight": null,
               "total": 70.7,
               "isInProgress": true,
               "marked": 0,
@@ -471,8 +482,9 @@
             {
               "_id": "112E",
               "semester": null,
-              "type": "examples",
+              "type": "Examples class",
               "isFinal": false,
+              "weight": null,
               "total": 47.5,
               "isInProgress": true,
               "marked": 47.5,
@@ -572,8 +584,9 @@
             {
               "_id": "112Efin",
               "semester": null,
-              "type": "examples",
+              "type": "Examples class",
               "isFinal": true,
+              "weight": null,
               "total": 58.7,
               "isInProgress": true,
               "marked": 0,
@@ -607,8 +620,12 @@
             {
               "_id": "121L",
               "semester": null,
-              "type": "lab",
+              "type": "Lab",
               "isFinal": false,
+              "weight": null,
+              "total": null,
+              "isInProgress": null,
+              "marked": null,
               "sessions": [
                 {
                   "name": "1.2aD",
@@ -711,8 +728,9 @@
             {
               "_id": "151L",
               "semester": null,
-              "type": "lab",
+              "type": "Lab",
               "isFinal": false,
+              "weight": null,
               "total": 99,
               "isInProgress": false,
               "marked": 99,
@@ -773,8 +791,9 @@
             {
               "_id": "161L",
               "semester": null,
-              "type": "lab",
+              "type": "Lab",
               "isFinal": false,
+              "weight": 14,
               "total": 97.4,
               "isInProgress": false,
               "marked": 97.4,
@@ -886,15 +905,6 @@
                   "isEstimated": false,
                   "isExpected": false,
                   "isLate": true
-                },
-                {
-                  "name": "Weight",
-                  "weighting": null,
-                  "denominator": null,
-                  "value": 14,
-                  "isEstimated": false,
-                  "isExpected": false,
-                  "isLate": false
                 }
               ]
             }
@@ -907,8 +917,9 @@
             {
               "_id": "162L",
               "semester": null,
-              "type": "lab",
+              "type": "Lab",
               "isFinal": false,
+              "weight": 160,
               "total": 92.4,
               "isInProgress": false,
               "marked": 67.8,
@@ -1038,15 +1049,6 @@
                   "isEstimated": true,
                   "isExpected": false,
                   "isLate": false
-                },
-                {
-                  "name": "Weight",
-                  "weighting": null,
-                  "denominator": null,
-                  "value": 160,
-                  "isEstimated": false,
-                  "isExpected": false,
-                  "isLate": false
                 }
               ]
             }
@@ -1059,8 +1061,9 @@
             {
               "_id": "181L",
               "semester": null,
-              "type": "lab",
+              "type": "Lab",
               "isFinal": false,
+              "weight": null,
               "total": 100,
               "isInProgress": true,
               "marked": 64,
@@ -1123,6 +1126,7 @@
               "semester": null,
               "type": null,
               "isFinal": false,
+              "weight": null,
               "total": 100,
               "isInProgress": false,
               "marked": 100,
@@ -1149,6 +1153,10 @@
               "semester": null,
               "type": null,
               "isFinal": false,
+              "weight": null,
+              "total": null,
+              "isInProgress": null,
+              "marked": null,
               "sessions": [
                 {
                   "name": "0D",

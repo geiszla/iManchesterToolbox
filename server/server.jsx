@@ -131,7 +131,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 https.createServer(options, app).listen(443);
 console.log('Server is started.');
 
-// getMarks();
+// getMarks('mbaxaag2');
 // prompt.start();
 // prompt.get('password', (err, result) => {
 //   if (err) return;
