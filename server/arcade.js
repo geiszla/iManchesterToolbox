@@ -79,10 +79,8 @@ function parseMarks(inputString, username) {
 
     let tableMatch;
     while ((tableMatch = tableRegex.exec(inputString))) {
-      const currSubject = {
+      const currClass = {
         _id: tableMatch[1],
-        name: subjectNames[tableMatch[2]] || null,
-        subjectId: tableMatch[2] || null,
         semester: tableMatch[4] ? parseInt(tableMatch[4], 10) : null,
         type: subjectTypes[tableMatch[5]] || null,
         isFinal: tableMatch[6] === 'fin'
@@ -106,13 +104,13 @@ function parseMarks(inputString, username) {
         const isExpected = markMatch[2].includes('E');
 
         if (names[i] === 'Total') {
-          currSubject.total = markValue;
-          currSubject.isInProgress = isExpected;
+          currClass.total = markValue;
+          currClass.isInProgress = isExpected;
           continue;
         }
 
         if (names[i] === 'Marked') {
-          currSubject.marked = markValue;
+          currClass.marked = markValue;
           continue;
         }
 
@@ -128,9 +126,24 @@ function parseMarks(inputString, username) {
 
         sessions.push(currSession);
       }
-      currSubject.sessions = sessions;
+      currClass.sessions = sessions;
 
-      currYear.subjects.push(currSubject);
+      // Add current class to appropriate subject
+      const currSubjects = currYear.subjects.filter(subject => subject._id === tableMatch[2]);
+      if (currSubjects.length) {
+        currSubjects[0].classes.push(currClass);
+      } else {
+        const currSubject = {
+          _id: tableMatch[2] || null,
+          name: subjectNames[tableMatch[2]] || null,
+          classes: [currClass]
+        };
+
+        if (currSubject._id === null) currSubject._id = currClass._id;
+        if (currSubject.name === null) currSubject.name = currClass._id;
+
+        currYear.subjects.push(currSubject);
+      }
     }
 
     marksData.years.push(currYear);
