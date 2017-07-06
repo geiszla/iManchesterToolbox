@@ -1,20 +1,19 @@
 import Tabs, { Tab } from 'material-ui/Tabs';
 import { createStyleSheet, withStyles } from 'material-ui/styles';
 
+import AppBar from 'material-ui/AppBar';
 import Paper from 'material-ui/Paper';
 import PropTypes from 'prop-types';
 import React from 'react';
+import Toolbar from 'material-ui/Toolbar';
+import Typography from 'material-ui/Typography';
 
-const styleSheet = createStyleSheet('Home', theme => ({
+const styleSheet = createStyleSheet('Navigation', theme => ({
   root: {
-    width: 400,
-    margin: '30px auto',
-    '@media (max-width: 500px)': {
-      width: '100%'
-    },
-    '@media (min-width: 960px)': {
-      width: 500
-    }
+    flexgrow: 1
+  },
+  flex: {
+    flex: 1
   },
   appBar: {
     backgroundColor: theme.palette.primary[500],
@@ -32,18 +31,21 @@ class Navigation extends React.Component {
 
     return (
       <Paper className={classes.root}>
-        <div className={classes.appBar}>
-          <Tabs
-            index={this.props.selectedPage}
-            onChange={(_, index) => this.props.handlePageSelect(index)}
-            fullWidth
-            centered
-          >
-            <Tab label="Marks" />
-            <Tab label="Timetable" />
-            <Tab label="Resources" />
-          </Tabs>
-        </div>
+        <AppBar position="static" className={classes.appBar}>
+          <Toolbar>
+            <Typography type="title" color="inherit" className={classes.flex}>
+              iManchester Toolbox
+            </Typography>
+            <Tabs
+              index={this.props.selectedPage}
+              onChange={(_, index) => this.props.handlePageSelect(index)}
+            >
+              <Tab label="Marks" />
+              <Tab label="Timetable" />
+              <Tab label="Resources" />
+            </Tabs>
+          </Toolbar>
+        </AppBar>
       </Paper>
     );
   }

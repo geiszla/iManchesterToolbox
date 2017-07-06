@@ -13,6 +13,9 @@ import Typography from 'material-ui/Typography';
 import { observer } from 'mobx-react';
 
 const styleSheet = createStyleSheet('Filter', {
+  root: {
+    marginTop: '50px'
+  },
   flex: {
     marginLeft: '10px',
     flex: 1
@@ -62,7 +65,7 @@ class Filter extends React.Component {
     const classes = this.props.classes;
 
     return (
-      <AppBar position="static">
+      <AppBar position="static" className={classes.root}>
         <Toolbar>
           <FilterListIcon />
           <Typography type="title" color="inherit" className={classes.flex}>Filter</Typography>

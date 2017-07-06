@@ -26,10 +26,9 @@ class Select extends React.Component {
 
   render() {
     const options = this.props.optionList.map((value, index) => (
-      <MenuItem key={index}>
+      <MenuItem key={index} onClick={() => this.props.handleSelect(index)}>
         <Checkbox
           checked={this.props.selected.has(index)}
-          onChange={() => this.props.handleSelect(index)}
           tabIndex="-1"
           disableRipple
         />

@@ -7,8 +7,7 @@ import { gql } from 'react-apollo';
 
 const styleSheet = createStyleSheet('SessionCard', {
   card: {
-    display: 'flex',
-    margin: '0 10px'
+    display: 'flex'
   },
   details: {
     display: 'flex',
@@ -18,14 +17,15 @@ const styleSheet = createStyleSheet('SessionCard', {
     flex: '1 0 auto'
   },
   marks: {
-    display: 'flex',
     alignItems: 'center',
     margin: '25px',
     marginTop: '0px'
   },
   mark: {
+    display: 'inline',
     margin: '5px 8px',
-    padding: '5px'
+    padding: '5px',
+    fontSize: '15px'
   },
   expected: {
     color: 'lightgray'

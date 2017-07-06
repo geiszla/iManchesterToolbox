@@ -58,3 +58,4 @@ export const MarksQuery = gql`
 `;
 
 export default graphql(MarksQuery)(Marks);
+

@@ -7,13 +7,25 @@ import Navigation from './Navigation.jsx';
 import PropTypes from 'prop-types';
 import React from 'react';
 import Resources from './Resources.jsx';
+import StatusCard from './StatusCard.jsx';
 import Timetable from './Timetable.jsx';
 
 const styleSheet = createStyleSheet('Toolbox', {
   container: {
-    margin: '50px auto',
+    margin: '25px auto',
     padding: '0 25px',
-    maxWidth: '972px'
+    maxWidth: '972px',
+    '@media (max-width: 500px)': {
+      width: '100%',
+      margin: '30px auto 0 auto',
+      padding: 0
+    }
+  },
+  statusCards: {
+    display: 'flex',
+    '@media (max-width: 500px)': {
+      flexDirection: 'column'
+    }
   }
 });
 
@@ -51,13 +63,19 @@ class Toolbox extends React.Component {
           />
 
           <div className={classes.container}>
+            <div className={classes.statusCards}>
+              <StatusCard />
+              <StatusCard />
+              <StatusCard />
+            </div>
+
             <Switch>
               <Route path="/marks" component={Marks} />
               <Route path="/timetable" component={Timetable} />
               <Route epath="/resources" component={Resources} />
             </Switch>
           </div>
-          <button onClick={() => this.props.handleLogout()}>Logout</button>
+          <button onClick={() => this.props.handleLogout()} hidden>Login</button>
         </div>
       </DocumentTitle>
     );

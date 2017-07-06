@@ -7,24 +7,23 @@ import { gql } from 'react-apollo';
 
 const styleSheet = createStyleSheet('Subject', {
   subjectContainer: {
-    display: 'flex',
-    margin: '35px 25px'
+    margin: '15px 0',
+    '@media (max-width: 500px)': {
+      marginTop: '10px',
+      marginBottom: 0
+    }
   },
   titleContainer: {
-    width: '25%'
-  },
-  title: {
     marginBottom: '10px'
   },
   subtitle: {
-    margin: 0,
+    display: 'inline',
+    marginLeft: '10px',
     fontSize: '13px',
     color: 'rgb(97, 97, 97)'
   },
   sessionContainer: {
-    display: 'flex',
     overflow: 'auto',
-    width: '75%',
     height: '100%',
     padding: '2px'
   }
@@ -33,7 +32,9 @@ const styleSheet = createStyleSheet('Subject', {
 class Subject extends React.Component {
   render() {
     const subject = this.props.subject;
-    const sessionCards = subject.classes.map(classData => (
+    const sessionCards = subject.classes.filter(classData => {
+      return !classData.isFinal;
+    }).map(classData => (
       <SessionCard
         key={classData._id}
         class={filter(SessionCard.fragments.class, classData)}
@@ -46,8 +47,8 @@ class Subject extends React.Component {
       <div className={classes.subjectContainer}>
         <br />
         <div className={classes.titleContainer}>
-          <p className={classes.title}>{subject.name}</p>
-          <p className={classes.subtitle}>COMP{subject._id}</p>
+          {subject.name}
+          <div className={classes.subtitle}>COMP{subject._id}</div>
         </div>
         <div className={classes.sessionContainer}>
           {sessionCards}
