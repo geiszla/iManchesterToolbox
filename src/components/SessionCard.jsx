@@ -6,9 +6,6 @@ import Typography from 'material-ui/Typography';
 import { gql } from 'react-apollo';
 
 const styleSheet = createStyleSheet('SessionCard', {
-  card: {
-    display: 'flex'
-  },
   details: {
     display: 'flex',
     flexDirection: 'column'
@@ -16,16 +13,30 @@ const styleSheet = createStyleSheet('SessionCard', {
   content: {
     flex: '1 0 auto'
   },
-  marks: {
+  sessions: {
+    display: 'flex',
+    flexWrap: 'wrap',
     alignItems: 'center',
-    margin: '25px',
-    marginTop: '0px'
+    margin: '-5px 25px 20px 25px'
+  },
+  session: {
+    width: '53px',
+    margin: '15px 15px'
+  },
+  sessionTitle: {
+    marginBottom: '10px',
+    textAlign: 'center',
+    fontSize: '15px',
+    fontWeight: 500
+  },
+  sessionBody: {
+    marginLeft: '-100%',
+    marginRight: '-100%',
+    textAlign: 'center',
+    fontSize: '16px'
   },
   mark: {
-    display: 'inline',
-    margin: '5px 8px',
-    padding: '5px',
-    fontSize: '15px'
+    padding: '0 5px'
   },
   expected: {
     color: 'lightgray'
@@ -48,24 +59,33 @@ class SessionCard extends React.Component {
       if (sessionData.isExpected) classNames += ` ${classes.expected}`;
       if (sessionData.isLate) classNames += ` ${classes.late}`;
 
-      return (<div key={sessionData.name} className={classNames}>
-        {sessionData.value !== null
-          ? `${sessionData.value}/${sessionData.denominator}`
-          : '-'}
-      </div>);
+      return (
+        <div key={sessionData.name} className={classes.session}>
+          <div className={classes.sessionTitle}>
+            {sessionData.name}
+          </div>
+          <div className={classes.sessionBody}>
+            <span className={classNames}>
+              {sessionData.value !== null
+              ? `${sessionData.value}/${sessionData.denominator}`
+              : '-'}
+            </span>
+          </div>
+        </div>
+      );
     });
     const completedPercentString = currClass.marked !== null ? ` (${currClass.marked}%)` : '';
 
     return (
       <div>
-        <Card className={classes.card}>
+        <Card>
           <div className={classes.details}>
             <CardContent className={classes.content}>
               <Typography type="subheading" color="secondary">
                 {sessionType}{completedPercentString}
               </Typography>
             </CardContent>
-            <div className={classes.marks}>
+            <div className={classes.sessions}>
               {marks}
             </div>
           </div>

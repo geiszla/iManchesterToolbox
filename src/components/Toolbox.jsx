@@ -11,13 +11,15 @@ import StatusCard from './StatusCard.jsx';
 import Timetable from './Timetable.jsx';
 
 const styleSheet = createStyleSheet('Toolbox', {
+  root: {
+    minWidth: '430px'
+  },
   container: {
     margin: '25px auto',
     padding: '0 25px',
     maxWidth: '972px',
     '@media (max-width: 500px)': {
-      width: '100%',
-      margin: '30px auto 0 auto',
+      margin: '20px 5px 0 5px',
       padding: 0
     }
   },
@@ -56,7 +58,7 @@ class Toolbox extends React.Component {
 
     return (
       <DocumentTitle title={Toolbox.pageNames[this.selectedPage]}>
-        <div>
+        <div className={classes.root}>
           <Navigation
             selectedPage={this.selectedPage}
             handlePageSelect={index => this.handlePageSelect(index)}

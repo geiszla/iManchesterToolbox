@@ -14,7 +14,7 @@ import { observer } from 'mobx-react';
 
 const styleSheet = createStyleSheet('Filter', {
   root: {
-    marginTop: '50px'
+    marginTop: '30px'
   },
   flex: {
     marginLeft: '10px',

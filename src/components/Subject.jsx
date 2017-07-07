@@ -32,9 +32,7 @@ const styleSheet = createStyleSheet('Subject', {
 class Subject extends React.Component {
   render() {
     const subject = this.props.subject;
-    const sessionCards = subject.classes.filter(classData => {
-      return !classData.isFinal;
-    }).map(classData => (
+    const sessionCards = subject.classes.filter(classData => !classData.isFinal).map(classData => (
       <SessionCard
         key={classData._id}
         class={filter(SessionCard.fragments.class, classData)}

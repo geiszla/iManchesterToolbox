@@ -9,9 +9,6 @@ import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 
 const styleSheet = createStyleSheet('Navigation', theme => ({
-  root: {
-    flexgrow: 1
-  },
   flex: {
     flex: 1
   },
@@ -39,6 +36,8 @@ class Navigation extends React.Component {
             <Tabs
               index={this.props.selectedPage}
               onChange={(_, index) => this.props.handlePageSelect(index)}
+              indicatorColor="primary"
+              centered
             >
               <Tab label="Marks" />
               <Tab label="Timetable" />
@@ -53,8 +52,7 @@ class Navigation extends React.Component {
 
 Navigation.propTypes = {
   classes: PropTypes.shape({
-    appBar: PropTypes.string.isRequired,
-    root: PropTypes.string.isRequired
+    appBar: PropTypes.string.isRequired
   }).isRequired,
   handlePageSelect: PropTypes.func.isRequired,
   selectedPage: PropTypes.number.isRequired
