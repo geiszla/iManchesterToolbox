@@ -1,6 +1,7 @@
 import Card, { CardContent } from 'material-ui/Card';
 import { createStyleSheet, withStyles } from 'material-ui/styles';
 
+import PropTypes from 'prop-types';
 import React from 'react';
 import Typography from 'material-ui/Typography';
 
@@ -20,20 +21,25 @@ const styleSheet = createStyleSheet('StatusCard', {
   }
 });
 
-class StatusCard extends React.Component {
-  render() {
-    const classes = this.props.classes;
+function StatusCard(props) {
+  const classes = props.classes;
 
-    return (
-      <Card className={classes.card}>
-        <CardContent className={classes.content}>
-          <Typography type="subheading" color="secondary">
-            Status Card
-          </Typography>
-        </CardContent>
-      </Card>
-    );
-  }
+  return (
+    <Card className={classes.card}>
+      <CardContent className={classes.content}>
+        <Typography type="subheading" color="secondary">
+          Status Card
+        </Typography>
+      </CardContent>
+    </Card>
+  );
 }
+
+StatusCard.propTypes = {
+  classes: PropTypes.shape({
+    card: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired
+  }).isRequired
+};
 
 export default withStyles(styleSheet)(StatusCard);

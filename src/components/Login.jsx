@@ -9,7 +9,7 @@ import React from 'react';
 import Typography from 'material-ui/Typography';
 import { withRouter } from 'react-router-dom';
 
-const styleSheet = createStyleSheet('SimpleMediaCard', {
+const styleSheet = createStyleSheet('Login', {
   card: {
     maxWidth: 345,
     margin: 'auto',
@@ -23,27 +23,25 @@ const styleSheet = createStyleSheet('SimpleMediaCard', {
   }
 });
 
-class Login extends React.Component {
-  render() {
-    const classes = this.props.classes;
+function Login(props) {
+  const classes = props.classes;
 
-    return (
-      <DocumentTitle title={'iManchester Toolbox'}>
-        <Card className={classes.card}>
-          <CardContent>
-            <Typography type="headline" component="h2">
+  return (
+    <DocumentTitle title={'iManchester Toolbox'}>
+      <Card className={classes.card}>
+        <CardContent>
+          <Typography type="headline" component="h2">
               Login
             </Typography>
-            <Input placeholder="Username" className={classes.input} />
-            <Input placeholder="Password" className={classes.input} />
-          </CardContent>
-          <CardActions className={classes.cardActions}>
-            <Button onClick={() => this.props.handleLogin()}>Login</Button>
-          </CardActions>
-        </Card>
-      </DocumentTitle>
-    );
-  }
+          <Input placeholder="Username" className={classes.input} />
+          <Input placeholder="Password" className={classes.input} />
+        </CardContent>
+        <CardActions className={classes.cardActions}>
+          <Button onClick={() => props.handleLogin()}>Login</Button>
+        </CardActions>
+      </Card>
+    </DocumentTitle>
+  );
 }
 
 Login.propTypes = {

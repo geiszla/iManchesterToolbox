@@ -1,5 +1,7 @@
 const babel = require('rollup-plugin-babel');
 const commonjs = require('rollup-plugin-commonjs');
+const globals = require('rollup-plugin-node-globals');
+const json = require('rollup-plugin-json');
 const nodeResolve = require('rollup-plugin-node-resolve');
 
 module.exports = {
@@ -9,24 +11,29 @@ module.exports = {
     format: 'umd'
   }],
   plugins: [
-    babel({
-      exclude: 'node_modules/**'
-    }),
     nodeResolve({
-      jsnext: true,
-      main: true
+      browser: true,
+      preferBuiltins: false
     }),
     commonjs({
       namedExports: {
+        'graphql-anywhere': ['PropType'],
         'material-ui/Card': ['CardActions', 'CardContent'],
+        'material-ui/colors': ['red', 'blue', 'white'],
         'material-ui/Menu': ['MenuItem'],
         'material-ui/styles': ['MuiThemeProvider', 'createMuiTheme', 'createStyleSheet', 'withStyles'],
         'material-ui/Tabs': ['Tab'],
         'mobx-react': ['observer'],
         'react-dom': ['render'],
-        'react-apollo': ['ApolloProvider', 'ApolloClient', 'compose', 'graphql', 'gql']
+        'node_modules/react-apollo/react-apollo.browser.umd.js': ['ApolloProvider', 'ApolloClient', 'compose', 'graphql', 'gql']
       },
-      sourceMap: false
+      sourceMap: false,
+      ignoreGlobal: true
+    }),
+    globals(),
+    json(),
+    babel({
+      exclude: 'node_modules/**'
     })
   ],
   onwarn: (warning) => {

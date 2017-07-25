@@ -1,4 +1,5 @@
 import { ApolloProvider, renderToStringWithData } from 'react-apollo';
+import { JssProvider, SheetsRegistry } from 'react-jss';
 
 import App from '../src/components/App.jsx';
 import { MuiThemeProvider } from 'material-ui/styles';
@@ -8,15 +9,17 @@ import apolloClient from '../src/apollo_client.js';
 import bodyParser from 'body-parser';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
+import { create } from 'jss';
+import createGenerateClassName from 'material-ui/styles/createGenerateClassName';
 import express from 'express';
 import favicon from 'serve-favicon';
-import fetch from 'node-fetch';
 import fs from 'fs';
 import getMarks from './arcade.js';
 import graphQLSchema from './graphql';
 import graphqlHTTP from 'express-graphql';
 import http from 'http';
 import https from 'https';
+import jssPreset from 'jss-preset-default';
 import muiTheme from '../src/theme.js';
 import path from 'path';
 import session from 'express-session';
@@ -61,25 +64,30 @@ app.use('/api',
 
 app.get('*', (req, res) => {
   console.log();
+
   const headers = Object.assign({}, req.headers, {
     accept: 'application/json'
   });
   const client = apolloClient(true, headers);
 
-  const { styleManager, theme } = MuiThemeProvider.createDefaultContext({ theme: muiTheme });
+  const sheetsRegistry = new SheetsRegistry();
+  const jss = create(jssPreset);
+  jss.options.createGenerateClassName = createGenerateClassName;
 
   const context = {};
   const reactApp = (
-    <MuiThemeProvider styleManager={styleManager} theme={theme}>
-      <ApolloProvider client={client}>
-        <StaticRouter location={req.url} context={context}>
-          <App />
-        </StaticRouter>
-      </ApolloProvider>
-    </MuiThemeProvider>
+    <JssProvider registry={sheetsRegistry} jss={jss}>
+      <MuiThemeProvider theme={muiTheme} sheetsManager={new WeakMap()}>
+        <ApolloProvider client={client}>
+          <StaticRouter location={req.url} context={context}>
+            <App />
+          </StaticRouter>
+        </ApolloProvider>
+      </MuiThemeProvider>
+    </JssProvider>
   );
 
-  renderPage(reactApp, client, styleManager).then((html) => {
+  renderPage(reactApp, client, sheetsRegistry).then((html) => {
     if (context.url) {
       res.writeHead(301, {
         Location: context.url
@@ -91,12 +99,10 @@ app.get('*', (req, res) => {
   }).catch((err) => { console.log(err); });
 });
 
-global.fetch = fetch;
-
-function renderPage(reactApp, client, styleManager) {
+function renderPage(reactApp, client, sheetsRegistry) {
   return renderToStringWithData(reactApp).then((content) => {
     const initialState = { apollo: client.getInitialState() };
-    const css = styleManager.sheetsToString();
+    const css = sheetsRegistry.toString();
 
     return `
       <!DOCTYPE html>

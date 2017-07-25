@@ -4,6 +4,7 @@ import { createStyleSheet, withStyles } from 'material-ui/styles';
 import React from 'react';
 import Typography from 'material-ui/Typography';
 import { gql } from 'react-apollo';
+import { red } from 'material-ui/colors';
 
 const styleSheet = createStyleSheet('SessionCard', {
   details: {
@@ -12,6 +13,15 @@ const styleSheet = createStyleSheet('SessionCard', {
   },
   content: {
     flex: '1 0 auto'
+  },
+  semester: {
+    display: 'inline',
+    marginLeft: '10px',
+    padding: '0 5px',
+    borderRadius: '25px',
+    fontSize: '13px',
+    backgroundColor: 'gray',
+    color: 'white'
   },
   sessions: {
     display: 'flex',
@@ -43,56 +53,70 @@ const styleSheet = createStyleSheet('SessionCard', {
   },
   late: {
     borderRadius: '25px',
-    backgroundColor: 'red',
+    backgroundColor: red[500],
     color: 'white'
   }
 });
 
-class SessionCard extends React.Component {
-  render() {
-    const currClass = this.props.class;
-    const classes = this.props.classes;
-    const sessionType = currClass.type !== null ? currClass.type : currClass._id;
+function SessionCard(props) {
+  const currClass = props.class;
+  const classes = props.classes;
+  const sessionType = currClass.type !== null ? currClass.type : currClass._id;
+  const completedPercentString = currClass.marked !== null ? ` (${currClass.marked}%)` : '';
 
-    const marks = currClass.sessions.map((sessionData) => {
-      let classNames = classes.mark;
-      if (sessionData.isExpected) classNames += ` ${classes.expected}`;
-      if (sessionData.isLate) classNames += ` ${classes.late}`;
+  const semesterNumber = currClass.semester;
+  const semesterIndicator = currClass.semester !== null ? (
+    <div className={classes.semester} title={`Semester ${semesterNumber}`}>
+      {`S${semesterNumber}`}
+    </div>
+  ) : '';
 
-      return (
-        <div key={sessionData.name} className={classes.session}>
-          <div className={classes.sessionTitle}>
-            {sessionData.name}
-          </div>
-          <div className={classes.sessionBody}>
-            <span className={classNames}>
-              {sessionData.value !== null
-              ? `${sessionData.value}/${sessionData.denominator}`
-              : '-'}
-            </span>
-          </div>
-        </div>
-      );
-    });
-    const completedPercentString = currClass.marked !== null ? ` (${currClass.marked}%)` : '';
+  const marks = currClass.sessions.map((sessionData) => {
+    const classNames = [classes.mark];
+    const title = [];
+
+    if (sessionData.isExpected) {
+      classNames.push(classes.expected);
+      title.push('Expected');
+    }
+
+    if (sessionData.isLate) {
+      classNames.push(classes.late);
+      title.push('Late');
+    }
 
     return (
-      <div>
-        <Card>
-          <div className={classes.details}>
-            <CardContent className={classes.content}>
-              <Typography type="subheading" color="secondary">
-                {sessionType}{completedPercentString}
-              </Typography>
-            </CardContent>
-            <div className={classes.sessions}>
-              {marks}
-            </div>
-          </div>
-        </Card>
+      <div key={sessionData.name} className={classes.session}>
+        <div className={classes.sessionTitle}>
+          {sessionData.name}
+        </div>
+        <div className={classes.sessionBody} title={title.join(', ')}>
+          <span className={classNames.join(' ')}>
+            {sessionData.value !== null
+            ? `${sessionData.value}/${sessionData.denominator}`
+            : '-'}
+          </span>
+        </div>
       </div>
     );
-  }
+  });
+
+  return (
+    <div>
+      <Card>
+        <div className={classes.details}>
+          <CardContent className={classes.content}>
+            <Typography type="subheading" color="secondary">
+              {sessionType}{completedPercentString}{semesterIndicator}
+            </Typography>
+          </CardContent>
+          <div className={classes.sessions}>
+            {marks}
+          </div>
+        </div>
+      </Card>
+    </div>
+  );
 }
 
 SessionCard.fragments = {

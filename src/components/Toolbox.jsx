@@ -86,7 +86,9 @@ class Toolbox extends React.Component {
 
 Toolbox.propTypes = {
   classes: PropTypes.shape({
-    container: PropTypes.string.isRequired
+    root: PropTypes.string.isRequired,
+    container: PropTypes.string.isRequired,
+    statusCards: PropTypes.string.isRequired
   }).isRequired,
   handleLogout: PropTypes.func.isRequired,
   history: PropTypes.shape({

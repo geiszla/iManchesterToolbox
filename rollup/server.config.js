@@ -6,10 +6,10 @@ const ignoredWarnings = ['MISSING_GLOBAL_NAME', 'MISSING_NODE_BUILTINS', 'UNRESO
 export default {
   entry: 'server/server.jsx',
   plugins: [
-    babel({
-      exclude: 'scripts/build_options.js'
+    commonjs({
+      sourceMap: false
     }),
-    commonjs()
+    babel()
   ],
   targets: [{
     dest: 'server.bundle.js',

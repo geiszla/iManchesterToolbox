@@ -1,10 +1,10 @@
+import { filter, propType } from 'graphql-anywhere';
 import { gql, graphql } from 'react-apollo';
 
 import Filter from './Filter.jsx';
 import Immutable from 'immutable';
 import React from 'react';
 import Subject from './Subject.jsx';
-import { filter } from 'graphql-anywhere';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 
@@ -56,6 +56,10 @@ export const MarksQuery = gql`
   }
   ${Subject.fragments.subject}
 `;
+
+Marks.propTypes = {
+  data: propType(MarksQuery).isRequired
+};
 
 export default graphql(MarksQuery)(Marks);
 
