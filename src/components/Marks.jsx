@@ -3,6 +3,7 @@ import { gql, graphql } from 'react-apollo';
 
 import Filter from './Filter.jsx';
 import Immutable from 'immutable';
+import PropTypes from 'prop-types';
 import React from 'react';
 import Subject from './Subject.jsx';
 import { observable } from 'mobx';
@@ -22,6 +23,8 @@ class Marks extends React.Component {
   }
 
   render() {
+    if (this.props.data.loading) return (<div />);
+
     const subjects = this.props.data.getMarks.subjects;
     const subjectElements = subjects.map(subjectData => (
       <Subject
@@ -58,7 +61,14 @@ export const MarksQuery = gql`
 `;
 
 Marks.propTypes = {
-  data: propType(MarksQuery).isRequired
+  data: PropTypes.shape({
+    loading: PropTypes.bool.isRequired,
+    getMarks(props) {
+      if (!props.loading) {
+        return propType(MarksQuery)(props.getMarks);
+      }
+    }
+  }).isRequired
 };
 
 export default graphql(MarksQuery)(Marks);

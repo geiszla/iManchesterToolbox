@@ -71,7 +71,7 @@ app.get('*', (req, res) => {
   const client = apolloClient(true, headers);
 
   const sheetsRegistry = new SheetsRegistry();
-  const jss = create(jssPreset);
+  const jss = create(jssPreset());
   jss.options.createGenerateClassName = createGenerateClassName;
 
   const context = {};

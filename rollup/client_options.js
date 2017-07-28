@@ -38,6 +38,7 @@ module.exports = {
   ],
   onwarn: (warning) => {
     if (warning.code !== 'THIS_IS_UNDEFINED' && warning.loc
+      && warning.loc.file.indexOf('fetch.js') === -1
       && warning.loc.file.indexOf('es6.object.to-string.js') === -1
       && warning.loc.file.indexOf('redux\\es\\index.js') === -1) {
       console.log(`Warning: ${warning}`);
