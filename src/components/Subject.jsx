@@ -21,6 +21,9 @@ const styleSheet = createStyleSheet('Subject', {
     },
     '@media (max-width: 850px)': {
       maxWidth: 'none'
+    },
+    '@media (min-width: 1500px)': {
+      maxWidth: '32%'
     }
   },
   titleContainer: {

@@ -21,6 +21,9 @@ const styleSheet = createStyleSheet('Toolbox', {
     '@media (max-width: 500px)': {
       margin: '20px 5px 0 5px',
       padding: 0
+    },
+    '@media (min-width: 1300px)': {
+      maxWidth: '1800px'
     }
   },
   statusCards: {
