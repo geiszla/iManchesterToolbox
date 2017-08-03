@@ -13,6 +13,8 @@ import Switch from 'material-ui/Switch';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import { grey } from 'material-ui/colors';
+import { observable } from 'mobx';
+import { observer } from 'mobx-react';
 
 const styleSheet = createStyleSheet('Filter', {
   root: {
@@ -31,9 +33,25 @@ const styleSheet = createStyleSheet('Filter', {
   }
 });
 
+@observer
 class Filter extends React.Component {
   static sessionTypes = ['Laboratory', 'Examples class', 'Test', 'Exam'];
   static weightings = ['10', '20', '30'];
+
+  componentDidMount = () => {
+    this.updateWindowWidth();
+    window.addEventListener('resize', this.updateWindowWidth);
+  }
+
+  componentWillUnmount = () => {
+    window.removeEventListener('resize', this.updateWindowDimensions);
+  }
+
+  @observable isMobile = true;
+
+  updateWindowWidth = () => {
+    this.isMobile = window.innerWidth < 850;
+  }
 
   handleSelect = (type, value) => {
     if (type === 'session') {
@@ -56,25 +74,29 @@ class Filter extends React.Component {
   render() {
     const classes = this.props.classes;
 
+    const compactViewToggle = (
+      <FormControlLabel
+        control={
+          <Switch
+            classes={{
+              checked: classes.checked,
+              bar: classes.bar
+            }}
+            checked={this.props.compactViewChecked}
+            onChange={() => this.props.handleCompactViewCheck()}
+            aria-label="compactViewChecked"
+          />
+        }
+        label="Compact View"
+      />
+    );
+
     return (
       <AppBar position="static" className={classes.root}>
         <Toolbar>
           <FilterListIcon />
           <Typography type="title" color="inherit" className={classes.flex}>Filter</Typography>
-          <FormControlLabel
-            control={
-              <Switch
-                classes={{
-                  checked: classes.checked,
-                  bar: classes.bar
-                }}
-                checked={this.props.compactViewChecked}
-                onChange={() => this.props.handleCompactViewCheck()}
-                aria-label="compactViewChecked"
-              />
-            }
-            label="Compact View"
-          />
+          {!this.isMobile ? compactViewToggle : null}
           <IconButton color="contrast">
             <ExpandMoreIcon />
           </IconButton>

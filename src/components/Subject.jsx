@@ -25,7 +25,7 @@ const styleSheet = createStyleSheet('Subject', {
       maxWidth: 'none'
     },
     '@media (min-width: 1500px)': {
-      maxWidth: '32%'
+      maxWidth: '33%'
     }
   },
   titleContainer: {
@@ -43,10 +43,7 @@ const styleSheet = createStyleSheet('Subject', {
   sessionContainer: {
     display: 'flex',
     flexDirection: 'column',
-    flex: 1
-  },
-  compactSessionContainer: {
-    overflow: 'auto',
+    flex: 1,
     padding: '2px'
   },
   flex: {
@@ -66,9 +63,6 @@ function Subject(props) {
   const compactViewChecked = props.compactViewChecked;
   const classes = props.classes;
 
-  let sessionContainerClass = classes.sessionContainer;
-  if (compactViewChecked) sessionContainerClass += ` ${classes.compactSessionContainer}`;
-
   let subjectContainerClass = classes.subjectContainer;
   if (compactViewChecked) subjectContainerClass += ` ${classes.compactSubjectContainer}`;
 
@@ -85,7 +79,7 @@ function Subject(props) {
         {subject.name}
         <div className={classes.subtitle}>COMP{subject._id}</div>
       </div>
-      <div className={sessionContainerClass}>
+      <div className={classes.sessionContainer}>
         {sessionCards}
       </div>
     </div>
