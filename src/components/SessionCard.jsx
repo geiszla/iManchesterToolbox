@@ -27,7 +27,7 @@ const styleSheet = createStyleSheet('SessionCard', {
     display: 'flex',
     flexWrap: 'wrap',
     alignItems: 'center',
-    margin: '-5px 25px 20px 25px'
+    margin: '-5px 25px 20px 35px'
   },
   session: {
     width: '53px',

@@ -3,14 +3,16 @@ import { createStyleSheet, withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 import FilterListIcon from 'material-ui-icons/FilterList';
+import { FormControlLabel } from 'material-ui/Form';
 import IconButton from 'material-ui/IconButton';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
 import React from 'react';
-import Select from './Select.jsx';
+// import Select from './Select.jsx';
+import Switch from 'material-ui/Switch';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
-import { observer } from 'mobx-react';
+import { grey } from 'material-ui/colors';
 
 const styleSheet = createStyleSheet('Filter', {
   root: {
@@ -19,29 +21,19 @@ const styleSheet = createStyleSheet('Filter', {
   flex: {
     marginLeft: '10px',
     flex: 1
+  },
+  bar: {},
+  checked: {
+    color: grey[50],
+    '& + $bar': {
+      backgroundColor: grey[50]
+    }
   }
 });
 
-@observer
 class Filter extends React.Component {
   static sessionTypes = ['Laboratory', 'Examples class', 'Test', 'Exam'];
   static weightings = ['10', '20', '30'];
-
-  handleToggle = (event, value) => {
-    const { checked } = this.state;
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    this.setState({
-      checked: newChecked
-    });
-  };
 
   handleSelect = (type, value) => {
     if (type === 'session') {
@@ -69,17 +61,19 @@ class Filter extends React.Component {
         <Toolbar>
           <FilterListIcon />
           <Typography type="title" color="inherit" className={classes.flex}>Filter</Typography>
-          <Select
-            title={`Session types (${this.props.selectedSessionTypes.size})`}
-            optionList={Filter.sessionTypes}
-            selected={this.props.selectedSessionTypes}
-            handleSelect={value => this.handleSelect('session', value)}
-          />
-          <Select
-            title={`Weightings (${this.props.selectedWeightings.size})`}
-            optionList={Filter.weightings}
-            selected={this.props.selectedWeightings}
-            handleSelect={value => this.handleSelect('weighting', value)}
+          <FormControlLabel
+            control={
+              <Switch
+                classes={{
+                  checked: classes.checked,
+                  bar: classes.bar
+                }}
+                checked={this.props.compactViewChecked}
+                onChange={() => this.props.handleCompactViewCheck()}
+                aria-label="compactViewChecked"
+              />
+            }
+            label="Compact View"
           />
           <IconButton color="contrast">
             <ExpandMoreIcon />
@@ -89,6 +83,13 @@ class Filter extends React.Component {
     );
   }
 }
+
+// <Select
+//   title={`Weightings (${this.props.selectedWeightings.size})`}
+//   optionList={Filter.weightings}
+//   selected={this.props.selectedWeightings}
+//   handleSelect={value => this.handleSelect('weighting', value)}
+// />
 
 Filter.propTypes = {
   classes: PropTypes.shape({

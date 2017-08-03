@@ -12,9 +12,13 @@ import { observer } from 'mobx-react';
 
 const styleSheet = createStyleSheet('Marks', {
   subjectsContainer: {
+    margin: '0 5px'
+  },
+  compactSubjectsContainer: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
+    margin: '0 5px',
     '@media (max-width: 800px)': {
       display: 'block'
     }
@@ -37,23 +41,32 @@ class Marks extends React.Component {
   render() {
     if (this.props.data.loading) return (<div />);
 
+    const compactViewChecked = this.props.compactViewChecked;
+
     const subjects = this.props.data.getMarks.subjects;
     const subjectElements = subjects.map(subjectData => (
       <Subject
         key={subjectData._id}
         subject={filter(Subject.fragments.subject, subjectData)}
+        compactViewChecked={compactViewChecked}
       />
     ));
+
+    const classes = this.props.classes;
+    let subjectsContainerClass = classes.subjectsContainer;
+    if (compactViewChecked) subjectsContainerClass += ` ${classes.compactSubjectsContainer}`;
 
     return (
       <div>
         <Filter
           selectedSessionTypes={this.selectedSessionTypes}
           selectedWeightings={this.selectedWeightings}
+          compactViewChecked={compactViewChecked}
           setSessionTypes={selected => this.handleSessionSet(selected)}
           setWeightings={selected => this.handleWeightingSet(selected)}
+          handleCompactViewCheck={() => this.props.handleCompactViewCheck()}
         />
-        <div className={this.props.classes.subjectsContainer}>
+        <div className={subjectsContainerClass}>
           {subjectElements}
         </div>
       </div>

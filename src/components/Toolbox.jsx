@@ -9,6 +9,8 @@ import React from 'react';
 import Resources from './Resources.jsx';
 import StatusCard from './StatusCard.jsx';
 import Timetable from './Timetable.jsx';
+import { observable } from 'mobx';
+import { observer } from 'mobx-react';
 
 const styleSheet = createStyleSheet('Toolbox', {
   root: {
@@ -34,9 +36,12 @@ const styleSheet = createStyleSheet('Toolbox', {
   }
 });
 
+@observer
 class Toolbox extends React.Component {
   static pages = ['/marks', '/timetable', '/resources'];
   static pageNames = ['Marks', 'Timetable', 'Resources'];
+
+  @observable compactViewChecked = false;
 
   selectedPage = -1;
 
@@ -44,6 +49,10 @@ class Toolbox extends React.Component {
     if (this.selectedPage !== index) {
       this.props.history.push(Toolbox.pages[index]);
     }
+  }
+
+  handleCompactViewCheck = () => {
+    this.compactViewChecked = !this.compactViewChecked;
   }
 
   render() {
@@ -58,6 +67,7 @@ class Toolbox extends React.Component {
     this.selectedPage = pageNumber !== -1 ? pageNumber : 0;
 
     const classes = this.props.classes;
+    const containerMaxWidth = this.compactViewChecked ? '1500px' : '972px';
 
     return (
       <DocumentTitle title={Toolbox.pageNames[this.selectedPage]}>
@@ -67,7 +77,7 @@ class Toolbox extends React.Component {
             handlePageSelect={index => this.handlePageSelect(index)}
           />
 
-          <div className={classes.container}>
+          <div className={classes.container} style={{ maxWidth: containerMaxWidth }}>
             <div className={classes.statusCards}>
               <StatusCard />
               <StatusCard />
@@ -75,7 +85,17 @@ class Toolbox extends React.Component {
             </div>
 
             <Switch>
-              <Route path="/marks" component={Marks} />
+              <Route
+                path="/marks"
+                render={props => (
+                  <Marks
+                    compactViewChecked={this.compactViewChecked}
+                    handleCompactViewCheck={() => this.handleCompactViewCheck()}
+                    {...props}
+                  />
+                )}
+              />
+
               <Route path="/timetable" component={Timetable} />
               <Route epath="/resources" component={Resources} />
             </Switch>

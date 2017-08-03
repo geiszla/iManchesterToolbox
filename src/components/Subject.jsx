@@ -9,16 +9,18 @@ import { gql } from 'react-apollo';
 
 const styleSheet = createStyleSheet('Subject', {
   subjectContainer: {
-    display: 'flex',
-    flexDirection: 'column',
     margin: '15px 0',
-    minWidth: '30vw',
-    maxWidth: '49%',
-    flexGrow: 1,
     '@media (max-width: 500px)': {
       marginTop: '10px',
       marginBottom: 0
-    },
+    }
+  },
+  compactSubjectContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    minWidth: '20%',
+    maxWidth: '49%',
+    flexGrow: 1,
     '@media (max-width: 850px)': {
       maxWidth: 'none'
     },
@@ -41,7 +43,9 @@ const styleSheet = createStyleSheet('Subject', {
   sessionContainer: {
     display: 'flex',
     flexDirection: 'column',
-    flex: 1,
+    flex: 1
+  },
+  compactSessionContainer: {
     overflow: 'auto',
     padding: '2px'
   },
@@ -59,20 +63,29 @@ function Subject(props) {
     />
   ));
 
+  const compactViewChecked = props.compactViewChecked;
   const classes = props.classes;
 
-  sessionCards.push(
-    <Card className={classes.flex} key="blank" />
-  );
+  let sessionContainerClass = classes.sessionContainer;
+  if (compactViewChecked) sessionContainerClass += ` ${classes.compactSessionContainer}`;
+
+  let subjectContainerClass = classes.subjectContainer;
+  if (compactViewChecked) subjectContainerClass += ` ${classes.compactSubjectContainer}`;
+
+  if (compactViewChecked) {
+    sessionCards.push(
+      <Card className={classes.flex} key="blank" />
+    );
+  }
 
   return (
-    <div className={classes.subjectContainer}>
+    <div className={subjectContainerClass}>
       <br />
       <div className={classes.titleContainer}>
         {subject.name}
         <div className={classes.subtitle}>COMP{subject._id}</div>
       </div>
-      <div className={classes.sessionContainer}>
+      <div className={sessionContainerClass}>
         {sessionCards}
       </div>
     </div>

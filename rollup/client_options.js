@@ -19,7 +19,8 @@ module.exports = {
       namedExports: {
         'graphql-anywhere': ['PropType'],
         'material-ui/Card': ['CardActions', 'CardContent'],
-        'material-ui/colors': ['red', 'blue', 'white'],
+        'material-ui/colors': ['grey', 'red', 'blue', 'white'],
+        'material-ui/Form': ['FormControlLabel'],
         'material-ui/Menu': ['MenuItem'],
         'material-ui/styles': ['MuiThemeProvider', 'createMuiTheme', 'createStyleSheet', 'withStyles'],
         'material-ui/Tabs': ['Tab'],
