@@ -1,3 +1,4 @@
+import { createStyleSheet, withStyles } from 'material-ui/styles';
 import { filter, propType } from 'graphql-anywhere';
 import { gql, graphql } from 'react-apollo';
 
@@ -8,6 +9,17 @@ import React from 'react';
 import Subject from './Subject.jsx';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
+
+const styleSheet = createStyleSheet('Marks', {
+  subjectsContainer: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    '@media (max-width: 800px)': {
+      display: 'block'
+    }
+  }
+});
 
 @observer
 class Marks extends React.Component {
@@ -41,7 +53,9 @@ class Marks extends React.Component {
           setSessionTypes={selected => this.handleSessionSet(selected)}
           setWeightings={selected => this.handleWeightingSet(selected)}
         />
-        {subjectElements}
+        <div className={this.props.classes.subjectsContainer}>
+          {subjectElements}
+        </div>
       </div>
     );
   }
@@ -71,5 +85,5 @@ Marks.propTypes = {
   }).isRequired
 };
 
-export default graphql(MarksQuery)(Marks);
+export default graphql(MarksQuery)(withStyles(styleSheet)(Marks));
 

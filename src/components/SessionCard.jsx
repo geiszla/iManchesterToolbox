@@ -93,8 +93,8 @@ function SessionCard(props) {
         <div className={classes.sessionBody} title={title.join(', ')}>
           <span className={classNames.join(' ')}>
             {sessionData.value !== null
-            ? `${sessionData.value}/${sessionData.denominator}`
-            : '-'}
+              ? `${sessionData.value}/${sessionData.denominator}`
+              : '-'}
           </span>
         </div>
       </div>

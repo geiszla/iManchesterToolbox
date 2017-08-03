@@ -15,9 +15,9 @@ const styleSheet = createStyleSheet('Toolbox', {
     minWidth: '430px'
   },
   container: {
+    maxWidth: '1500px',
     margin: '25px auto',
     padding: '0 25px',
-    maxWidth: '972px',
     '@media (max-width: 500px)': {
       margin: '20px 5px 0 5px',
       padding: 0
