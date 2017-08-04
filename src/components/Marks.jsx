@@ -27,9 +27,9 @@ const styleSheet = createStyleSheet('Marks', {
 
 @observer
 class Marks extends React.Component {
+  @observable selectedSemesters = Immutable.Set(Filter.semesters.map((_, index) => index));
   @observable selectedSessionTypes = Immutable.Set(Filter.sessionTypes.map((_, index) => index));
   @observable selectedWeightings = Immutable.Set(Filter.weightings.map((_, index) => index));
-  @observable selectedSemesters = Immutable.Set(Filter.semesters.map((_, index) => index));
 
   handleSemesterSet = (semesters) => {
     this.selectedSemesters = semesters;
@@ -48,19 +48,12 @@ class Marks extends React.Component {
 
     const compactViewChecked = this.props.compactViewChecked;
 
-    const subjects = this.props.data.getMarks.subjects;
-    const subjectElements = subjects.map(subjectData => (
-      <Subject
-        key={subjectData._id}
-        subject={filter(Subject.fragments.subject, subjectData)}
-        compactViewChecked={compactViewChecked}
-      />
-    ));
-
+    // Apply compact view if appropriate
     const classes = this.props.classes;
     let subjectsContainerClass = classes.subjectsContainer;
     if (compactViewChecked) subjectsContainerClass += ` ${classes.compactSubjectsContainer}`;
 
+    const subjects = this.props.data.getMarks.subjects;
     return (
       <div>
         <Filter
@@ -74,7 +67,13 @@ class Marks extends React.Component {
           setWeightings={selected => this.handleWeightingSet(selected)}
         />
         <div className={subjectsContainerClass}>
-          {subjectElements}
+          {subjects.map(subjectData => (
+            <Subject
+              key={subjectData._id}
+              subject={filter(Subject.fragments.subject, subjectData)}
+              compactViewChecked={compactViewChecked}
+            />
+          ))}
         </div>
       </div>
     );
@@ -95,6 +94,12 @@ export const MarksQuery = gql`
 `;
 
 Marks.propTypes = {
+  classes: PropTypes.shape({
+    subjectsContainer: PropTypes.string.isRequired,
+    compactSubjectsContainer: PropTypes.string.isRequired
+  }).isRequired,
+  compactViewChecked: PropTypes.bool.isRequired,
+  handleCompactViewCheck: PropTypes.func.isRequired,
   data: PropTypes.shape({
     loading: PropTypes.bool.isRequired,
     getMarks(props) {

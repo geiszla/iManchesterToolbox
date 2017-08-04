@@ -66,6 +66,7 @@ class Toolbox extends React.Component {
     const pageNumber = Toolbox.pages.indexOf(this.props.location.pathname);
     this.selectedPage = pageNumber !== -1 ? pageNumber : 0;
 
+    // Apply compact view if appropriate
     const classes = this.props.classes;
     const containerMaxWidth = this.compactViewChecked ? '1500px' : '972px';
 

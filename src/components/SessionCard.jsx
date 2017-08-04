@@ -1,9 +1,11 @@
 import Card, { CardContent } from 'material-ui/Card';
 import { createStyleSheet, withStyles } from 'material-ui/styles';
 
+import PropTypes from 'prop-types';
 import React from 'react';
 import Typography from 'material-ui/Typography';
 import { gql } from 'react-apollo';
+import { propType } from 'graphql-anywhere';
 import { red } from 'material-ui/colors';
 
 const styleSheet = createStyleSheet('SessionCard', {
@@ -61,16 +63,8 @@ const styleSheet = createStyleSheet('SessionCard', {
 function SessionCard(props) {
   const currClass = props.class;
   const classes = props.classes;
-  const sessionType = currClass.type !== null ? currClass.type : currClass._id;
-  const completedPercentString = currClass.marked !== null ? ` (${currClass.marked}%)` : '';
 
-  const semesterNumber = currClass.semester;
-  const semesterIndicator = currClass.semester !== null ? (
-    <div className={classes.semester} title={`Semester ${semesterNumber}`}>
-      {`S${semesterNumber}`}
-    </div>
-  ) : '';
-
+  // Prepare marks
   const marks = currClass.sessions.map((sessionData) => {
     const classNames = [classes.mark];
     const title = [];
@@ -100,6 +94,17 @@ function SessionCard(props) {
       </div>
     );
   });
+
+  // Render SessionCard with marks
+  const sessionType = currClass.type !== null ? currClass.type : currClass._id;
+  const completedPercentString = currClass.marked !== null ? ` (${currClass.marked}%)` : '';
+
+  const semesterNumber = currClass.semester;
+  const semesterIndicator = currClass.semester !== null ? (
+    <div className={classes.semester} title={`Semester ${semesterNumber}`}>
+      {`S${semesterNumber}`}
+    </div>
+  ) : '';
 
   return (
     <div>
@@ -141,6 +146,22 @@ SessionCard.fragments = {
       }
     }
   `
+};
+
+SessionCard.propTypes = {
+  classes: PropTypes.shape({
+    details: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired,
+    semester: PropTypes.string.isRequired,
+    sessions: PropTypes.string.isRequired,
+    session: PropTypes.string.isRequired,
+    sessionTitle: PropTypes.string.isRequired,
+    sessionBody: PropTypes.string.isRequired,
+    mark: PropTypes.string.isRequired,
+    expected: PropTypes.string.isRequired,
+    late: PropTypes.string.isRequired
+  }).isRequired,
+  class: propType(SessionCard.fragments.class).isRequired
 };
 
 export default withStyles(styleSheet)(SessionCard);

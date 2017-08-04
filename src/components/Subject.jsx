@@ -53,6 +53,8 @@ const styleSheet = createStyleSheet('Subject', {
 
 function Subject(props) {
   const subject = props.subject;
+
+  // Prepare session cards
   const sessionCards = subject.classes.filter(classData => !classData.isFinal).map(classData => (
     <SessionCard
       key={classData._id}
@@ -60,6 +62,7 @@ function Subject(props) {
     />
   ));
 
+  // Apply compact view if appropriate
   const compactViewChecked = props.compactViewChecked;
   const classes = props.classes;
 
@@ -102,9 +105,11 @@ Subject.fragments = {
 Subject.propTypes = {
   classes: PropTypes.shape({
     subjectContainer: PropTypes.string.isRequired,
+    compactSubjectContainer: PropTypes.string.isRequired,
     titleContainer: PropTypes.string.isRequired,
     subtitle: PropTypes.string.isRequired,
-    sessionContainer: PropTypes.string.isRequired
+    sessionContainer: PropTypes.string.isRequired,
+    flex: PropTypes.string.isRequired
   }).isRequired,
   subject: propType(Subject.fragments.subject).isRequired
 };

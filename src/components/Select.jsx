@@ -20,8 +20,6 @@ class Select extends React.Component {
   @observable isOpen = false;
   @observable anchorEl = undefined;
 
-  button = undefined;
-
   handleClick = (event) => {
     this.isOpen = true;
     this.anchorEl = event.currentTarget;
@@ -32,23 +30,10 @@ class Select extends React.Component {
   };
 
   render() {
-    const options = this.props.optionList.map((value, index) => (
-      <MenuItem key={index} onClick={() => this.props.handleSelect(index)}>
-        <Checkbox
-          checked={this.props.selected.has(index)}
-          tabIndex="-1"
-          disableRipple
-        />
-        {value}
-      </MenuItem>
-    ));
-
-    const classes = this.props.classes;
-
     return (
       <div>
         <Button
-          classes={{ label: classes.label }}
+          classes={{ label: this.props.classes.label }}
           color="contrast"
           aria-owns="simple-menu"
           aria-haspopup="true"
@@ -62,7 +47,16 @@ class Select extends React.Component {
           open={this.isOpen}
           onRequestClose={this.handleRequestClose}
         >
-          {options}
+          {this.props.optionList.map((value, index) => (
+            <MenuItem key={index} onClick={() => this.props.handleSelect(index)}>
+              <Checkbox
+                checked={this.props.selected.has(index)}
+                tabIndex="-1"
+                disableRipple
+              />
+              {value}
+            </MenuItem>
+          ))}
         </Menu>
       </div>
     );
@@ -70,6 +64,9 @@ class Select extends React.Component {
 }
 
 Select.propTypes = {
+  classes: PropTypes.shape({
+    label: PropTypes.string.isRequired
+  }).isRequired,
   title: PropTypes.string.isRequired,
   optionList: PropTypes.arrayOf(PropTypes.string).isRequired,
   selected: ImmutablePropTypes.set.isRequired,

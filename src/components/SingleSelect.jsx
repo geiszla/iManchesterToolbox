@@ -7,12 +7,12 @@ import React from 'react';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 
-const styleSheet = createStyleSheet(theme => ({
+const styleSheet = createStyleSheet('SingleSelect', {
   root: {
     padding: 0,
     fontWeight: 500
   }
-}));
+});
 
 const options = [
   '2016',
@@ -52,7 +52,7 @@ class SingleSelect extends React.Component {
             button
             aria-haspopup="true"
             aria-controls="lock-menu"
-            aria-label="When device is locked"
+            aria-label="Select year"
             onClick={this.handleClickListItem}
           >
             <ListItemText

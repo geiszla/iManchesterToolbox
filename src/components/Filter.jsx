@@ -10,7 +10,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Select from './Select.jsx';
 import SingleSelect from './SingleSelect.jsx';
-// import Select from './Select.jsx';
 import Switch from 'material-ui/Switch';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
@@ -90,6 +89,7 @@ class Filter extends React.Component {
   render() {
     const classes = this.props.classes;
 
+    // Prepare compact view toggle
     const compactViewToggle = (
       <FormControlLabel
         className={classes.compactRoot}
@@ -108,6 +108,7 @@ class Filter extends React.Component {
       />
     );
 
+    // Prepare selected semester label
     const selectedSemesters = this.props.selectedSemesters;
     const selectedSemestersString = selectedSemesters.size
       ? `Semester ${selectedSemesters.map(index => index + 1).sort().join(', ')}`
@@ -137,19 +138,20 @@ class Filter extends React.Component {
   }
 }
 
-// <Select
-//   title={`Weightings (${this.props.selectedWeightings.size})`}
-//   optionList={Filter.weightings}
-//   selected={this.props.selectedWeightings}
-//   handleSelect={value => this.handleSelect('weighting', value)}
-// />
-
 Filter.propTypes = {
   classes: PropTypes.shape({
-    flex: PropTypes.string.isRequired
+    root: PropTypes.string.isRequired,
+    flex: PropTypes.string.isRequired,
+    compactRoot: PropTypes.string.isRequired,
+    bar: PropTypes.string.isRequired,
+    checked: PropTypes.string.isRequired
   }).isRequired,
+  compactViewChecked: PropTypes.bool.isRequired,
+  handleCompactViewCheck: PropTypes.func.isRequired,
+  selectedSemesters: ImmutablePropTypes.set.isRequired,
   selectedSessionTypes: ImmutablePropTypes.set.isRequired,
   selectedWeightings: ImmutablePropTypes.set.isRequired,
+  setSemesters: PropTypes.func.isRequired,
   setSessionTypes: PropTypes.func.isRequired,
   setWeightings: PropTypes.func.isRequired
 };

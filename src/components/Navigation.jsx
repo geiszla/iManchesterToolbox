@@ -27,7 +27,7 @@ class Navigation extends React.Component {
     const classes = this.props.classes;
 
     return (
-      <Paper className={classes.root}>
+      <Paper>
         <AppBar position="static" className={classes.appBar}>
           <Toolbar>
             <Typography type="title" color="inherit" className={classes.flex}>
@@ -52,7 +52,8 @@ class Navigation extends React.Component {
 
 Navigation.propTypes = {
   classes: PropTypes.shape({
-    appBar: PropTypes.string.isRequired
+    appBar: PropTypes.string.isRequired,
+    flex: PropTypes.string.isRequired
   }).isRequired,
   handlePageSelect: PropTypes.func.isRequired,
   selectedPage: PropTypes.number.isRequired

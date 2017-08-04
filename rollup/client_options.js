@@ -3,7 +3,6 @@ const commonjs = require('rollup-plugin-commonjs');
 const globals = require('rollup-plugin-node-globals');
 const json = require('rollup-plugin-json');
 const nodeResolve = require('rollup-plugin-node-resolve');
-const replace = require('rollup-plugin-replace');
 
 module.exports = {
   entry: 'src/index.jsx',
@@ -24,11 +23,15 @@ module.exports = {
         'material-ui/Form': ['FormControlLabel'],
         'material-ui/List': ['ListItem', 'ListItemText'],
         'material-ui/Menu': ['MenuItem'],
-        'material-ui/styles': ['MuiThemeProvider', 'createMuiTheme', 'createStyleSheet', 'withStyles'],
+        'material-ui/styles': [
+          'MuiThemeProvider', 'createMuiTheme', 'createStyleSheet', 'withStyles'
+        ],
         'material-ui/Tabs': ['Tab'],
         'mobx-react': ['observer'],
         'react-dom': ['render'],
-        'node_modules/react-apollo/react-apollo.browser.umd.js': ['ApolloProvider', 'ApolloClient', 'compose', 'graphql', 'gql']
+        'node_modules/react-apollo/react-apollo.browser.umd.js': [
+          'ApolloProvider', 'ApolloClient', 'compose', 'graphql', 'gql'
+        ]
       },
       sourceMap: false,
       ignoreGlobal: true

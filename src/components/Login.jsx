@@ -31,8 +31,8 @@ function Login(props) {
       <Card className={classes.card}>
         <CardContent>
           <Typography type="headline" component="h2">
-              Login
-            </Typography>
+            Login
+          </Typography>
           <Input placeholder="Username" className={classes.input} />
           <Input placeholder="Password" className={classes.input} />
         </CardContent>
@@ -47,6 +47,7 @@ function Login(props) {
 Login.propTypes = {
   classes: PropTypes.shape({
     card: PropTypes.string.isRequired,
+    input: PropTypes.string.isRequired,
     cardActions: PropTypes.string.isRequired
   }).isRequired,
   handleLogin: PropTypes.func.isRequired
