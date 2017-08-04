@@ -4,7 +4,8 @@ const replace = require('rollup-plugin-replace');
 export default (function setEvironment() {
   options.plugins.push(
     replace({
-      'process.env.NODE_ENV': JSON.stringify('development')
+      'process.env.NODE_ENV': JSON.stringify('development'),
+      '# sourceMappingURL=': ''
     })
   );
 

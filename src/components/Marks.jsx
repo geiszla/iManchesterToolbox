@@ -6,6 +6,7 @@ import Filter from './Filter.jsx';
 import Immutable from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
+import SingleSelect from './SingleSelect.jsx';
 import Subject from './Subject.jsx';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
@@ -58,6 +59,7 @@ class Marks extends React.Component {
 
     return (
       <div>
+        <SingleSelect />
         <Filter
           selectedSessionTypes={this.selectedSessionTypes}
           selectedWeightings={this.selectedWeightings}

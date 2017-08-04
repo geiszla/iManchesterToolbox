@@ -3,6 +3,7 @@ const commonjs = require('rollup-plugin-commonjs');
 const globals = require('rollup-plugin-node-globals');
 const json = require('rollup-plugin-json');
 const nodeResolve = require('rollup-plugin-node-resolve');
+const replace = require('rollup-plugin-replace');
 
 module.exports = {
   entry: 'src/index.jsx',
@@ -21,6 +22,7 @@ module.exports = {
         'material-ui/Card': ['CardActions', 'CardContent'],
         'material-ui/colors': ['grey', 'red', 'blue', 'white'],
         'material-ui/Form': ['FormControlLabel'],
+        'material-ui/List': ['ListItem', 'ListItemText'],
         'material-ui/Menu': ['MenuItem'],
         'material-ui/styles': ['MuiThemeProvider', 'createMuiTheme', 'createStyleSheet', 'withStyles'],
         'material-ui/Tabs': ['Tab'],

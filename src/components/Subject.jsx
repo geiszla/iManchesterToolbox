@@ -30,7 +30,7 @@ const styleSheet = createStyleSheet('Subject', {
   },
   titleContainer: {
     marginBottom: '10px',
-    marginLeft: '2px',
+    marginLeft: '5px',
     whiteSpace: 'nowrap',
     overflow: 'hidden'
   },
