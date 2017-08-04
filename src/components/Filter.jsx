@@ -8,6 +8,8 @@ import IconButton from 'material-ui/IconButton';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
 import React from 'react';
+import Select from './Select.jsx';
+import SingleSelect from './SingleSelect.jsx';
 // import Select from './Select.jsx';
 import Switch from 'material-ui/Switch';
 import Toolbar from 'material-ui/Toolbar';
@@ -21,8 +23,14 @@ const styleSheet = createStyleSheet('Filter', {
     marginTop: '30px'
   },
   flex: {
+    display: 'flex',
+    alignItems: 'center',
     marginLeft: '10px',
     flex: 1
+  },
+  compactRoot: {
+    marginLeft: '25px',
+    marginTop: '5px'
   },
   bar: {},
   checked: {
@@ -37,6 +45,7 @@ const styleSheet = createStyleSheet('Filter', {
 class Filter extends React.Component {
   static sessionTypes = ['Laboratory', 'Examples class', 'Test', 'Exam'];
   static weightings = ['10', '20', '30'];
+  static semesters = ['Semester 1', 'Semester 2'];
 
   componentDidMount = () => {
     this.updateWindowWidth();
@@ -54,7 +63,14 @@ class Filter extends React.Component {
   }
 
   handleSelect = (type, value) => {
-    if (type === 'session') {
+    if (type === 'semester') {
+      const selected = this.props.selectedSemesters;
+      if (selected.has(value)) {
+        this.props.setSemesters(selected.delete(value));
+      } else {
+        this.props.setSemesters(selected.add(value));
+      }
+    } else if (type === 'session') {
       const selected = this.props.selectedSessionTypes;
       if (selected.has(value)) {
         this.props.setSessionTypes(selected.delete(value));
@@ -76,6 +92,7 @@ class Filter extends React.Component {
 
     const compactViewToggle = (
       <FormControlLabel
+        className={classes.compactRoot}
         control={
           <Switch
             classes={{
@@ -91,12 +108,26 @@ class Filter extends React.Component {
       />
     );
 
+    const selectedSemesters = this.props.selectedSemesters;
+    const selectedSemestersString = selectedSemesters.size
+      ? `Semester ${selectedSemesters.map(index => index + 1).sort().join(', ')}`
+      : 'Select semester';
+
     return (
       <AppBar position="static" className={classes.root}>
         <Toolbar>
           <FilterListIcon />
-          <Typography type="title" color="inherit" className={classes.flex}>Filter</Typography>
-          {!this.isMobile ? compactViewToggle : null}
+          <div className={classes.flex}>
+            <Typography type="title" color="inherit" >Marks</Typography>
+            {!this.isMobile ? compactViewToggle : null}
+          </div>
+          <SingleSelect />
+          <Select
+            title={selectedSemestersString}
+            optionList={Filter.semesters}
+            selected={this.props.selectedSemesters}
+            handleSelect={value => this.handleSelect('semester', value)}
+          />
           <IconButton color="contrast">
             <ExpandMoreIcon />
           </IconButton>

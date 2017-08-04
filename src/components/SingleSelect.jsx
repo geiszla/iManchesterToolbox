@@ -4,46 +4,49 @@ import { createStyleSheet, withStyles } from 'material-ui/styles';
 
 import PropTypes from 'prop-types';
 import React from 'react';
+import { observable } from 'mobx';
+import { observer } from 'mobx-react';
 
 const styleSheet = createStyleSheet(theme => ({
   root: {
-    width: '100%',
-    maxWidth: 360,
-    background: theme.palette.background.paper
+    padding: 0,
+    fontWeight: 500
   }
 }));
 
 const options = [
-  'Show all notification content',
-  'Hide sensitive notification content',
-  'Hide all notification content'
+  '2016',
+  '2017',
+  '2018'
 ];
 
+@observer
 class SingleSelect extends React.Component {
-  state = {
-    anchorEl: undefined,
-    open: false,
-    selectedIndex: 1
-  };
+  @observable anchorEl = undefined;
+  @observable open = false;
+  @observable selectedIndex = 1;
 
   button = undefined;
 
   handleClickListItem = (event) => {
-    this.setState({ open: true, anchorEl: event.currentTarget });
+    this.open = true;
+    this.anchorEl = event.currentTarget;
   };
 
   handleMenuItemClick = (event, index) => {
-    this.setState({ selectedIndex: index, open: false });
+    this.selectedIndex = index;
+    this.open = false;
   };
 
   handleRequestClose = () => {
-    this.setState({ open: false });
+    this.open = false;
   };
 
   render() {
     const classes = this.props.classes;
+
     return (
-      <div className={classes.root}>
+      <div>
         <List>
           <ListItem
             button
@@ -53,25 +56,26 @@ class SingleSelect extends React.Component {
             onClick={this.handleClickListItem}
           >
             <ListItemText
-              primary="When device is locked"
-              secondary={options[this.state.selectedIndex]}
+              className={classes.root}
+              primary={options[this.selectedIndex]}
+              disableTypography
             />
           </ListItem>
         </List>
         <Menu
           id="lock-menu"
-          anchorEl={this.state.anchorEl}
-          open={this.state.open}
+          anchorEl={this.anchorEl}
+          open={this.open}
           onRequestClose={this.handleRequestClose}
         >
           {options.map((option, index) =>
             (<MenuItem
               key={option}
-              selected={index === this.state.selectedIndex}
+              selected={index === this.selectedIndex}
               onClick={event => this.handleMenuItemClick(event, index)}
             >
               {option}
-            </MenuItem>),
+            </MenuItem>)
           )}
         </Menu>
       </div>
@@ -80,7 +84,9 @@ class SingleSelect extends React.Component {
 }
 
 SingleSelect.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.shape({
+    root: PropTypes.string.isRequired
+  }).isRequired
 };
 
 export default withStyles(styleSheet)(SingleSelect);

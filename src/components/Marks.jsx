@@ -6,7 +6,6 @@ import Filter from './Filter.jsx';
 import Immutable from 'immutable';
 import PropTypes from 'prop-types';
 import React from 'react';
-import SingleSelect from './SingleSelect.jsx';
 import Subject from './Subject.jsx';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
@@ -30,6 +29,11 @@ const styleSheet = createStyleSheet('Marks', {
 class Marks extends React.Component {
   @observable selectedSessionTypes = Immutable.Set(Filter.sessionTypes.map((_, index) => index));
   @observable selectedWeightings = Immutable.Set(Filter.weightings.map((_, index) => index));
+  @observable selectedSemesters = Immutable.Set(Filter.semesters.map((_, index) => index));
+
+  handleSemesterSet = (semesters) => {
+    this.selectedSemesters = semesters;
+  }
 
   handleSessionSet = (sessionTypes) => {
     this.selectedSessionTypes = sessionTypes;
@@ -59,14 +63,15 @@ class Marks extends React.Component {
 
     return (
       <div>
-        <SingleSelect />
         <Filter
+          compactViewChecked={compactViewChecked}
+          handleCompactViewCheck={() => this.props.handleCompactViewCheck()}
+          selectedSemesters={this.selectedSemesters}
           selectedSessionTypes={this.selectedSessionTypes}
           selectedWeightings={this.selectedWeightings}
-          compactViewChecked={compactViewChecked}
+          setSemesters={selected => this.handleSemesterSet(selected)}
           setSessionTypes={selected => this.handleSessionSet(selected)}
           setWeightings={selected => this.handleWeightingSet(selected)}
-          handleCompactViewCheck={() => this.props.handleCompactViewCheck()}
         />
         <div className={subjectsContainerClass}>
           {subjectElements}

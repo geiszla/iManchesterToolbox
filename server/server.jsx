@@ -116,12 +116,11 @@ function renderPage(reactApp, client, sheetsRegistry) {
 
           <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
           <link rel="stylesheet" type="text/css" href="styles.css">
-          
-          <script src="bundle.js"></script>
         </head>
         <body>
           <div id="root">${content}</div>
           <style id="jss-server-side">${css}</style>
+          <script src="bundle.js"></script>
         </body>
       </html>
     `;
