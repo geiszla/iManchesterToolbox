@@ -132,14 +132,14 @@ const options = {
 };
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
+const port = process.env.PORT || 443;
 if (process.env.NODE_ENV === 'production') {
-  http.createServer(app).listen(80);
+  http.createServer(app).listen(port);
 } else {
   http.createServer(unsecureApp).listen(8080);
   https.createServer(options, app).listen(443);
 }
 
-const port = process.env.NODE_ENV === 'production' ? 80 : 443;
 console.log(`Server is started on port ${port}.`);
 
 // getMarks('mbaxaag2');
