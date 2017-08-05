@@ -7,7 +7,7 @@
     "url": "https://github.com/geiszla/iManchesterToolbox.git"
   },
   "scripts": {
-    "prestart": "rollup -c rollup/client_prod.config.js && rollup -c rollup/server.config.js",
+    "heroku-potbuild": "rollup -c rollup/client_prod.config.js && rollup -c rollup/server.config.js",
     "start": "node server.bundle.js",
     "server": "nodemon -e js,jsx --watch server --watch rollup/server.config.js --watch rollup/build_options.js --watch src --exec yarn start:server",
     "start:server": "rollup -c rollup/server.config.js && node server.bundle.js",
