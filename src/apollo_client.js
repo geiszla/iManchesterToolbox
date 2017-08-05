@@ -9,7 +9,7 @@ export default (ssrMode, headers) => {
   return new ApolloClient({
     ssrMode,
     networkInterface: createNetworkInterface({
-      uri: 'http://localhost/api',
+      uri: API_URL,
       opts
     })
   });
