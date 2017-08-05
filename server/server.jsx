@@ -33,8 +33,6 @@ unsecureApp.get('*', (req, res) => {
   res.redirect(`https://localhost${req.originalUrl}`);
 });
 
-http.createServer(unsecureApp).listen(8080);
-
 //  HTTPS Webserver
 const app = express();
 app.use(morgan(':method :url :status :response-time ms - :res[content-length]'));
@@ -133,8 +131,16 @@ const options = {
   passphrase: 'iManT'
 };
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-https.createServer(options, app).listen(443);
-console.log('Server is started.');
+
+if (process.env.NODE_ENV === 'production') {
+  http.createServer(app).listen(80);
+} else {
+  http.createServer(unsecureApp).listen(8080);
+  https.createServer(options, app).listen(443);
+}
+
+const port = process.env.NODE_ENV === 'production' ? 80 : 443;
+console.log(`Server is started on port ${port}.`);
 
 // getMarks('mbaxaag2');
 // prompt.start();
