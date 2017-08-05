@@ -116,6 +116,5 @@ typings/
 
 # Node.js
 server.bundle.js
-www/styles.css
 www/bundle.js
 !www/external/
