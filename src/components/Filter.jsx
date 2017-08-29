@@ -1,3 +1,4 @@
+import { PropTypes, observer } from 'mobx-react';
 import { createStyleSheet, withStyles } from 'material-ui/styles';
 
 import AppBar from 'material-ui/AppBar';
@@ -6,8 +7,8 @@ import FilterListIcon from 'material-ui-icons/FilterList';
 import { FormControlLabel } from 'material-ui/Form';
 import IconButton from 'material-ui/IconButton';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import PropTypes from 'prop-types';
 import React from 'react';
+import ReactPropTypes from 'prop-types';
 import Select from './Select.jsx';
 import SingleSelect from './SingleSelect.jsx';
 import Switch from 'material-ui/Switch';
@@ -15,7 +16,6 @@ import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import { grey } from 'material-ui/colors';
 import { observable } from 'mobx';
-import { observer } from 'mobx-react';
 
 const styleSheet = createStyleSheet('Filter', {
   root: {
@@ -42,9 +42,8 @@ const styleSheet = createStyleSheet('Filter', {
 
 @observer
 class Filter extends React.Component {
-  static sessionTypes = ['Laboratory', 'Examples class', 'Test', 'Exam'];
-  static weightings = ['10', '20', '30'];
-  static semesters = ['Semester 1', 'Semester 2'];
+  // static sessionTypes = ['Laboratory', 'Examples class', 'Test', 'Exam'];
+  // static weightings = ['10', '20', '30'];
 
   componentDidMount = () => {
     this.updateWindowWidth();
@@ -58,32 +57,34 @@ class Filter extends React.Component {
   @observable isMobile = true;
 
   updateWindowWidth = () => {
-    this.isMobile = window.innerWidth < 850;
+    this.isMobile = window.innerWidth < 650;
   }
 
   handleSelect = (type, value) => {
     if (type === 'semester') {
       const selected = this.props.selectedSemesters;
+
       if (selected.has(value)) {
-        this.props.setSemesters(selected.delete(value));
+        this.props.handleSemesterChange(selected.delete(value));
       } else {
-        this.props.setSemesters(selected.add(value));
-      }
-    } else if (type === 'session') {
-      const selected = this.props.selectedSessionTypes;
-      if (selected.has(value)) {
-        this.props.setSessionTypes(selected.delete(value));
-      } else {
-        this.props.setSessionTypes(selected.add(value));
-      }
-    } else if (type === 'weighting') {
-      const selected = this.props.selectedWeightings;
-      if (selected.has(value)) {
-        this.props.setWeightings(selected.delete(value));
-      } else {
-        this.props.setWeightings(selected.add(value));
+        this.props.handleSemesterChange(selected.add(value));
       }
     }
+    // else if (type === 'session') {
+    //   const selected = this.props.selectedSessionTypes;
+    //   if (selected.has(value)) {
+    //     this.props.setSessionTypes(selected.delete(value));
+    //   } else {
+    //     this.props.setSessionTypes(selected.add(value));
+    //   }
+    // } else if (type === 'weighting') {
+    //   const selected = this.props.selectedWeightings;
+    //   if (selected.has(value)) {
+    //     this.props.setWeightings(selected.delete(value));
+    //   } else {
+    //     this.props.setWeightings(selected.add(value));
+    //   }
+    // }
   }
 
   render() {
@@ -119,13 +120,17 @@ class Filter extends React.Component {
         <Toolbar>
           <FilterListIcon />
           <div className={classes.flex}>
-            <Typography type="title" color="inherit" >Marks</Typography>
+            <Typography type="title" color="inherit">Marks</Typography>
             {!this.isMobile ? compactViewToggle : null}
           </div>
-          <SingleSelect />
+          <SingleSelect
+            options={this.props.years}
+            selected={this.props.selectedYear}
+            onChange={selectedYear => this.props.handleYearChange(selectedYear)}
+          />
           <Select
             title={selectedSemestersString}
-            optionList={Filter.semesters}
+            optionList={this.props.semesters.map(semester => `Semester ${semester}`)}
             selected={this.props.selectedSemesters}
             handleSelect={value => this.handleSelect('semester', value)}
           />
@@ -139,21 +144,21 @@ class Filter extends React.Component {
 }
 
 Filter.propTypes = {
-  classes: PropTypes.shape({
-    root: PropTypes.string.isRequired,
-    flex: PropTypes.string.isRequired,
-    compactRoot: PropTypes.string.isRequired,
-    bar: PropTypes.string.isRequired,
-    checked: PropTypes.string.isRequired
+  classes: ReactPropTypes.shape({
+    root: ReactPropTypes.string.isRequired,
+    flex: ReactPropTypes.string.isRequired,
+    compactRoot: ReactPropTypes.string.isRequired,
+    bar: ReactPropTypes.string.isRequired,
+    checked: ReactPropTypes.string.isRequired
   }).isRequired,
-  compactViewChecked: PropTypes.bool.isRequired,
-  handleCompactViewCheck: PropTypes.func.isRequired,
+  compactViewChecked: ReactPropTypes.bool.isRequired,
+  handleCompactViewCheck: ReactPropTypes.func.isRequired,
+  years: PropTypes.observableArrayOf(ReactPropTypes.string).isRequired,
+  selectedYear: ReactPropTypes.number.isRequired,
+  handleYearChange: ReactPropTypes.func.isRequired,
+  semesters: ImmutablePropTypes.list.isRequired,
   selectedSemesters: ImmutablePropTypes.set.isRequired,
-  selectedSessionTypes: ImmutablePropTypes.set.isRequired,
-  selectedWeightings: ImmutablePropTypes.set.isRequired,
-  setSemesters: PropTypes.func.isRequired,
-  setSessionTypes: PropTypes.func.isRequired,
-  setWeightings: PropTypes.func.isRequired
+  handleSemesterChange: ReactPropTypes.func.isRequired
 };
 
 export default withStyles(styleSheet)(Filter);

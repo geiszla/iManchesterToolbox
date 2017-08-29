@@ -11,7 +11,8 @@ import { red } from 'material-ui/colors';
 const styleSheet = createStyleSheet('SessionCard', {
   details: {
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    paddingBottom: '4px'
   },
   content: {
     flex: '1 0 auto'
@@ -79,8 +80,10 @@ function SessionCard(props) {
       title.push('Late');
     }
 
+    const sessionKey = sessionData.name + sessionData.weighting;
+
     return (
-      <div key={sessionData.name} className={classes.session}>
+      <div key={sessionKey} className={classes.session}>
         <div className={classes.sessionTitle}>
           {sessionData.name}
         </div>

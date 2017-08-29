@@ -48,7 +48,7 @@ class Select extends React.Component {
           onRequestClose={this.handleRequestClose}
         >
           {this.props.optionList.map((value, index) => (
-            <MenuItem key={index} onClick={() => this.props.handleSelect(index)}>
+            <MenuItem key={value} onClick={() => this.props.handleSelect(index)}>
               <Checkbox
                 checked={this.props.selected.has(index)}
                 tabIndex="-1"
@@ -68,7 +68,7 @@ Select.propTypes = {
     label: PropTypes.string.isRequired
   }).isRequired,
   title: PropTypes.string.isRequired,
-  optionList: PropTypes.arrayOf(PropTypes.string).isRequired,
+  optionList: ImmutablePropTypes.list.isRequired,
   selected: ImmutablePropTypes.set.isRequired,
   handleSelect: PropTypes.func.isRequired
 };

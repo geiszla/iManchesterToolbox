@@ -18,8 +18,7 @@ const styleSheet = createStyleSheet('Marks', {
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    margin: '0 5px',
-    '@media (max-width: 800px)': {
+    '@media (max-width: 730px)': {
       display: 'block'
     }
   }
@@ -27,21 +26,55 @@ const styleSheet = createStyleSheet('Marks', {
 
 @observer
 class Marks extends React.Component {
-  @observable selectedSemesters = Immutable.Set(Filter.semesters.map((_, index) => index));
-  @observable selectedSessionTypes = Immutable.Set(Filter.sessionTypes.map((_, index) => index));
-  @observable selectedWeightings = Immutable.Set(Filter.weightings.map((_, index) => index));
+  constructor(props) {
+    super();
+    this.getYearsAndSemesters(props);
+  }
 
-  handleSemesterSet = (semesters) => {
+  componentWillReceiveProps = (nextProps) => {
+    if (this.props.data.loading) this.getYearsAndSemesters(nextProps);
+  }
+
+  getYearsAndSemesters = (props) => {
+    if (!props.data.loading) {
+      this.years = props.data.getMarks.years.map(year =>
+        `20${year.schoolYear[0]}/${year.schoolYear[1]}`
+      );
+
+      const semesters = new Set();
+      props.data.getMarks.years[this.selectedYear].subjects.forEach((subject) => {
+        subject.classes.forEach((currClass) => {
+          if (currClass.semester !== null) this.semesters = semesters.add(currClass.semester);
+        });
+      });
+
+      this.semesters = Immutable.List(semesters);
+      this.selectedSemesters = Immutable.Set([semesters.size - 1]);
+    }
+  }
+
+  @observable years = [];
+  @observable selectedYear = 0;
+  @observable semesters = Immutable.List();
+  @observable selectedSemesters = Immutable.Set();
+
+  // @observable selectedWeightings = Immutable.Set(Filter.weightings.map((_, index) => index));
+
+  handleYearChange = (selectedYear) => {
+    this.selectedYear = selectedYear;
+  }
+
+  handleSemesterChange = (semesters) => {
     this.selectedSemesters = semesters;
   }
 
-  handleSessionSet = (sessionTypes) => {
-    this.selectedSessionTypes = sessionTypes;
-  }
+  // handleSessionSet = (sessionTypes) => {
+  //   this.selectedSessionTypes = sessionTypes;
+  // }
 
-  handleWeightingSet = (weightings) => {
-    this.selectedWeightings = weightings;
-  }
+  // handleWeightingSet = (weightings) => {
+  //   this.selectedWeightings = weightings;
+  // }
 
   render() {
     if (this.props.data.loading) return (<div />);
@@ -53,24 +86,33 @@ class Marks extends React.Component {
     let subjectsContainerClass = classes.subjectsContainer;
     if (compactViewChecked) subjectsContainerClass += ` ${classes.compactSubjectsContainer}`;
 
-    const subjects = this.props.data.getMarks.subjects;
+    const subjects = this.props.data.getMarks.years[this.selectedYear].subjects;
     return (
       <div>
         <Filter
           compactViewChecked={compactViewChecked}
           handleCompactViewCheck={() => this.props.handleCompactViewCheck()}
+
+          years={this.years}
+          selectedYear={this.selectedYear}
+          handleYearChange={selectedYear => this.handleYearChange(selectedYear)}
+
+          semesters={this.semesters}
           selectedSemesters={this.selectedSemesters}
-          selectedSessionTypes={this.selectedSessionTypes}
-          selectedWeightings={this.selectedWeightings}
-          setSemesters={selected => this.handleSemesterSet(selected)}
-          setSessionTypes={selected => this.handleSessionSet(selected)}
-          setWeightings={selected => this.handleWeightingSet(selected)}
+          handleSemesterChange={selected => this.handleSemesterChange(selected)}
+
+          // selectedSessionTypes={this.selectedSessionTypes}
+          // selectedWeightings={this.selectedWeightings}
+          // setSessionTypes={selected => this.handleSessionSet(selected)}
+          // setWeightings={selected => this.handleWeightingSet(selected)}
         />
         <div className={subjectsContainerClass}>
           {subjects.map(subjectData => (
             <Subject
               key={subjectData._id}
               subject={filter(Subject.fragments.subject, subjectData)}
+              selectedSemesters={this.selectedSemesters
+                .map(semesterNumber => this.semesters.get(semesterNumber))}
               compactViewChecked={compactViewChecked}
             />
           ))}
@@ -83,10 +125,12 @@ class Marks extends React.Component {
 export const MarksQuery = gql`
   query Marks {
     getMarks {
-      number
-      schoolYear
-      subjects {
-        ...SubjectPageSubject
+      years {
+        number
+        schoolYear
+        subjects {
+          ...SubjectPageSubject
+        }
       }
     }
   }

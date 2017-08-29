@@ -27,7 +27,7 @@ module.exports = {
           'MuiThemeProvider', 'createMuiTheme', 'createStyleSheet', 'withStyles'
         ],
         'material-ui/Tabs': ['Tab'],
-        'mobx-react': ['observer'],
+        'mobx-react': ['observer', 'PropTypes'],
         'react-dom': ['render'],
         'node_modules/react-apollo/react-apollo.browser.umd.js': [
           'ApolloProvider', 'ApolloClient', 'compose', 'graphql', 'gql'

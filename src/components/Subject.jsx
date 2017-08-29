@@ -2,6 +2,7 @@ import { createStyleSheet, withStyles } from 'material-ui/styles';
 import { filter, propType } from 'graphql-anywhere';
 
 import Card from 'material-ui/Card';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
 import React from 'react';
 import SessionCard from './SessionCard.jsx';
@@ -21,7 +22,7 @@ const styleSheet = createStyleSheet('Subject', {
     minWidth: '20%',
     maxWidth: '49%',
     flexGrow: 1,
-    '@media (max-width: 850px)': {
+    '@media (max-width: 730px)': {
       maxWidth: 'none'
     },
     '@media (min-width: 1500px)': {
@@ -55,12 +56,15 @@ function Subject(props) {
   const subject = props.subject;
 
   // Prepare session cards
-  const sessionCards = subject.classes.filter(classData => !classData.isFinal).map(classData => (
-    <SessionCard
-      key={classData._id}
-      class={filter(SessionCard.fragments.class, classData)}
-    />
-  ));
+  const sessionCards = subject.classes
+    .filter(classData => !classData.isFinal
+      && (classData.semester === null || props.selectedSemesters.has(classData.semester)))
+    .map(classData => (
+      <SessionCard
+        key={classData._id}
+        class={filter(SessionCard.fragments.class, classData)}
+      />
+    ));
 
   // Apply compact view if appropriate
   const compactViewChecked = props.compactViewChecked;
@@ -111,7 +115,9 @@ Subject.propTypes = {
     sessionContainer: PropTypes.string.isRequired,
     flex: PropTypes.string.isRequired
   }).isRequired,
-  subject: propType(Subject.fragments.subject).isRequired
+  subject: propType(Subject.fragments.subject).isRequired,
+  compactViewChecked: PropTypes.bool.isRequired,
+  selectedSemesters: ImmutablePropTypes.set.isRequired
 };
 
 export default withStyles(styleSheet)(Subject);
