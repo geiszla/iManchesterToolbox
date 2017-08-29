@@ -1,5 +1,4 @@
 import Card, { CardActions, CardContent } from 'material-ui/Card';
-import { createStyleSheet, withStyles } from 'material-ui/styles';
 
 import Button from 'material-ui/Button';
 import DocumentTitle from 'react-document-title';
@@ -8,8 +7,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Typography from 'material-ui/Typography';
 import { withRouter } from 'react-router-dom';
+import { withStyles } from 'material-ui/styles';
 
-const styleSheet = createStyleSheet('Login', {
+const styles = {
   card: {
     maxWidth: 345,
     margin: 'auto',
@@ -21,7 +21,7 @@ const styleSheet = createStyleSheet('Login', {
   cardActions: {
     float: 'right'
   }
-});
+};
 
 function Login(props) {
   const classes = props.classes;
@@ -53,4 +53,4 @@ Login.propTypes = {
   handleLogin: PropTypes.func.isRequired
 };
 
-export default withRouter(withStyles(styleSheet)(Login));
+export default withRouter(withStyles(styles)(Login));

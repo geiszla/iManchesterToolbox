@@ -1,4 +1,3 @@
-import { createStyleSheet, withStyles } from 'material-ui/styles';
 import { filter, propType } from 'graphql-anywhere';
 
 import Card from 'material-ui/Card';
@@ -7,8 +6,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import SessionCard from './SessionCard.jsx';
 import { gql } from 'react-apollo';
+import { withStyles } from 'material-ui/styles';
 
-const styleSheet = createStyleSheet('Subject', {
+const styles = {
   subjectContainer: {
     margin: '15px 0',
     '@media (max-width: 500px)': {
@@ -50,7 +50,7 @@ const styleSheet = createStyleSheet('Subject', {
   flex: {
     flex: 1
   }
-});
+};
 
 function Subject(props) {
   const subject = props.subject;
@@ -120,4 +120,4 @@ Subject.propTypes = {
   selectedSemesters: ImmutablePropTypes.set.isRequired
 };
 
-export default withStyles(styleSheet)(Subject);
+export default withStyles(styles)(Subject);

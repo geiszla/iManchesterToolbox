@@ -1,5 +1,4 @@
 import { PropTypes, observer } from 'mobx-react';
-import { createStyleSheet, withStyles } from 'material-ui/styles';
 
 import AppBar from 'material-ui/AppBar';
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
@@ -16,8 +15,9 @@ import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import { grey } from 'material-ui/colors';
 import { observable } from 'mobx';
+import { withStyles } from 'material-ui/styles';
 
-const styleSheet = createStyleSheet('Filter', {
+const styles = {
   root: {
     marginTop: '30px'
   },
@@ -37,8 +37,12 @@ const styleSheet = createStyleSheet('Filter', {
     '& + $bar': {
       backgroundColor: grey[50]
     }
+  },
+  label: {
+    color: 'white',
+    fontSize: '15px'
   }
-});
+};
 
 @observer
 class Filter extends React.Component {
@@ -105,6 +109,9 @@ class Filter extends React.Component {
             aria-label="compactViewChecked"
           />
         }
+        classes={{
+          label: classes.label
+        }}
         label="Compact View"
       />
     );
@@ -161,4 +168,4 @@ Filter.propTypes = {
   handleSemesterChange: ReactPropTypes.func.isRequired
 };
 
-export default withStyles(styleSheet)(Filter);
+export default withStyles(styles)(Filter);

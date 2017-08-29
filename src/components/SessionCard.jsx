@@ -1,5 +1,4 @@
 import Card, { CardContent } from 'material-ui/Card';
-import { createStyleSheet, withStyles } from 'material-ui/styles';
 
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -7,8 +6,9 @@ import Typography from 'material-ui/Typography';
 import { gql } from 'react-apollo';
 import { propType } from 'graphql-anywhere';
 import { red } from 'material-ui/colors';
+import { withStyles } from 'material-ui/styles';
 
-const styleSheet = createStyleSheet('SessionCard', {
+const styles = {
   details: {
     display: 'flex',
     flexDirection: 'column',
@@ -59,7 +59,7 @@ const styleSheet = createStyleSheet('SessionCard', {
     backgroundColor: red[500],
     color: 'white'
   }
-});
+};
 
 function SessionCard(props) {
   const currClass = props.class;
@@ -167,4 +167,4 @@ SessionCard.propTypes = {
   class: propType(SessionCard.fragments.class).isRequired
 };
 
-export default withStyles(styleSheet)(SessionCard);
+export default withStyles(styles)(SessionCard);

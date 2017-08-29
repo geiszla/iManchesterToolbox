@@ -1,11 +1,11 @@
 import Card, { CardContent } from 'material-ui/Card';
-import { createStyleSheet, withStyles } from 'material-ui/styles';
 
 import PropTypes from 'prop-types';
 import React from 'react';
 import Typography from 'material-ui/Typography';
+import { withStyles } from 'material-ui/styles';
 
-const styleSheet = createStyleSheet('StatusCard', {
+const styles = {
   card: {
     display: 'flex',
     flexGrow: 1,
@@ -19,7 +19,7 @@ const styleSheet = createStyleSheet('StatusCard', {
   content: {
     flex: '1 0 auto'
   }
-});
+};
 
 function StatusCard(props) {
   const classes = props.classes;
@@ -42,4 +42,4 @@ StatusCard.propTypes = {
   }).isRequired
 };
 
-export default withStyles(styleSheet)(StatusCard);
+export default withStyles(styles)(StatusCard);

@@ -1,4 +1,3 @@
-import { createStyleSheet, withStyles } from 'material-ui/styles';
 import { filter, propType } from 'graphql-anywhere';
 import { gql, graphql } from 'react-apollo';
 
@@ -9,8 +8,9 @@ import React from 'react';
 import Subject from './Subject.jsx';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
+import { withStyles } from 'material-ui/styles';
 
-const styleSheet = createStyleSheet('Marks', {
+const styles = {
   subjectsContainer: {
     margin: '0 5px'
   },
@@ -22,7 +22,7 @@ const styleSheet = createStyleSheet('Marks', {
       display: 'block'
     }
   }
-});
+};
 
 @observer
 class Marks extends React.Component {
@@ -154,5 +154,5 @@ Marks.propTypes = {
   }).isRequired
 };
 
-export default graphql(MarksQuery)(withStyles(styleSheet)(Marks));
+export default graphql(MarksQuery)(withStyles(styles)(Marks));
 

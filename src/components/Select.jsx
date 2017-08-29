@@ -1,5 +1,4 @@
 import Menu, { MenuItem } from 'material-ui/Menu';
-import { createStyleSheet, withStyles } from 'material-ui/styles';
 
 import Button from 'material-ui/Button';
 import Checkbox from 'material-ui/Checkbox';
@@ -8,12 +7,13 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
+import { withStyles } from 'material-ui/styles';
 
-const styleSheet = createStyleSheet('Select', {
+const styles = {
   label: {
     fontSize: '15px'
   }
-});
+};
 
 @observer
 class Select extends React.Component {
@@ -73,4 +73,4 @@ Select.propTypes = {
   handleSelect: PropTypes.func.isRequired
 };
 
-export default withStyles(styleSheet)(Select);
+export default withStyles(styles)(Select);

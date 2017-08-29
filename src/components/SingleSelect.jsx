@@ -1,20 +1,19 @@
 import List, { ListItem, ListItemText } from 'material-ui/List';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import { PropTypes, observer } from 'mobx-react';
-import { createStyleSheet, withStyles } from 'material-ui/styles';
 
-import ImmutablePropTypes from 'react-immutable-proptypes';
 import React from 'react';
 import ReactPropTypes from 'prop-types';
 import { observable } from 'mobx';
+import { withStyles } from 'material-ui/styles';
 
-const styleSheet = createStyleSheet('SingleSelect', {
+const styles = {
   root: {
     padding: 0,
     fontWeight: 500,
     textTransform: 'uppercase'
   }
-});
+};
 
 @observer
 class SingleSelect extends React.Component {
@@ -85,4 +84,4 @@ SingleSelect.propTypes = {
   selected: ReactPropTypes.number.isRequired
 };
 
-export default withStyles(styleSheet)(SingleSelect);
+export default withStyles(styles)(SingleSelect);

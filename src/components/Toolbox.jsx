@@ -1,5 +1,4 @@
 import { Redirect, Route, Switch, withRouter } from 'react-router-dom';
-import { createStyleSheet, withStyles } from 'material-ui/styles';
 
 import DocumentTitle from 'react-document-title';
 import Marks from './Marks.jsx';
@@ -11,8 +10,9 @@ import StatusCard from './StatusCard.jsx';
 import Timetable from './Timetable.jsx';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
+import { withStyles } from 'material-ui/styles';
 
-const styleSheet = createStyleSheet('Toolbox', {
+const styles = {
   root: {
     minWidth: '430px'
   },
@@ -34,7 +34,7 @@ const styleSheet = createStyleSheet('Toolbox', {
       flexDirection: 'column'
     }
   }
-});
+};
 
 @observer
 class Toolbox extends React.Component {
@@ -123,4 +123,4 @@ Toolbox.propTypes = {
   }).isRequired
 };
 
-export default withStyles(styleSheet)(withRouter(Toolbox));
+export default withStyles(styles)(withRouter(Toolbox));

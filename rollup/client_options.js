@@ -24,7 +24,7 @@ module.exports = {
         'material-ui/List': ['ListItem', 'ListItemText'],
         'material-ui/Menu': ['MenuItem'],
         'material-ui/styles': [
-          'MuiThemeProvider', 'createMuiTheme', 'createStyleSheet', 'withStyles'
+          'MuiThemeProvider', 'createMuiTheme', 'withStyles'
         ],
         'material-ui/Tabs': ['Tab'],
         'mobx-react': ['observer', 'PropTypes'],
