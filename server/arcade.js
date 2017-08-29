@@ -1,59 +1,69 @@
+import NodeSsh from 'node-ssh';
 import Promise from 'bluebird';
-// import ssh from 'ssh2';
+
+const ssh = new NodeSsh();
 const fs = Promise.promisifyAll(require('fs'));
 
 export default function getMarks(username, password) {
-  fs.readFileAsync('test.txt').then((data) => {
-    const marks = parseMarks(data.toString(), 'mbaxaag2');
+  const host = 'kilburn.cs.manchester.ac.uk';
+  const scriptPath = `/home/${username}/.imant`;
 
-    fs.writeFileAsync('test.json', JSON.stringify(marks, null, 2)).then(() => {
-      console.log('Parsing succesfully finished.');
-    }).catch(err => console.log(err));
-  }).catch(err => console.log(err));
+  ssh
+    .connect({
+      host,
+      port: 22,
+      username,
+      password
+    })
+    .then(() =>
+      ssh.putFile('./server/arcade.py', `${scriptPath}/arcade.py`)
+    )
+    .then(() => {
+      console.log('Script copied.');
 
-  // const Client = ssh.Client;
+      return new Promise((resolve, reject) => {
+        const connection = ssh.connection;
+        const startCommand = `python3 ${scriptPath}/arcade.py`;
 
-  // const conn = new Client();
-  // conn.on('ready', function () {
-  //   const startCommand = 'java -classpath /opt/teaching/lib/ARCADE TClient';
+        connection.on('ready', () => {
+          console.log('ready');
+        });
 
-  //   let isConnected = false;
-  //   let startListening = false;
-  //   let responseString = '';
-  //   conn.exec(startCommand, function (err, stream) {
-  //     if (err) throw err;
+        connection.exec(startCommand, (err, stream) => {
+          if (err) reject(err);
 
-  //     console.log('Connecting to Arcade...');
+          stream.on('close', () => {
+            console.log('Finished');
+            resolve();
+          }).on('data', (data) => {
+            console.log(`Progress: ${data}`);
+          }).stderr.on('data', (data) => {
+            console.log(`Error: ${data}`);
+          });
+        });
+      });
+    })
+    .then(() => {
+      fs.statAsync('tmp/').catch(() => { fs.mkdir('tmp/'); });
 
-  //     stream.on('close', function (code, signal) {
-  //       parseMarks(responseString);
-  //       conn.end();
-  //     }).on('data', function (data) {
-  //       if (!isConnected && data.toString() === 'Initialisation completed') {
-  //         console.log('Arcade: Succesfully connected.');
-  //         isConnected = true;
-  //       }
+      return ssh.getFile(`tmp/${username}result0.txt`, `${scriptPath}/finalresult0.txt`);
+    })
+    .then(() => {
+      console.log('Result file copied.');
 
-  //       if (isConnected && data.toString().includes('Running query')) {
-  //         console.log('Arcade: Query sent.');
-  //         startListening = true;
-  //       }
+      ssh.dispose();
+      return fs.readFileAsync(`tmp/${username}result0.txt`);
+    })
+    .then((data) => {
+      const marks = parseMarks(data.toString(), username);
 
-  //       if (startListening) {
-  //         responseString += data.toString();
-  //       }
-  //     }).stderr.on('data', function (data) {
-  //       console.log('SSH Error: ' + data);
-  //     });
-
-  //     stream.end('c\n+\n2\nq\nq\nr\nx\n');
-  //   });
-  // }).connect({
-  //   host: 'kilburn.cs.manchester.ac.uk',
-  //   port: 22,
-  //   username: username,
-  //   password: password
-  // });
+      fs.writeFileAsync('test.json', JSON.stringify(marks, null, 2)).then(() => {
+        console.log('Parsing succesfully finished.');
+      }).catch(err => console.log(err));
+    })
+    .catch((err) => {
+      console.error(err);
+    });
 }
 
 function parseMarks(inputString, username) {
@@ -67,11 +77,20 @@ function parseMarks(inputString, username) {
   while ((databaseMatch = databaseRegex.exec(inputString))) {
     if (databaseMatch[4] === 'X') continue;
 
-    const currYear = {
-      number: parseInt(databaseMatch[3], 10),
-      schoolYear: [parseInt(databaseMatch[1], 10), parseInt(databaseMatch[2], 10)]
-    };
-    currYear.subjects = [];
+    const yearNumber = parseInt(databaseMatch[3], 10);
+    const matchingYears = marksData.years.filter(year => year.number === yearNumber);
+
+    let currYear;
+    if (currYear.length > 0) {
+      currYear = matchingYears[0];
+    } else {
+      currYear = {
+        number: yearNumber,
+        schoolYear: [parseInt(databaseMatch[1], 10), parseInt(databaseMatch[2], 10)]
+      };
+    }
+
+    const subjects = [];
 
     // Parse tables
     const tableRegex = /Table (([0-9]{3})(s([0-9]))?([a-zA-Z]?)(fin)?|[^:]*)/g;
@@ -151,8 +170,10 @@ function parseMarks(inputString, username) {
         if (currSubject._id === null) currSubject._id = currClass._id;
         if (currSubject.name === null) currSubject.name = currClass._id;
 
-        currYear.subjects.push(currSubject);
+        subjects.push(currSubject);
       }
+
+      currYear.subjects = subjects.sort((a, b) => a._id < b._id);
     }
 
     marksData.years.push(currYear);
@@ -173,7 +194,7 @@ const subjectTypes = {
   L: 'Lab',
   E: 'Examples class',
   T: 'Test',
-  C: 'Clinic',
+  C: 'Tutorial',
   X: 'Exam'
 };
 

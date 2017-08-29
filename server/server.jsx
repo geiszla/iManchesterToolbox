@@ -22,6 +22,7 @@ import https from 'https';
 import jssPreset from 'jss-preset-default';
 import muiTheme from '../src/theme.js';
 import path from 'path';
+import prompt from 'prompt';
 import session from 'express-session';
 
 const morgan = require('morgan');
@@ -142,13 +143,11 @@ if (process.env.NODE_ENV === 'production') {
 
 console.log(`Server is started on port ${port}.`);
 
-// getMarks('mbaxaag2');
 // prompt.start();
 // prompt.get('password', (err, result) => {
 //   if (err) return;
-//   else {
-//     getMarks("mbaxaag2", result.password);
-//   }
+
+//   getMarks('mbaxaag2', result.password);
 // });
 
 // MongoDB

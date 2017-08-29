@@ -38,6 +38,8 @@
     "mobx-react": "^4.2.2",
     "mongoose": "^4.11.5",
     "morgan": "^1.8.2",
+    "node-ssh": "^4.2.3",
+    "prompt": "^1.0.0",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-apollo": "^1.4.10",
@@ -55,8 +57,7 @@
     "rollup-plugin-replace": "^1.1.1",
     "rollup-plugin-uglify": "^2.0.1",
     "rollup-watch": "^4.3.1",
-    "serve-favicon": "^2.4.3",
-    "ssh2": "^0.5.5"
+    "serve-favicon": "^2.4.3"
   },
   "devDependencies": {
     "eslint": "^4.3.0",
