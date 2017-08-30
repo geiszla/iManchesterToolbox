@@ -6,24 +6,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Toolbox from './Toolbox.jsx';
 
-const IsLoggedInQuery = gql`
-  query IsLoggedInQuery {
-    isLoggedIn
-  }
-`;
-
-const LoginUserMutation = gql`
-  mutation LoginUserMutation {
-    loginUser
-  }
-`;
-
-const LogoutUserMutation = gql`
-  mutation LogoutUserMutation {
-    logoutUser
-  }
-`;
-
 class App extends React.Component {
   componentDidMount = () => {
     const jssStyles = document.getElementById('jss-server-side');
@@ -33,7 +15,12 @@ class App extends React.Component {
   }
 
   handleLogin = () => {
-    this.props.loginMutate();
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    this.props.loginMutate({
+      variables: { username, password }
+    });
   }
 
   handleLogout = () => {
@@ -74,6 +61,28 @@ class App extends React.Component {
   }
 }
 
+const IsLoggedInQuery = gql`
+query IsLoggedInQuery {
+  isLoggedIn
+}
+`;
+
+const LoginUserMutation = gql`
+mutation LoginUserMutation($username: String!, $password: String!) {
+  loginUser(username: $username, password: $password)
+}
+`;
+
+const LogoutUserMutation = gql`
+mutation LogoutUserMutation {
+  logoutUser
+}
+`;
+
+const loginMutationOptions = {
+  refetchQueries: ['IsLoggedInQuery', 'FetchStatusQuery']
+};
+
 App.propTypes = {
   data: PropTypes.shape({
     loading: PropTypes.bool,
@@ -85,10 +94,6 @@ App.propTypes = {
   }).isRequired,
   loginMutate: PropTypes.func.isRequired,
   logoutMutate: PropTypes.func.isRequired
-};
-
-const loginMutationOptions = {
-  refetchQueries: ['IsLoggedInQuery']
 };
 
 export default compose(

@@ -23,6 +23,7 @@ module.exports = {
         'material-ui/Form': ['FormControlLabel'],
         'material-ui/List': ['ListItem', 'ListItemText'],
         'material-ui/Menu': ['MenuItem'],
+        'material-ui/Progress': ['CircularProgress'],
         'material-ui/styles': [
           'MuiThemeProvider', 'createMuiTheme', 'withStyles'
         ],

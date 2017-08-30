@@ -4,7 +4,7 @@ import Promise from 'bluebird';
 const ssh = new NodeSsh();
 const fs = Promise.promisifyAll(require('fs'));
 
-export default function getMarks(username, password) {
+export default function getMarks(username, password, session) {
   const host = 'kilburn.cs.manchester.ac.uk';
   const scriptPath = `/home/${username}/.imant`;
 
@@ -15,39 +15,47 @@ export default function getMarks(username, password) {
       username,
       password
     })
-    .then(() =>
-      ssh.putFile('./server/arcade.py', `${scriptPath}/arcade.py`)
-    )
-    .then(() => {
-      console.log('Script copied.');
+    // .then(() =>
+    //   ssh.putFile('./server/arcade.py', `${scriptPath}/arcade.py`)
+    // )
+    // .then(() => {
+    //   console.log('Script copied.');
 
-      return new Promise((resolve, reject) => {
-        const connection = ssh.connection;
-        const startCommand = `python3 ${scriptPath}/arcade.py`;
+    //   return new Promise((resolve, reject) => {
+    //     const connection = ssh.connection;
+    //     const startCommand = `python3 ${scriptPath}/arcade.py`;
 
-        connection.on('ready', () => {
-          console.log('ready');
-        });
+    //     connection.on('ready', () => {
+    //       console.log('ready');
+    //     });
 
-        connection.exec(startCommand, (err, stream) => {
-          if (err) reject(err);
+    //     const progressSeen = [];
+    //     connection.exec(startCommand, (err, stream) => {
+    //       if (err) reject(err);
 
-          stream.on('close', () => {
-            console.log('Finished');
-            resolve();
-          }).on('data', (data) => {
-            console.log(`Progress: ${data}`);
-          }).stderr.on('data', (data) => {
-            console.log(`Error: ${data}`);
-          });
-        });
-      });
-    })
-    .then(() => {
-      fs.statAsync('tmp/').catch(() => { fs.mkdir('tmp/'); });
+    //       stream.on('close', () => {
+    //         console.log('Finished');
+    //         resolve();
+    //       }).on('data', (data) => {
+    //         data.toString().split(/\s*/).forEach((progressString) => {
+    //           if (progressString.trim() !== '' && !isNaN(progressString)) {
+    //             progressSeen.push(parseInt(progressString.trim(), 10));
+    //           }
+    //         });
 
-      return ssh.getFile(`tmp/${username}result0.txt`, `${scriptPath}/finalresult0.txt`);
-    })
+    //         session.fetchStatus = calculateStatus(progressSeen, 3, 6);
+    //         session.save();
+    //       }).stderr.on('data', (data) => {
+    //         console.log(`Error: ${data}`);
+    //       });
+    //     });
+    //   });
+    // })
+    // .then(() => {
+    //   fs.statAsync('tmp/').catch(() => { fs.mkdir('tmp/'); });
+
+    //   return ssh.getFile(`tmp/${username}result0.txt`, `${scriptPath}/finalresult0.txt`);
+    // })
     .then(() => {
       console.log('Result file copied.');
 
@@ -56,14 +64,26 @@ export default function getMarks(username, password) {
     })
     .then((data) => {
       const marks = parseMarks(data.toString(), username);
-
-      fs.writeFileAsync('test.json', JSON.stringify(marks, null, 2)).then(() => {
-        console.log('Parsing succesfully finished.');
-      }).catch(err => console.log(err));
+      session.marks = marks;
+      session.fetchStatus = 100;
+      session.save();
     })
-    .catch((err) => {
-      console.error(err);
+    .catch((_) => {
+      session.fetchStatus = -1;
+      session.save();
     });
+}
+
+function calculateStatus(progressSeen, threadCount, stepCount) {
+  const progressCount = progressSeen.length;
+  const start = progressCount - threadCount;
+  const sortedProgress = progressSeen
+    .sort()
+    .map(value => value + 1)
+    .slice(start, progressCount);
+
+  const status = 100 * sortedProgress.reduce((a, b) => a + b, 0) / (threadCount * stepCount);
+  return Math.round(status - 1);
 }
 
 function parseMarks(inputString, username) {
@@ -73,31 +93,44 @@ function parseMarks(inputString, username) {
 
   // Parse databases
   const databaseRegex = /Database ([0-9]{2})-([0-9]{2})-([0-9])(X?)/g;
-  let databaseMatch;
-  while ((databaseMatch = databaseRegex.exec(inputString))) {
-    if (databaseMatch[4] === 'X') continue;
+  let databaseMatch = databaseRegex.exec(inputString);
+  let nextDatabaseMatch;
+  let databaseString;
+  while (databaseMatch) {
+    nextDatabaseMatch = databaseRegex.exec(inputString);
 
-    const yearNumber = parseInt(databaseMatch[3], 10);
-    const matchingYears = marksData.years.filter(year => year.number === yearNumber);
+    const endIndex = nextDatabaseMatch ? nextDatabaseMatch.index : inputString.length;
+    databaseString = inputString.substring(databaseMatch.index, endIndex);
 
-    let currYear;
-    if (currYear.length > 0) {
-      currYear = matchingYears[0];
-    } else {
-      currYear = {
-        number: yearNumber,
-        schoolYear: [parseInt(databaseMatch[1], 10), parseInt(databaseMatch[2], 10)]
-      };
+    if (databaseMatch[4] === 'X') {
+      databaseMatch = nextDatabaseMatch;
+      continue;
     }
 
-    const subjects = [];
+    const yearNumber = parseInt(databaseMatch[3], 10);
+
+    let currYear;
+    for (let i = 0; i < marksData.years.length; i++) {
+      if (marksData.years[i].number === yearNumber) currYear = marksData.years[i];
+    }
+
+    if (!currYear) {
+      currYear = {
+        number: yearNumber,
+        schoolYear: [parseInt(databaseMatch[1], 10), parseInt(databaseMatch[2], 10)],
+        subjects: []
+      };
+
+      marksData.years.push(currYear);
+    }
+
+    const subjects = currYear.subjects;
 
     // Parse tables
     const tableRegex = /Table (([0-9]{3})(s([0-9]))?([a-zA-Z]?)(fin)?|[^:]*)/g;
-    tableRegex.lastIndex = databaseMatch.index;
 
     let tableMatch;
-    while ((tableMatch = tableRegex.exec(inputString))) {
+    while ((tableMatch = tableRegex.exec(databaseString))) {
       const currClass = {
         _id: tableMatch[1],
         semester: tableMatch[4] ? parseInt(tableMatch[4], 10) : null,
@@ -110,12 +143,12 @@ function parseMarks(inputString, username) {
       };
 
       // Parse rows
-      const weightings = parseRow('Weighting', inputString, tableMatch.index)
+      const weightings = parseRow('Weighting', databaseString, tableMatch.index)
         .map(x => parseInt(x, 10));
-      const denominators = parseRow('Denominator', inputString, tableMatch.index)
+      const denominators = parseRow('Denominator', databaseString, tableMatch.index)
         .map(x => parseInt(x, 10));
-      const names = parseRow('Email Name', inputString, tableMatch.index);
-      const marks = parseRow(username, inputString, tableMatch.index);
+      const names = parseRow('Email Name', databaseString, tableMatch.index);
+      const marks = parseRow(username, databaseString, tableMatch.index);
 
       const sessions = [];
       for (let i = 0; i < names.length; i++) {
@@ -157,7 +190,7 @@ function parseMarks(inputString, username) {
       currClass.sessions = sessions;
 
       // Add current class to appropriate subject
-      const currSubjects = currYear.subjects.filter(subject => subject._id === tableMatch[2]);
+      const currSubjects = subjects.filter(subject => subject._id === tableMatch[2]);
       if (currSubjects.length) {
         currSubjects[0].classes.push(currClass);
       } else {
@@ -172,11 +205,10 @@ function parseMarks(inputString, username) {
 
         subjects.push(currSubject);
       }
-
-      currYear.subjects = subjects.sort((a, b) => a._id < b._id);
     }
 
-    marksData.years.push(currYear);
+    currYear.subjects = subjects.sort((a, b) => a._id.localeCompare(b._id));
+    databaseMatch = nextDatabaseMatch;
   }
 
   return marksData;
