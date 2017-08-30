@@ -15,50 +15,39 @@ export default function getMarks(username, password, session) {
       username,
       password
     })
-    // .then(() =>
-    //   ssh.putFile('./server/arcade.py', `${scriptPath}/arcade.py`)
-    // )
-    // .then(() => {
-    //   console.log('Script copied.');
+    .then(() =>
+      ssh.putFile('./server/arcade.py', `${scriptPath}/arcade.py`)
+    )
+    .then(() => new Promise((resolve, reject) => {
+      const connection = ssh.connection;
+      const startCommand = `python3 ${scriptPath}/arcade.py`;
 
-    //   return new Promise((resolve, reject) => {
-    //     const connection = ssh.connection;
-    //     const startCommand = `python3 ${scriptPath}/arcade.py`;
+      const progressSeen = [];
+      connection.exec(startCommand, (err, stream) => {
+        if (err) reject(err);
 
-    //     connection.on('ready', () => {
-    //       console.log('ready');
-    //     });
+        stream.on('close', () => {
+          resolve();
+        }).on('data', (data) => {
+          data.toString().split(/\s*/).forEach((progressString) => {
+            if (progressString.trim() !== '' && !isNaN(progressString)) {
+              progressSeen.push(parseInt(progressString.trim(), 10));
+            }
+          });
 
-    //     const progressSeen = [];
-    //     connection.exec(startCommand, (err, stream) => {
-    //       if (err) reject(err);
-
-    //       stream.on('close', () => {
-    //         console.log('Finished');
-    //         resolve();
-    //       }).on('data', (data) => {
-    //         data.toString().split(/\s*/).forEach((progressString) => {
-    //           if (progressString.trim() !== '' && !isNaN(progressString)) {
-    //             progressSeen.push(parseInt(progressString.trim(), 10));
-    //           }
-    //         });
-
-    //         session.fetchStatus = calculateStatus(progressSeen, 3, 6);
-    //         session.save();
-    //       }).stderr.on('data', (data) => {
-    //         console.log(`Error: ${data}`);
-    //       });
-    //     });
-    //   });
-    // })
-    // .then(() => {
-    //   fs.statAsync('tmp/').catch(() => { fs.mkdir('tmp/'); });
-
-    //   return ssh.getFile(`tmp/${username}result0.txt`, `${scriptPath}/finalresult0.txt`);
-    // })
+          session.fetchStatus = calculateStatus(progressSeen, 3, 6);
+          session.save();
+        }).stderr.on('data', (data) => {
+          console.log(`Error: ${data}`);
+        });
+      });
+    }))
     .then(() => {
-      console.log('Result file copied.');
+      fs.statAsync('tmp/').catch(() => { fs.mkdir('tmp/'); });
 
+      return ssh.getFile(`tmp/${username}result0.txt`, `${scriptPath}/finalresult0.txt`);
+    })
+    .then(() => {
       ssh.dispose();
       return fs.readFileAsync(`tmp/${username}result0.txt`);
     })
