@@ -1,5 +1,4 @@
 import Menu, { MenuItem } from 'material-ui/Menu';
-import { createStyleSheet, withStyles } from 'material-ui/styles';
 
 import Button from 'material-ui/Button';
 import Checkbox from 'material-ui/Checkbox';
@@ -8,12 +7,13 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
+import { withStyles } from 'material-ui/styles';
 
-const styleSheet = createStyleSheet('Select', {
+const styles = {
   label: {
     fontSize: '15px'
   }
-});
+};
 
 @observer
 class Select extends React.Component {
@@ -48,7 +48,7 @@ class Select extends React.Component {
           onRequestClose={this.handleRequestClose}
         >
           {this.props.optionList.map((value, index) => (
-            <MenuItem key={index} onClick={() => this.props.handleSelect(index)}>
+            <MenuItem key={value} onClick={() => this.props.handleSelect(index)}>
               <Checkbox
                 checked={this.props.selected.has(index)}
                 tabIndex="-1"
@@ -68,9 +68,9 @@ Select.propTypes = {
     label: PropTypes.string.isRequired
   }).isRequired,
   title: PropTypes.string.isRequired,
-  optionList: PropTypes.arrayOf(PropTypes.string).isRequired,
+  optionList: ImmutablePropTypes.list.isRequired,
   selected: ImmutablePropTypes.set.isRequired,
   handleSelect: PropTypes.func.isRequired
 };
 
-export default withStyles(styleSheet)(Select);
+export default withStyles(styles)(Select);

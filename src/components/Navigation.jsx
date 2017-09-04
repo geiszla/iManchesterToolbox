@@ -1,5 +1,4 @@
 import Tabs, { Tab } from 'material-ui/Tabs';
-import { createStyleSheet, withStyles } from 'material-ui/styles';
 
 import AppBar from 'material-ui/AppBar';
 import Paper from 'material-ui/Paper';
@@ -7,8 +6,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
+import { withStyles } from 'material-ui/styles';
 
-const styleSheet = createStyleSheet('Navigation', theme => ({
+const styles = theme => ({
   flex: {
     flex: 1
   },
@@ -16,7 +16,7 @@ const styleSheet = createStyleSheet('Navigation', theme => ({
     backgroundColor: theme.palette.primary[500],
     color: theme.palette.getContrastText(theme.palette.primary[500])
   }
-}));
+});
 
 class Navigation extends React.Component {
   handleTabChange = (_, index) => {
@@ -34,7 +34,7 @@ class Navigation extends React.Component {
               iManchester Toolbox
             </Typography>
             <Tabs
-              index={this.props.selectedPage}
+              value={this.props.selectedPage}
               onChange={(_, index) => this.props.handlePageSelect(index)}
               indicatorColor="primary"
               centered
@@ -59,4 +59,4 @@ Navigation.propTypes = {
   selectedPage: PropTypes.number.isRequired
 };
 
-export default withStyles(styleSheet)(Navigation);
+export default withStyles(styles)(Navigation);

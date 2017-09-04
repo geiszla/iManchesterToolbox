@@ -9,6 +9,8 @@ import {
   GraphQLString
 } from 'graphql';
 
+import getMarks from './arcade.js';
+
 const testMarks = require('./test.json');
 
 const sessionType = new GraphQLObjectType({
@@ -57,12 +59,12 @@ const yearType = new GraphQLObjectType({
   }
 });
 
-// const marksType = new GraphQLObjectType({
-//   name: 'Marks',
-//   fields: {
-//     years: { type: new GraphQLNonNull(new GraphQLList(yearType)) }
-//   }
-// });
+const marksType = new GraphQLObjectType({
+  name: 'Marks',
+  fields: {
+    years: { type: new GraphQLNonNull(new GraphQLList(yearType)) }
+  }
+});
 
 // Queries
 const queryType = new GraphQLObjectType({
@@ -70,12 +72,16 @@ const queryType = new GraphQLObjectType({
   fields: {
     isLoggedIn: {
       type: GraphQLBoolean,
-      // resolve: ({ session }) => session.isLoggedIn === true
-      resolve: () => true
+      resolve: ({ session }) => session.marks
+        || session.isLoggedIn && session.fetchStatus === 100
+    },
+    getFetchStatus: {
+      type: GraphQLInt,
+      resolve: ({ session }) => session.fetchStatus || 0
     },
     getMarks: {
-      type: new GraphQLNonNull(yearType),
-      resolve: () => testMarks.years[0]
+      type: new GraphQLNonNull(marksType),
+      resolve: ({ session }) => session.marks
     }
   }
 });
@@ -86,7 +92,18 @@ const mutationType = new GraphQLObjectType({
   fields: {
     loginUser: {
       type: GraphQLBoolean,
-      resolve: ({ session }) => {
+      args: {
+        username: { type: new GraphQLNonNull(GraphQLString) },
+        password: { type: new GraphQLNonNull(GraphQLString) }
+      },
+      resolve: ({ session }, { username, password }) => {
+        session.fetchStatus = 1;
+        try {
+          getMarks(username, password, session);
+        } catch (_) {
+          return false;
+        }
+
         session.isLoggedIn = true;
         return session.isLoggedIn;
       }
@@ -98,14 +115,16 @@ const mutationType = new GraphQLObjectType({
         return session.isLoggedIn;
       }
     }
-    // addUserAndLogIn: {
-    //   type: userType,
+    // fetchMarks: {
+    //   type: new GraphQLNonNull(marksType),
     //   args: {
     //     username: { type: new GraphQLNonNull(GraphQLString) },
-    //     email: { type: new GraphQLNonNull(GraphQLString) },
     //     password: { type: new GraphQLNonNull(GraphQLString) }
     //   },
-    //   resolve: (root, { username, email, password }) => ({ username, email, password })
+    //   resolve: (_, { username, password }) => {
+    //     getMarks(username, password);
+    //     return testMarks;
+    //   }
     // }
   }
 });

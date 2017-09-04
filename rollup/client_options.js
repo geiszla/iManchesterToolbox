@@ -23,11 +23,12 @@ module.exports = {
         'material-ui/Form': ['FormControlLabel'],
         'material-ui/List': ['ListItem', 'ListItemText'],
         'material-ui/Menu': ['MenuItem'],
+        'material-ui/Progress': ['CircularProgress'],
         'material-ui/styles': [
-          'MuiThemeProvider', 'createMuiTheme', 'createStyleSheet', 'withStyles'
+          'MuiThemeProvider', 'createMuiTheme', 'withStyles'
         ],
         'material-ui/Tabs': ['Tab'],
-        'mobx-react': ['observer'],
+        'mobx-react': ['observer', 'PropTypes'],
         'react-dom': ['render'],
         'node_modules/react-apollo/react-apollo.browser.umd.js': [
           'ApolloProvider', 'ApolloClient', 'compose', 'graphql', 'gql'

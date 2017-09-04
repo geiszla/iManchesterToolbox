@@ -1,59 +1,78 @@
+import NodeSsh from 'node-ssh';
 import Promise from 'bluebird';
-// import ssh from 'ssh2';
+
+const ssh = new NodeSsh();
 const fs = Promise.promisifyAll(require('fs'));
 
-export default function getMarks(username, password) {
-  fs.readFileAsync('test.txt').then((data) => {
-    const marks = parseMarks(data.toString(), 'mbaxaag2');
+export default function getMarks(username, password, session) {
+  const host = 'kilburn.cs.manchester.ac.uk';
+  const scriptPath = `/home/${username}/.imant`;
 
-    fs.writeFileAsync('test.json', JSON.stringify(marks, null, 2)).then(() => {
-      console.log('Parsing succesfully finished.');
-    }).catch(err => console.log(err));
-  }).catch(err => console.log(err));
+  ssh
+    .connect({
+      host,
+      port: 22,
+      username,
+      password
+    })
+    .then(() =>
+      ssh.putFile('./server/arcade.py', `${scriptPath}/arcade.py`)
+    )
+    .then(() => new Promise((resolve, reject) => {
+      const connection = ssh.connection;
+      const startCommand = `python3 ${scriptPath}/arcade.py`;
 
-  // const Client = ssh.Client;
+      const progressSeen = [];
+      connection.exec(startCommand, (err, stream) => {
+        if (err) reject(err);
 
-  // const conn = new Client();
-  // conn.on('ready', function () {
-  //   const startCommand = 'java -classpath /opt/teaching/lib/ARCADE TClient';
+        stream.on('close', () => {
+          resolve();
+        }).on('data', (data) => {
+          data.toString().split(/\s*/).forEach((progressString) => {
+            if (progressString.trim() !== '' && !isNaN(progressString)) {
+              progressSeen.push(parseInt(progressString.trim(), 10));
+            }
+          });
 
-  //   let isConnected = false;
-  //   let startListening = false;
-  //   let responseString = '';
-  //   conn.exec(startCommand, function (err, stream) {
-  //     if (err) throw err;
+          session.fetchStatus = calculateStatus(progressSeen, 3, 6);
+          session.save();
+        }).stderr.on('data', (data) => {
+          console.log(`Error: ${data}`);
+        });
+      });
+    }))
+    .then(() => {
+      fs.statAsync('tmp/').catch(() => { fs.mkdir('tmp/'); });
 
-  //     console.log('Connecting to Arcade...');
+      return ssh.getFile(`tmp/${username}result0.txt`, `${scriptPath}/finalresult0.txt`);
+    })
+    .then(() => {
+      ssh.dispose();
+      return fs.readFileAsync(`tmp/${username}result0.txt`);
+    })
+    .then((data) => {
+      const marks = parseMarks(data.toString(), username);
+      session.marks = marks;
+      session.fetchStatus = 100;
+      session.save();
+    })
+    .catch((_) => {
+      session.fetchStatus = -1;
+      session.save();
+    });
+}
 
-  //     stream.on('close', function (code, signal) {
-  //       parseMarks(responseString);
-  //       conn.end();
-  //     }).on('data', function (data) {
-  //       if (!isConnected && data.toString() === 'Initialisation completed') {
-  //         console.log('Arcade: Succesfully connected.');
-  //         isConnected = true;
-  //       }
+function calculateStatus(progressSeen, threadCount, stepCount) {
+  const progressCount = progressSeen.length;
+  const start = progressCount - threadCount;
+  const sortedProgress = progressSeen
+    .sort()
+    .map(value => value + 1)
+    .slice(start, progressCount);
 
-  //       if (isConnected && data.toString().includes('Running query')) {
-  //         console.log('Arcade: Query sent.');
-  //         startListening = true;
-  //       }
-
-  //       if (startListening) {
-  //         responseString += data.toString();
-  //       }
-  //     }).stderr.on('data', function (data) {
-  //       console.log('SSH Error: ' + data);
-  //     });
-
-  //     stream.end('c\n+\n2\nq\nq\nr\nx\n');
-  //   });
-  // }).connect({
-  //   host: 'kilburn.cs.manchester.ac.uk',
-  //   port: 22,
-  //   username: username,
-  //   password: password
-  // });
+  const status = 100 * sortedProgress.reduce((a, b) => a + b, 0) / (threadCount * stepCount);
+  return Math.round(status - 1);
 }
 
 function parseMarks(inputString, username) {
@@ -63,22 +82,44 @@ function parseMarks(inputString, username) {
 
   // Parse databases
   const databaseRegex = /Database ([0-9]{2})-([0-9]{2})-([0-9])(X?)/g;
-  let databaseMatch;
-  while ((databaseMatch = databaseRegex.exec(inputString))) {
-    if (databaseMatch[4] === 'X') continue;
+  let databaseMatch = databaseRegex.exec(inputString);
+  let nextDatabaseMatch;
+  let databaseString;
+  while (databaseMatch) {
+    nextDatabaseMatch = databaseRegex.exec(inputString);
 
-    const currYear = {
-      number: parseInt(databaseMatch[3], 10),
-      schoolYear: [parseInt(databaseMatch[1], 10), parseInt(databaseMatch[2], 10)]
-    };
-    currYear.subjects = [];
+    const endIndex = nextDatabaseMatch ? nextDatabaseMatch.index : inputString.length;
+    databaseString = inputString.substring(databaseMatch.index, endIndex);
+
+    if (databaseMatch[4] === 'X') {
+      databaseMatch = nextDatabaseMatch;
+      continue;
+    }
+
+    const yearNumber = parseInt(databaseMatch[3], 10);
+
+    let currYear;
+    for (let i = 0; i < marksData.years.length; i++) {
+      if (marksData.years[i].number === yearNumber) currYear = marksData.years[i];
+    }
+
+    if (!currYear) {
+      currYear = {
+        number: yearNumber,
+        schoolYear: [parseInt(databaseMatch[1], 10), parseInt(databaseMatch[2], 10)],
+        subjects: []
+      };
+
+      marksData.years.push(currYear);
+    }
+
+    const subjects = currYear.subjects;
 
     // Parse tables
     const tableRegex = /Table (([0-9]{3})(s([0-9]))?([a-zA-Z]?)(fin)?|[^:]*)/g;
-    tableRegex.lastIndex = databaseMatch.index;
 
     let tableMatch;
-    while ((tableMatch = tableRegex.exec(inputString))) {
+    while ((tableMatch = tableRegex.exec(databaseString))) {
       const currClass = {
         _id: tableMatch[1],
         semester: tableMatch[4] ? parseInt(tableMatch[4], 10) : null,
@@ -91,12 +132,12 @@ function parseMarks(inputString, username) {
       };
 
       // Parse rows
-      const weightings = parseRow('Weighting', inputString, tableMatch.index)
+      const weightings = parseRow('Weighting', databaseString, tableMatch.index)
         .map(x => parseInt(x, 10));
-      const denominators = parseRow('Denominator', inputString, tableMatch.index)
+      const denominators = parseRow('Denominator', databaseString, tableMatch.index)
         .map(x => parseInt(x, 10));
-      const names = parseRow('Email Name', inputString, tableMatch.index);
-      const marks = parseRow(username, inputString, tableMatch.index);
+      const names = parseRow('Email Name', databaseString, tableMatch.index);
+      const marks = parseRow(username, databaseString, tableMatch.index);
 
       const sessions = [];
       for (let i = 0; i < names.length; i++) {
@@ -138,7 +179,7 @@ function parseMarks(inputString, username) {
       currClass.sessions = sessions;
 
       // Add current class to appropriate subject
-      const currSubjects = currYear.subjects.filter(subject => subject._id === tableMatch[2]);
+      const currSubjects = subjects.filter(subject => subject._id === tableMatch[2]);
       if (currSubjects.length) {
         currSubjects[0].classes.push(currClass);
       } else {
@@ -151,11 +192,12 @@ function parseMarks(inputString, username) {
         if (currSubject._id === null) currSubject._id = currClass._id;
         if (currSubject.name === null) currSubject.name = currClass._id;
 
-        currYear.subjects.push(currSubject);
+        subjects.push(currSubject);
       }
     }
 
-    marksData.years.push(currYear);
+    currYear.subjects = subjects.sort((a, b) => a._id.localeCompare(b._id));
+    databaseMatch = nextDatabaseMatch;
   }
 
   return marksData;
@@ -173,7 +215,7 @@ const subjectTypes = {
   L: 'Lab',
   E: 'Examples class',
   T: 'Test',
-  C: 'Clinic',
+  C: 'Tutorial',
   X: 'Exam'
 };
 
