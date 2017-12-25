@@ -1,5 +1,6 @@
 import { filter, propType } from 'graphql-anywhere';
-import { gql, graphql } from 'react-apollo';
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
 
 import Filter from './Filter.jsx';
 import Immutable from 'immutable';

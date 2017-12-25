@@ -1,5 +1,5 @@
 import Card, { CardActions, CardContent } from 'material-ui/Card';
-import { compose, gql, graphql } from 'react-apollo';
+import { compose, graphql } from 'react-apollo';
 
 import Button from 'material-ui/Button';
 import { CircularProgress } from 'material-ui/Progress';
@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import TextField from 'material-ui/TextField';
 import Typography from 'material-ui/Typography';
+import gql from 'graphql-tag';
 import { red } from 'material-ui/colors';
 import { withRouter } from 'react-router-dom';
 import { withStyles } from 'material-ui/styles';
@@ -81,8 +82,8 @@ function Login(props) {
   );
 
   return (
-    <DocumentTitle title={'iManchester Toolbox'}>
-      <div style={{ height: '100%' }}>
+    <DocumentTitle title="iManchester Toolbox">
+      <div style={{ height: '100%' }} suppressHydrationWarning>
         {data.getFetchStatus < 0 ? error : null}
         <Card className={classes.card}>
           <CardContent>

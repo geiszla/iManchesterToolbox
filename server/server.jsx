@@ -2,6 +2,7 @@ import { ApolloProvider, renderToStringWithData } from 'react-apollo';
 import { JssProvider, SheetsRegistry } from 'react-jss';
 
 import App from '../src/components/App.jsx';
+import { InMemoryCache } from '../node_modules/apollo-cache-inmemory/lib/inMemoryCache';
 import { MuiThemeProvider } from 'material-ui/styles';
 import React from 'react';
 import { StaticRouter } from 'react-router-dom';
@@ -27,6 +28,7 @@ import path from 'path';
 import session from 'express-session';
 
 const morgan = require('morgan');
+
 global.fetch = fetch;
 
 // HTTP Webserver
@@ -51,7 +53,8 @@ app.use(session({
   saveUninitialized: false
 }));
 
-app.use('/api',
+app.use(
+  '/api',
   (req, res, next) => {
     console.log(`GraphQL API request: ${req.body.operationName}`);
     next();
@@ -69,7 +72,7 @@ app.get('*', (req, res) => {
   const headers = Object.assign({}, req.headers, {
     accept: 'application/json'
   });
-  const client = apolloClient(true, headers);
+  const client = apolloClient(true, headers, new InMemoryCache());
 
   const sheetsRegistry = new SheetsRegistry();
   const jss = create(jssPreset());
@@ -77,15 +80,15 @@ app.get('*', (req, res) => {
 
   const context = {};
   const reactApp = (
-    <JssProvider registry={sheetsRegistry} jss={jss}>
-      <MuiThemeProvider theme={muiTheme} sheetsManager={new WeakMap()}>
-        <ApolloProvider client={client}>
-          <StaticRouter location={req.url} context={context}>
+    <ApolloProvider client={client}>
+      <StaticRouter location={req.url} context={context}>
+        <JssProvider registry={sheetsRegistry} jss={jss}>
+          <MuiThemeProvider theme={muiTheme} sheetsManager={new Map()}>
             <App />
-          </StaticRouter>
-        </ApolloProvider>
-      </MuiThemeProvider>
-    </JssProvider>
+          </MuiThemeProvider>
+        </JssProvider>
+      </StaticRouter>
+    </ApolloProvider>
   );
 
   renderPage(reactApp, client, sheetsRegistry).then((html) => {
@@ -102,7 +105,8 @@ app.get('*', (req, res) => {
 
 function renderPage(reactApp, client, sheetsRegistry) {
   return renderToStringWithData(reactApp).then((content) => {
-    const initialState = { apollo: client.getInitialState() };
+    const initialState = { apollo: client.extract() };
+    console.log(JSON.stringify(initialState));
     const css = sheetsRegistry.toString();
 
     return `

@@ -3,7 +3,7 @@ import Card, { CardContent } from 'material-ui/Card';
 import PropTypes from 'prop-types';
 import React from 'react';
 import Typography from 'material-ui/Typography';
-import { gql } from 'react-apollo';
+import gql from 'graphql-tag';
 import { propType } from 'graphql-anywhere';
 import { red } from 'material-ui/colors';
 import { withStyles } from 'material-ui/styles';

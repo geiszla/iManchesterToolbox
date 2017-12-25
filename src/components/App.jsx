@@ -1,5 +1,6 @@
 import { Redirect, Route, Switch, withRouter } from 'react-router-dom';
-import { compose, gql, graphql } from 'react-apollo';
+import { compose, graphql } from 'react-apollo';
+import gql from 'graphql-tag';
 
 import Login from './Login.jsx';
 import PropTypes from 'prop-types';

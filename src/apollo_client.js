@@ -1,16 +1,14 @@
-import ApolloClient, { createNetworkInterface } from 'apollo-client';
+import ApolloClient from 'apollo-client';
+import { createHttpLink } from 'apollo-link-http';
 
-export default (ssrMode, headers) => {
-  const opts = {
-    credentials: 'same-origin'
-  };
-  if (headers) opts.headers = headers;
-
+export default (ssrMode, headers, cache) => {
   return new ApolloClient({
     ssrMode,
-    networkInterface: createNetworkInterface({
+    link: createHttpLink({
       uri: API_URL,
-      opts
-    })
+      credentials: 'same-origin',
+      headers
+    }),
+    cache
   });
 };

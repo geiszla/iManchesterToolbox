@@ -5,7 +5,7 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
 import React from 'react';
 import SessionCard from './SessionCard.jsx';
-import { gql } from 'react-apollo';
+import gql from 'graphql-tag';
 import { withStyles } from 'material-ui/styles';
 
 const styles = {

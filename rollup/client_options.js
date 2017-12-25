@@ -29,10 +29,12 @@ module.exports = {
         ],
         'material-ui/Tabs': ['Tab'],
         'mobx-react': ['observer', 'PropTypes'],
-        'react-dom': ['render'],
+        react: ['createElement', 'Component', 'Children'],
+        'react-dom': ['render', 'findDOMNode', 'unstable_batchedUpdates', 'hydrate'],
         'node_modules/react-apollo/react-apollo.browser.umd.js': [
           'ApolloProvider', 'ApolloClient', 'compose', 'graphql', 'gql'
-        ]
+        ],
+        'zen-observable': ['of']
       },
       sourceMap: false,
       ignoreGlobal: true

@@ -57,9 +57,11 @@ export default function getMarks(username, password, session) {
       session.fetchStatus = 100;
       session.save();
     })
-    .catch((_) => {
+    .catch((err) => {
       session.fetchStatus = -1;
       session.save();
+
+      return console.log(err);
     });
 }
 
