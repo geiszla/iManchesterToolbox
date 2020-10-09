@@ -63,7 +63,7 @@ Adds React debugging tools to the Chrome Developer Tools.
 1. Navigate to the project files using a command line utility.
 2. Enter `yarn run client` to start monitoring the changes in code and automatically bundle the application.
 3. Before every git push, run ESLint to fix syntactic and semantic errors in JavaScript files (may have to run the command multiple times to fix all issues).
-4. Optionally turn on LivePage extension by clicking on its icon in the chrome extenstion bar (see install instructions above).
+4. Optionally turn on LivePage extension by clicking on its icon in the chrome extension bar (see install instructions above).
 
 ### With Visual Studio Code
 See setup instructions [above](#install-visual-studio-code-optional).
@@ -80,7 +80,7 @@ See setup instructions [above](#install-visual-studio-code-optional).
 3. Before every git push use the previously set up key shortcut to lint the current file and fix syntactic and semantic errors in JavaScript files (may have to run the command multiple times to fix all issues).
 4. Fix other issues, which couldn't be automatically solved, reported by the previous command.
 5. Repeat linting with all modified files.
-6. Optionally turn on LivePage extension by clicking on its icon in the chrome extenstion bar (see install instructions above).
+6. Optionally turn on LivePage extension by clicking on its icon in the chrome extension bar (see install instructions above).
 
 ### Visit the website
 Open a web browser and navigate to "[https://localhost/](https://localhost/)" to access the webapp.
