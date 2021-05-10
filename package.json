@@ -36,7 +36,7 @@
     "graphql-anywhere": "^4.1.0",
     "graphql-tag": "^2.6.1",
     "immutable": "^3.8.2",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "material-ui": "^1.0.0-beta.25",
     "material-ui-icons": "^1.0.0-beta.17",
     "mobx": "^3.4.1",
